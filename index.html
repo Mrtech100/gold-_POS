@@ -28,7 +28,7 @@
             getDoc,
             setDoc,
             deleteDoc,
-            query
+            onSnapshot
         } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
         const firebaseConfig = {
@@ -46,7 +46,7 @@
         const db = getFirestore(app);
 
         // Expose Firebase to global scope
-        window.__firebase = { db, collection, doc, getDocs, getDoc, setDoc, deleteDoc, query };
+        window.__firebase = { db, collection, doc, getDocs, getDoc, setDoc, deleteDoc, onSnapshot };
         window.__firebaseReady = true;
         console.log('🔥 Firebase ready');
     </script>
@@ -680,6 +680,10 @@
         let lastReceipt = null;
         let isLive = false;
 
+        // Unsubscribe functions for listeners
+        let unsubscribeItems = null;
+        let unsubscribeSuppliers = null;
+
         // ---------- DOM refs ----------
         const $ = id => document.getElementById(id);
         const liveSell24k = $('liveSell24k'), liveBuy24k = $('liveBuy24k');
@@ -712,12 +716,127 @@
         const printLabelFormBtn = $('printLabelFormBtn');
 
         // ========== FIRESTORE HELPERS ==========
+
+        // Save all items to Firestore (overwrites each document)
+        async function saveItemsToFirestore() {
+            await waitForFirebase();
+            const { db, collection, doc, setDoc } = window.__firebase;
+            try {
+                for (const item of items) {
+                    await setDoc(doc(db, 'items', item.id), item);
+                }
+                console.log(`✅ ${items.length} items saved to Firestore`);
+            } catch (err) {
+                console.error('❌ Error saving items:', err);
+                showToast('Failed to save items to cloud: ' + err.message, 'error');
+                throw err;
+            }
+        }
+
+        // Save all suppliers
+        async function saveSuppliersToFirestore() {
+            await waitForFirebase();
+            const { db, collection, doc, setDoc } = window.__firebase;
+            try {
+                for (const sup of suppliers) {
+                    await setDoc(doc(db, 'suppliers', sup.id), sup);
+                }
+                console.log(`✅ ${suppliers.length} suppliers saved`);
+            } catch (err) {
+                console.error('❌ Error saving suppliers:', err);
+                showToast('Failed to save suppliers: ' + err.message, 'error');
+                throw err;
+            }
+        }
+
+        // Save rates
+        async function saveRatesToFirestore() {
+            await waitForFirebase();
+            const { db, doc, setDoc } = window.__firebase;
+            try {
+                await setDoc(doc(db, 'meta', 'rates'), rates);
+                console.log('✅ Rates saved');
+            } catch (err) {
+                console.error('❌ Error saving rates:', err);
+            }
+        }
+
+        // Save spreads
+        async function saveSpreadsToFirestore() {
+            await waitForFirebase();
+            const { db, doc, setDoc } = window.__firebase;
+            try {
+                await setDoc(doc(db, 'meta', 'spreads'), spreads);
+                console.log('✅ Spreads saved');
+            } catch (err) {
+                console.error('❌ Error saving spreads:', err);
+            }
+        }
+
+        // ========== REAL‑TIME LISTENERS ==========
+
+        function startListeners() {
+            waitForFirebase().then(() => {
+                const { db, collection, onSnapshot } = window.__firebase;
+
+                // Listen to items
+                if (unsubscribeItems) unsubscribeItems();
+                unsubscribeItems = onSnapshot(collection(db, 'items'), (snapshot) => {
+                    console.log('📦 Items snapshot received');
+                    const newItems = [];
+                    snapshot.forEach(doc => newItems.push({ id: doc.id, ...doc.data() }));
+                    // Only update if data actually changed to avoid infinite loops
+                    const changed = JSON.stringify(newItems) !== JSON.stringify(items);
+                    if (changed) {
+                        items = newItems;
+                        renderStock();
+                        renderPOS();
+                        updateCart();
+                        // If we are editing an item, refresh form fields if needed
+                        if (editingId) {
+                            const editingItem = items.find(i => i.id === editingId);
+                            if (editingItem) {
+                                // update fields if they are currently being edited
+                                boughtPrice.value = (editingItem.boughtPrice || 0).toFixed(2);
+                                salePrice.value = (editingItem.finalSalePrice || 0).toFixed(2);
+                            }
+                        }
+                        console.log('🔄 Items updated from Firestore');
+                    }
+                }, (error) => {
+                    console.error('❌ Items listener error:', error);
+                    showToast('Real‑time sync error: ' + error.message, 'error');
+                });
+
+                // Listen to suppliers
+                if (unsubscribeSuppliers) unsubscribeSuppliers();
+                unsubscribeSuppliers = onSnapshot(collection(db, 'suppliers'), (snapshot) => {
+                    console.log('📦 Suppliers snapshot received');
+                    const newSuppliers = [];
+                    snapshot.forEach(doc => newSuppliers.push({ id: doc.id, ...doc.data() }));
+                    if (JSON.stringify(newSuppliers) !== JSON.stringify(suppliers)) {
+                        suppliers = newSuppliers;
+                        renderSuppliers();
+                        renderSupplierDropdown();
+                        console.log('🔄 Suppliers updated from Firestore');
+                    }
+                }, (error) => {
+                    console.error('❌ Suppliers listener error:', error);
+                    showToast('Real‑time sync error: ' + error.message, 'error');
+                });
+
+                // Also listen to rates and spreads? Not necessary for real‑time, but we can.
+                // We'll just fetch them once at init.
+            });
+        }
+
+        // ========== LOAD DATA ONCE (initial) ==========
         async function loadAllData() {
             await waitForFirebase();
             const { db, collection, getDocs, doc, getDoc } = window.__firebase;
 
             try {
-                // Load items
+                // Load items (initial)
                 const itemsSnap = await getDocs(collection(db, 'items'));
                 items = [];
                 itemsSnap.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
@@ -735,9 +854,9 @@
                 const spreadsDoc = await getDoc(doc(db, 'meta', 'spreads'));
                 if (spreadsDoc.exists()) spreads = spreadsDoc.data();
 
-                console.log('✅ Data loaded from Firestore');
+                console.log('✅ All data loaded from Firestore');
             } catch (err) {
-                console.error('Error loading from Firestore:', err);
+                console.error('❌ Error loading from Firestore:', err);
                 // Fallback to localStorage
                 items = JSON.parse(localStorage.getItem('stockItems')) || [];
                 suppliers = JSON.parse(localStorage.getItem('suppliers')) || [];
@@ -751,44 +870,8 @@
             renderStock();
             renderPOS();
             updateCart();
-        }
-
-        async function saveItemsToFirestore() {
-            await waitForFirebase();
-            const { db, collection, doc, setDoc } = window.__firebase;
-            try {
-                for (const item of items) {
-                    await setDoc(doc(db, 'items', item.id), item);
-                }
-                console.log('Items saved');
-            } catch (err) { console.error('Save items error:', err); }
-        }
-
-        async function saveSuppliersToFirestore() {
-            await waitForFirebase();
-            const { db, collection, doc, setDoc } = window.__firebase;
-            try {
-                for (const sup of suppliers) {
-                    await setDoc(doc(db, 'suppliers', sup.id), sup);
-                }
-                console.log('Suppliers saved');
-            } catch (err) { console.error('Save suppliers error:', err); }
-        }
-
-        async function saveRatesToFirestore() {
-            await waitForFirebase();
-            const { db, doc, setDoc } = window.__firebase;
-            try {
-                await setDoc(doc(db, 'meta', 'rates'), rates);
-            } catch (err) { console.error('Save rates error:', err); }
-        }
-
-        async function saveSpreadsToFirestore() {
-            await waitForFirebase();
-            const { db, doc, setDoc } = window.__firebase;
-            try {
-                await setDoc(doc(db, 'meta', 'spreads'), spreads);
-            } catch (err) { console.error('Save spreads error:', err); }
+            // Start real‑time listeners after initial load
+            startListeners();
         }
 
         // ========== SPREADS ==========
@@ -936,7 +1019,7 @@
             showToast('Supplier saved', 'success');
         });
 
-        // ========== LIVE PRICE FETCH & UPDATE ALL ITEMS ==========
+        // ========== LIVE PRICE FETCH ==========
         async function fetchLiveGoldPrice() {
             fetchStatus.textContent = '🔄 fetching...';
             fetchStatus.className = 'price-fetch-status syncing';
@@ -1194,7 +1277,10 @@
                 showToast('Item added! Barcode generated.', 'success');
             }
 
+            // Save to Firestore
             await saveItemsToFirestore();
+
+            // Reset form
             form.reset();
             boughtPrice.value = '';
             salePrice.value = '';
@@ -1211,8 +1297,20 @@
 
         window.deleteItem = async function(id) {
             if (!confirm('Delete this item?')) return;
+            // Remove from local array
             items = items.filter(i => i.id !== id);
-            await saveItemsToFirestore();
+            // Delete the document from Firestore
+            await waitForFirebase();
+            const { db, doc, deleteDoc } = window.__firebase;
+            try {
+                await deleteDoc(doc(db, 'items', id));
+                console.log(`🗑️ Item ${id} deleted from Firestore`);
+            } catch (err) {
+                console.error('❌ Error deleting item:', err);
+                showToast('Failed to delete from cloud: ' + err.message, 'error');
+                // Revert local deletion?
+                return;
+            }
             renderStock();
             renderPOS();
             showToast('Item deleted.', 'info');
@@ -1860,7 +1958,7 @@
                 });
             }, 60000);
 
-            console.log('🌟 GoldPOS with Firebase');
+            console.log('🌟 GoldPOS with Firebase + real‑time sync');
         }
 
         init();
