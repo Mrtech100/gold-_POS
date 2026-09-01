@@ -15,6 +15,42 @@
     </script>
     <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js">
     </script>
+
+    <!-- 🔥 Firebase Module Script -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-analytics.js";
+        import {
+            getFirestore,
+            collection,
+            doc,
+            getDocs,
+            getDoc,
+            setDoc,
+            deleteDoc,
+            query
+        } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCmj9fwRLmiQU-g5zvd6XzE8i2X9eNr7TQ",
+            authDomain: "hyperpos-12210.firebaseapp.com",
+            projectId: "hyperpos-12210",
+            storageBucket: "hyperpos-12210.firebasestorage.app",
+            messagingSenderId: "641877559339",
+            appId: "1:641877559339:web:14a1b8a6ffd354a089026e",
+            measurementId: "G-5SY4XMXQL8"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+
+        // Expose Firebase to global scope
+        window.__firebase = { db, collection, doc, getDocs, getDoc, setDoc, deleteDoc, query };
+        window.__firebaseReady = true;
+        console.log('🔥 Firebase ready');
+    </script>
+
     <style>
         /* ── base ── */
         body {
@@ -160,7 +196,7 @@
             }
         }
 
-        /* ── LABEL PRINT ── LEFT: barcode + name + purity + weight | RIGHT: making + supplier ── */
+        /* ── LABEL PRINT ── */
         .label-print {
             font-family: 'Segoe UI', Arial, sans-serif;
             width: 450px;
@@ -176,7 +212,6 @@
             gap: 24px;
             align-items: stretch;
         }
-        /* LEFT SIDE: barcode, name, purity, weight */
         .label-print .label-left {
             flex: 1.4;
             border-right: 2px dashed #e5e7eb;
@@ -220,8 +255,6 @@
             margin-top: 6px;
             align-self: flex-start;
         }
-
-        /* RIGHT SIDE: making charge + supplier logo + name */
         .label-print .label-right {
             flex: 0.9;
             display: flex;
@@ -622,23 +655,24 @@
         <i class="fas fa-check-circle text-green-400"></i> <span id="toastMsg">Success</span>
     </div>
 
+    <!-- =================================================================== -->
+    <!-- MAIN APPLICATION SCRIPT (Firebase + Firestore integration)           -->
+    <!-- =================================================================== -->
     <script>
-        // ========== GLOBAL STATE ==========
-        let items = JSON.parse(localStorage.getItem('stockItems')) || [];
-        let suppliers = JSON.parse(localStorage.getItem('suppliers')) || [];
-        let rates = JSON.parse(localStorage.getItem('dailyRates')) || {
-            sell24k: 0,
-            buy24k: 0,
-            sell21k: 0,
-            buy21k: 0,
-            sell18k: 0,
-            buy18k: 0,
-            sell14k: 0,
-            buy14k: 0,
-            sell10k: 0,
-            buy10k: 0
-        };
-        let spreads = JSON.parse(localStorage.getItem('spreads')) || { sell: 3 };
+        // Wait for Firebase module to load
+        let firebaseReady = false;
+        const waitForFirebase = () => new Promise(resolve => {
+            if (window.__firebaseReady) return resolve();
+            const check = setInterval(() => {
+                if (window.__firebaseReady) { clearInterval(check); resolve(); }
+            }, 100);
+        });
+
+        // ---------- Global state ----------
+        let items = [];
+        let suppliers = [];
+        let rates = { sell24k:0, buy24k:0, sell21k:0, buy21k:0, sell18k:0, buy18k:0, sell14k:0, buy14k:0, sell10k:0, buy10k:0 };
+        let spreads = { sell: 3 };
         let editingId = null;
         let editingSupplierId = null;
         let reportData = [];
@@ -646,73 +680,124 @@
         let lastReceipt = null;
         let isLive = false;
 
-        // ========== DOM refs ==========
+        // ---------- DOM refs ----------
         const $ = id => document.getElementById(id);
-        const liveSell24k = $('liveSell24k'),
-            liveBuy24k = $('liveBuy24k');
-        const liveSell21k = $('liveSell21k'),
-            liveBuy21k = $('liveBuy21k');
-        const liveSell18k = $('liveSell18k'),
-            liveBuy18k = $('liveBuy18k');
-        const liveSell14k = $('liveSell14k'),
-            liveBuy14k = $('liveBuy14k');
-        const liveSell10k = $('liveSell10k'),
-            liveBuy10k = $('liveBuy10k');
-        const liveStatusIcon = $('liveStatusIcon'),
-            liveStatusText = $('liveStatusText');
+        const liveSell24k = $('liveSell24k'), liveBuy24k = $('liveBuy24k');
+        const liveSell21k = $('liveSell21k'), liveBuy21k = $('liveBuy21k');
+        const liveSell18k = $('liveSell18k'), liveBuy18k = $('liveBuy18k');
+        const liveSell14k = $('liveSell14k'), liveBuy14k = $('liveBuy14k');
+        const liveSell10k = $('liveSell10k'), liveBuy10k = $('liveBuy10k');
+        const liveStatusIcon = $('liveStatusIcon'), liveStatusText = $('liveStatusText');
         const fetchStatus = $('fetchStatus');
         const sellSpreadInput = $('sellSpread');
-        const itemName = $('itemName'),
-            purity = $('purity'),
-            weight = $('weight'),
-            makingCharge = $('makingCharge');
-        const boughtPrice = $('boughtPrice'),
-            salePrice = $('salePrice'),
-            stockQty = $('stockQty');
-        const form = $('itemForm'),
-            editId = $('editId'),
-            formBtnText = $('formBtnText');
-        const stockTbody = $('stockTbody'),
-            emptyStock = $('emptyStock'),
-            itemCount = $('itemCount');
-        const rateWarning = $('rateWarning'),
-            lastUpdate = $('lastUpdate');
-        const posProductList = $('posProductList'),
-            posEmpty = $('posEmpty');
-        const cartItems = $('cartItems'),
-            cartEmpty = $('cartEmpty'),
-            cartCount = $('cartCount');
-        const cartSubtotal = $('cartSubtotal'),
-            cartDiscount = $('cartDiscount');
-        const cartDiscountAmount = $('cartDiscountAmount'),
-            cartTotal = $('cartTotal');
+        const itemName = $('itemName'), purity = $('purity'), weight = $('weight'), makingCharge = $('makingCharge');
+        const boughtPrice = $('boughtPrice'), salePrice = $('salePrice'), stockQty = $('stockQty');
+        const form = $('itemForm'), editId = $('editId'), formBtnText = $('formBtnText');
+        const stockTbody = $('stockTbody'), emptyStock = $('emptyStock'), itemCount = $('itemCount');
+        const rateWarning = $('rateWarning'), lastUpdate = $('lastUpdate');
+        const posProductList = $('posProductList'), posEmpty = $('posEmpty');
+        const cartItems = $('cartItems'), cartEmpty = $('cartEmpty'), cartCount = $('cartCount');
+        const cartSubtotal = $('cartSubtotal'), cartDiscount = $('cartDiscount');
+        const cartDiscountAmount = $('cartDiscountAmount'), cartTotal = $('cartTotal');
         const posSearch = $('posSearch');
-        const supplierTbody = $('supplierTbody'),
-            emptySupplier = $('emptySupplier');
-        const supplierForm = $('supplierForm'),
-            supplierId = $('supplierId'),
-            supplierName = $('supplierName'),
-            supplierPhone = $('supplierPhone'),
-            supplierLogoUrl = $('supplierLogoUrl'),
-            supplierLogoFile = $('supplierLogoFile'),
-            supplierLogoPreview = $('supplierLogoPreview'),
-            supplierLogoData = $('supplierLogoData'),
-            editSupplierId = $('editSupplierId'),
-            supplierBtnText = $('supplierBtnText');
+        const supplierTbody = $('supplierTbody'), emptySupplier = $('emptySupplier');
+        const supplierForm = $('supplierForm'), supplierId = $('supplierId'), supplierName = $('supplierName');
+        const supplierPhone = $('supplierPhone'), supplierLogoUrl = $('supplierLogoUrl');
+        const supplierLogoFile = $('supplierLogoFile'), supplierLogoPreview = $('supplierLogoPreview');
+        const supplierLogoData = $('supplierLogoData'), editSupplierId = $('editSupplierId');
+        const supplierBtnText = $('supplierBtnText');
         const itemSupplier = $('itemSupplier');
-        const itemPhotoFile = $('itemPhotoFile'),
-            itemPhotoPreview = $('itemPhotoPreview'),
-            itemPhotoData = $('itemPhotoData');
+        const itemPhotoFile = $('itemPhotoFile'), itemPhotoPreview = $('itemPhotoPreview'), itemPhotoData = $('itemPhotoData');
+        const description = $('description');
         const printLabelFormBtn = $('printLabelFormBtn');
 
-        // ========== SPREADS ==========
-        function loadSpreads() {
-            sellSpreadInput.value = spreads.sell ?? 3;
+        // ========== FIRESTORE HELPERS ==========
+        async function loadAllData() {
+            await waitForFirebase();
+            const { db, collection, getDocs, doc, getDoc } = window.__firebase;
+
+            try {
+                // Load items
+                const itemsSnap = await getDocs(collection(db, 'items'));
+                items = [];
+                itemsSnap.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
+
+                // Load suppliers
+                const suppSnap = await getDocs(collection(db, 'suppliers'));
+                suppliers = [];
+                suppSnap.forEach(doc => suppliers.push({ id: doc.id, ...doc.data() }));
+
+                // Load rates
+                const ratesDoc = await getDoc(doc(db, 'meta', 'rates'));
+                if (ratesDoc.exists()) rates = ratesDoc.data();
+
+                // Load spreads
+                const spreadsDoc = await getDoc(doc(db, 'meta', 'spreads'));
+                if (spreadsDoc.exists()) spreads = spreadsDoc.data();
+
+                console.log('✅ Data loaded from Firestore');
+            } catch (err) {
+                console.error('Error loading from Firestore:', err);
+                // Fallback to localStorage
+                items = JSON.parse(localStorage.getItem('stockItems')) || [];
+                suppliers = JSON.parse(localStorage.getItem('suppliers')) || [];
+                rates = JSON.parse(localStorage.getItem('dailyRates')) || rates;
+                spreads = JSON.parse(localStorage.getItem('spreads')) || spreads;
+                showToast('Could not connect to Firebase – using local cache', 'warning');
+            }
+            // Update UI
+            updateRatesUI();
+            renderSuppliers();
+            renderStock();
+            renderPOS();
+            updateCart();
         }
+
+        async function saveItemsToFirestore() {
+            await waitForFirebase();
+            const { db, collection, doc, setDoc } = window.__firebase;
+            try {
+                for (const item of items) {
+                    await setDoc(doc(db, 'items', item.id), item);
+                }
+                console.log('Items saved');
+            } catch (err) { console.error('Save items error:', err); }
+        }
+
+        async function saveSuppliersToFirestore() {
+            await waitForFirebase();
+            const { db, collection, doc, setDoc } = window.__firebase;
+            try {
+                for (const sup of suppliers) {
+                    await setDoc(doc(db, 'suppliers', sup.id), sup);
+                }
+                console.log('Suppliers saved');
+            } catch (err) { console.error('Save suppliers error:', err); }
+        }
+
+        async function saveRatesToFirestore() {
+            await waitForFirebase();
+            const { db, doc, setDoc } = window.__firebase;
+            try {
+                await setDoc(doc(db, 'meta', 'rates'), rates);
+            } catch (err) { console.error('Save rates error:', err); }
+        }
+
+        async function saveSpreadsToFirestore() {
+            await waitForFirebase();
+            const { db, doc, setDoc } = window.__firebase;
+            try {
+                await setDoc(doc(db, 'meta', 'spreads'), spreads);
+            } catch (err) { console.error('Save spreads error:', err); }
+        }
+
+        // ========== SPREADS ==========
+        function loadSpreads() { sellSpreadInput.value = spreads.sell ?? 3; }
 
         function saveSpreads() {
             spreads.sell = parseFloat(sellSpreadInput.value) || 0;
-            localStorage.setItem('spreads', JSON.stringify(spreads));
+            saveSpreadsToFirestore();
+            fetchLiveGoldPrice().then(() => updateAllItemPrices());
         }
 
         // ========== HELPER: image to base64 ==========
@@ -796,10 +881,10 @@
             renderSupplierDropdown();
         }
 
-        window.deleteSupplier = function(id) {
+        window.deleteSupplier = async function(id) {
             if (!confirm('Delete supplier?')) return;
             suppliers = suppliers.filter(s => s.id !== id);
-            localStorage.setItem('suppliers', JSON.stringify(suppliers));
+            await saveSuppliersToFirestore();
             renderSuppliers();
             showToast('Supplier deleted', 'info');
         };
@@ -824,7 +909,7 @@
             editSupplierId.value = id;
         };
 
-        supplierForm.addEventListener('submit', function(e) {
+        supplierForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             const id = supplierId.value.trim();
             const name = supplierName.value.trim();
@@ -843,7 +928,7 @@
                 if (suppliers.find(s => s.id === id)) { showToast('Supplier ID exists', 'warning'); return; }
                 suppliers.push({ id, name, phone, logo });
             }
-            localStorage.setItem('suppliers', JSON.stringify(suppliers));
+            await saveSuppliersToFirestore();
             renderSuppliers();
             supplierForm.reset();
             supplierLogoPreview.classList.add('hidden');
@@ -877,25 +962,18 @@
                 const buy10 = buy24 * (416.7 / 1000);
 
                 const newRates = {
-                    sell24k: sell24,
-                    buy24k: buy24,
-                    sell21k: sell21,
-                    buy21k: buy21,
-                    sell18k: sell18,
-                    buy18k: buy18,
-                    sell14k: sell14,
-                    buy14k: buy14,
-                    sell10k: sell10,
-                    buy10k: buy10
+                    sell24k: sell24, buy24k: buy24,
+                    sell21k: sell21, buy21k: buy21,
+                    sell18k: sell18, buy18k: buy18,
+                    sell14k: sell14, buy14k: buy14,
+                    sell10k: sell10, buy10k: buy10
                 };
-
-                const rateChanged = Math.abs(rates.sell24k - sell24) > 0.01 ||
-                    Math.abs(rates.buy24k - buy24) > 0.01;
-
                 Object.assign(rates, newRates);
-                localStorage.setItem('dailyRates', JSON.stringify(rates));
+                await saveRatesToFirestore();
                 updateRatesUI();
 
+                const rateChanged = Math.abs(rates.sell24k - sell24) > 0.01 ||
+                                    Math.abs(rates.buy24k - buy24) > 0.01;
                 if (rateChanged && items.length > 0) {
                     updateAllItemPrices();
                     showToast(`Rates changed! Updated ${items.length} items.`, 'info');
@@ -917,7 +995,6 @@
                 renderStock();
                 renderPOS();
                 return true;
-
             } catch (error) {
                 console.warn('Live fetch failed:', error.message);
                 if (rates.sell24k > 0 && rates.sell18k > 0) {
@@ -936,8 +1013,7 @@
                     renderPOS();
                     return true;
                 } else {
-                    Object.assign(rates, { sell24k: 0, buy24k: 0, sell21k: 0, buy21k: 0, sell18k: 0, buy18k: 0,
-                        sell14k: 0, buy14k: 0, sell10k: 0, buy10k: 0 });
+                    Object.assign(rates, { sell24k:0, buy24k:0, sell21k:0, buy21k:0, sell18k:0, buy18k:0, sell14k:0, buy14k:0, sell10k:0, buy10k:0 });
                     updateRatesUI();
                     lastUpdate.innerText = '⚠️ No data';
                     lastUpdate.className = 'text-xs text-red-500';
@@ -960,14 +1036,12 @@
             let updatedCount = 0;
             items.forEach(item => {
                 const pur = item.purity;
-                let buyRate = 0,
-                    sellRate = 0;
-                if (pur === '24K') { buyRate = rates.buy24k;
-                    sellRate = rates.sell24k; } else if (pur === '21K') { buyRate = rates.buy21k;
-                    sellRate = rates.sell21k; } else if (pur === '18K') { buyRate = rates.buy18k;
-                    sellRate = rates.sell18k; } else if (pur === '14K') { buyRate = rates.buy14k;
-                    sellRate = rates.sell14k; } else if (pur === '10K') { buyRate = rates.buy10k;
-                    sellRate = rates.sell10k; }
+                let buyRate = 0, sellRate = 0;
+                if (pur === '24K') { buyRate = rates.buy24k; sellRate = rates.sell24k; }
+                else if (pur === '21K') { buyRate = rates.buy21k; sellRate = rates.sell21k; }
+                else if (pur === '18K') { buyRate = rates.buy18k; sellRate = rates.sell18k; }
+                else if (pur === '14K') { buyRate = rates.buy14k; sellRate = rates.sell14k; }
+                else if (pur === '10K') { buyRate = rates.buy10k; sellRate = rates.sell10k; }
 
                 if (buyRate > 0 && sellRate > 0 && item.weight > 0) {
                     const newBought = item.weight * buyRate;
@@ -985,9 +1059,8 @@
                     }
                 }
             });
-
             if (updatedCount > 0) {
-                localStorage.setItem('stockItems', JSON.stringify(items));
+                saveItemsToFirestore();
                 if (editingId) {
                     const editingItem = items.find(i => i.id === editingId);
                     if (editingItem) {
@@ -1017,11 +1090,6 @@
 
         window.saveSpreadsAndRefresh = function() {
             saveSpreads();
-            fetchLiveGoldPrice().then(() => {
-                if (rates.sell24k > 0) {
-                    updateAllItemPrices();
-                }
-            });
         };
 
         // ========== PRICE FORMULA ==========
@@ -1029,32 +1097,25 @@
             const w = parseFloat(weight.value) || 0;
             const mc = parseFloat(makingCharge.value) || 0;
             const pur = purity.value;
-
-            let buyRate = 0,
-                sellRate = 0;
-            if (pur === '24K') { buyRate = rates.buy24k;
-                sellRate = rates.sell24k; } else if (pur === '21K') { buyRate = rates.buy21k;
-                sellRate = rates.sell21k; } else if (pur === '18K') { buyRate = rates.buy18k;
-                sellRate = rates.sell18k; } else if (pur === '14K') { buyRate = rates.buy14k;
-                sellRate = rates.sell14k; } else if (pur === '10K') { buyRate = rates.buy10k;
-                sellRate = rates.sell10k; }
-
+            let buyRate = 0, sellRate = 0;
+            if (pur === '24K') { buyRate = rates.buy24k; sellRate = rates.sell24k; }
+            else if (pur === '21K') { buyRate = rates.buy21k; sellRate = rates.sell21k; }
+            else if (pur === '18K') { buyRate = rates.buy18k; sellRate = rates.sell18k; }
+            else if (pur === '14K') { buyRate = rates.buy14k; sellRate = rates.sell14k; }
+            else if (pur === '10K') { buyRate = rates.buy10k; sellRate = rates.sell10k; }
             if (!buyRate || buyRate <= 0 || w <= 0) {
                 boughtPrice.value = '—';
                 salePrice.value = '—';
                 return null;
             }
-
             const bought = w * buyRate;
             const baseSell = w * sellRate;
             const making = (baseSell * mc) / 100;
             const total = baseSell + making;
             const vat = total * 0.05;
             const sell = total + vat;
-
             boughtPrice.value = bought.toFixed(2);
             salePrice.value = sell.toFixed(2);
-
             return { bought, sell };
         }
 
@@ -1069,7 +1130,7 @@
         }
 
         // ========== CRUD ITEMS ==========
-        function addOrUpdate(e) {
+        async function addOrUpdate(e) {
             e.preventDefault();
             const w = parseFloat(weight.value) || 0;
             const mc = parseFloat(makingCharge.value) || 0;
@@ -1133,7 +1194,7 @@
                 showToast('Item added! Barcode generated.', 'success');
             }
 
-            localStorage.setItem('stockItems', JSON.stringify(items));
+            await saveItemsToFirestore();
             form.reset();
             boughtPrice.value = '';
             salePrice.value = '';
@@ -1148,10 +1209,10 @@
             formBtnText.innerText = 'Add Item';
         }
 
-        window.deleteItem = function(id) {
+        window.deleteItem = async function(id) {
             if (!confirm('Delete this item?')) return;
             items = items.filter(i => i.id !== id);
-            localStorage.setItem('stockItems', JSON.stringify(items));
+            await saveItemsToFirestore();
             renderStock();
             renderPOS();
             showToast('Item deleted.', 'info');
@@ -1202,11 +1263,10 @@
             items.forEach((item) => {
                 const barcodeId = `barcode-${item.id}`;
                 const purityClass = item.purity === '24K' ? 'bg-amber-100 text-amber-800' :
-                    item.purity === '21K' ? 'bg-blue-100 text-blue-800' :
-                    'bg-gray-200 text-gray-700';
-
+                                    item.purity === '21K' ? 'bg-blue-100 text-blue-800' :
+                                    'bg-gray-200 text-gray-700';
                 const photoHtml = item.photo ? `<img src="${item.photo}" class="item-photo" alt="photo" />` :
-                    '<span class="text-gray-400 text-xs">No img</span>';
+                                    '<span class="text-gray-400 text-xs">No img</span>';
                 const supObj = suppliers.find(s => s.id === item.supplier);
                 const supName = supObj ? supObj.name : '—';
 
@@ -1257,14 +1317,12 @@
         function renderPOS() {
             const search = posSearch.value.toLowerCase().trim();
             let filtered = items.filter(i => (i.stockQty || 1) > 0);
-
             if (search) {
                 filtered = filtered.filter(i =>
                     i.name.toLowerCase().includes(search) ||
                     i.itemCode.toLowerCase().includes(search)
                 );
             }
-
             if (!filtered.length) {
                 posProductList.innerHTML = '';
                 posEmpty.classList.remove('hidden');
@@ -1303,12 +1361,10 @@
             const qtyInput = document.getElementById(`posQty-${itemId}`);
             const qty = parseInt(qtyInput?.value) || 1;
             const available = item.stockQty || 1;
-
             if (qty > available) {
                 showToast(`Only ${available} in stock`, 'warning');
                 return;
             }
-
             const existing = cart.find(c => c.id === itemId);
             if (existing) {
                 const newQty = existing.qty + qty;
@@ -1383,7 +1439,7 @@
         };
 
         // ========== CHECKOUT ==========
-        window.checkout = function() {
+        window.checkout = async function() {
             if (!cart.length) {
                 showToast('Cart is empty', 'warning');
                 return;
@@ -1408,7 +1464,7 @@
                     item.stockQty = (item.stockQty || 1) - c.qty;
                 }
             }
-            localStorage.setItem('stockItems', JSON.stringify(items));
+            await saveItemsToFirestore();
 
             const discount = parseFloat(cartDiscount.value) || 0;
             const subtotal = cart.reduce((sum, c) => sum + (calculateItemPrice(c, c.qty) || 0), 0);
@@ -1437,7 +1493,6 @@
                 showToast('No sale to print', 'warning');
                 return;
             }
-
             const { items, subtotal, discount, discountAmount, total, date } = lastReceipt;
             const d = new Date(date);
             const dateStr = d.toLocaleDateString();
@@ -1451,7 +1506,6 @@
                         </div>
                         <div style="padding: 8px 0; border-bottom: 1px dashed #000;">
                 `;
-
             items.forEach(item => {
                 const totalPrice = calculateItemPrice(item, item.qty) || 0;
                 receiptHtml += `
@@ -1461,7 +1515,6 @@
                         </div>
                     `;
             });
-
             receiptHtml += `
                         </div>
                         <div style="padding: 6px 0;">
@@ -1483,7 +1536,6 @@
                         </div>
                     </div>
                 `;
-
             const printWindow = window.open('', '_blank', 'width=400,height=600');
             printWindow.document.write(`
                     <html>
@@ -1496,7 +1548,7 @@
             printWindow.document.close();
         };
 
-        // ===================== PRINT LABEL · LEFT: barcode + name + purity + weight | RIGHT: making + supplier =====================
+        // ========== PRINT LABEL ==========
         function buildLabelHTML(item, supplier) {
             const code = item.itemCode || 'N/A';
             const name = item.name || '';
@@ -1506,11 +1558,9 @@
             const logo = supplier?.logo || '';
             const supplierName = supplier?.name || '';
             const barcodeId = 'label-barcode-' + Date.now();
-
             return `
                     <div class="label-print" id="labelPrintContainer">
                         <div class="label-row">
-                            <!-- LEFT: barcode + name + purity + weight -->
                             <div class="label-left">
                                 <div class="label-barcode">
                                     <svg id="${barcodeId}"></svg>
@@ -1523,7 +1573,6 @@
                                 </div>
                                 <div class="label-badge">✦ Gold POS</div>
                             </div>
-                            <!-- RIGHT: making charge + supplier logo + name -->
                             <div class="label-right">
                                 <div class="label-making">⚙ ${mc}% Making</div>
                                 ${logo ? `<img src="${logo}" class="label-supplier-logo" alt="supplier logo" />` : '<div style="font-size:14px;color:#94a3b8;padding:4px 0;">No logo</div>'}
@@ -1559,11 +1608,9 @@
                 return;
             }
             const supplier = suppliers.find(s => s.id === item.supplier) || null;
-
             const container = document.getElementById('printLabelContainer');
             container.style.display = 'block';
             container.innerHTML = buildLabelHTML(item, supplier);
-
             setTimeout(() => {
                 const printWindow = window.open('', '_blank', 'width=540,height=440');
                 if (!printWindow) {
@@ -1610,7 +1657,6 @@
             }, 400);
         };
 
-        // Print label for the item currently being edited
         window.printCurrentLabel = function() {
             const id = editId.value;
             if (id) {
@@ -1666,8 +1712,7 @@
                 return;
             }
             empty.classList.add('hidden');
-            let totalWeight = 0,
-                totalValue = 0;
+            let totalWeight = 0, totalValue = 0;
             let html = '';
             data.forEach(item => {
                 totalWeight += item.weight * (item.stockQty || 1);
@@ -1694,14 +1739,9 @@
         // ========== EXPORT ==========
         window.exportCSV = function() {
             if (!reportData.length) { showToast('No data to export.', 'warning'); return; }
-            const rows = [
-                ['Code', 'Name', 'Purity', 'Weight(g)', 'Bought Price', 'Sell Price', 'Qty', 'Date']
-            ];
+            const rows = [['Code', 'Name', 'Purity', 'Weight(g)', 'Bought Price', 'Sell Price', 'Qty', 'Date']];
             reportData.forEach(i => {
-                rows.push([i.itemCode, i.name, i.purity, i.weight, i.boughtPrice || 0, i.finalSalePrice, i
-                    .stockQty || 1,
-                    new Date(i.dateAdded).toLocaleDateString()
-                ]);
+                rows.push([i.itemCode, i.name, i.purity, i.weight, i.boughtPrice || 0, i.finalSalePrice, i.stockQty || 1, new Date(i.dateAdded).toLocaleDateString()]);
             });
             const csv = rows.map(r => r.join(',')).join('\n');
             const blob = new Blob([csv], { type: 'text/csv' });
@@ -1736,14 +1776,9 @@
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF('landscape', 'pt', 'a4');
             doc.text('Stock Report', 40, 50);
-            const rows = reportData.map(i => [i.itemCode, i.name, i.purity, i.weight.toFixed(2), (i.boughtPrice || 0)
-                .toFixed(2), i.finalSalePrice.toFixed(2), i.stockQty || 1, new Date(i.dateAdded)
-                .toLocaleDateString()
-            ]);
+            const rows = reportData.map(i => [i.itemCode, i.name, i.purity, i.weight.toFixed(2), (i.boughtPrice || 0).toFixed(2), i.finalSalePrice.toFixed(2), i.stockQty || 1, new Date(i.dateAdded).toLocaleDateString()]);
             doc.autoTable({
-                head: [
-                    ['Code', 'Name', 'Purity', 'Weight(g)', 'Bought Price', 'Sell Price', 'Qty', 'Date']
-                ],
+                head: [['Code', 'Name', 'Purity', 'Weight(g)', 'Bought Price', 'Sell Price', 'Qty', 'Date']],
                 body: rows,
                 startY: 70,
                 styles: { fontSize: 8 },
@@ -1755,8 +1790,7 @@
 
         // ========== TOAST ==========
         function showToast(msg, type = 'success') {
-            const toast = $('toast'),
-                toastMsg = $('toastMsg');
+            const toast = $('toast'), toastMsg = $('toastMsg');
             toastMsg.innerText = msg;
             toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
             const icon = toast.querySelector('i');
@@ -1789,48 +1823,47 @@
         });
 
         // ========== INIT ==========
-        loadSpreads();
-        renderSuppliers();
-        if (rates.sell24k > 0) {
-            updateRatesUI();
-            lastUpdate.innerText = 'Cached';
-            lastUpdate.className = 'text-xs text-gray-400';
-            rateWarning.classList.add('hidden');
-        } else {
-            lastUpdate.innerText = 'Awaiting live...';
-            rateWarning.classList.remove('hidden');
-            rateWarning.innerText = '⏳ Fetching live gold price...';
+        async function init() {
+            await loadAllData();
+            loadSpreads();
+            if (rates.sell24k > 0) {
+                updateRatesUI();
+                lastUpdate.innerText = 'Cached';
+                lastUpdate.className = 'text-xs text-gray-400';
+                rateWarning.classList.add('hidden');
+            } else {
+                lastUpdate.innerText = 'Awaiting live...';
+                rateWarning.classList.remove('hidden');
+                rateWarning.innerText = '⏳ Fetching live gold price...';
+            }
+            renderStock();
+            renderPOS();
+            updateCart();
+
+            const todayStr = new Date().toISOString().slice(0, 10);
+            const weekAgo = new Date();
+            weekAgo.setDate(weekAgo.getDate() - 7);
+            $('customFrom').value = weekAgo.toISOString().slice(0, 10);
+            $('customTo').value = todayStr;
+
+            // Initial fetch
+            setTimeout(() => {
+                fetchLiveGoldPrice().then(() => {
+                    if (rates.sell24k > 0) updateAllItemPrices();
+                });
+            }, 500);
+
+            // Auto-update every 60 seconds
+            setInterval(() => {
+                fetchLiveGoldPrice().then(() => {
+                    if (rates.sell24k > 0) updateAllItemPrices();
+                });
+            }, 60000);
+
+            console.log('🌟 GoldPOS with Firebase');
         }
 
-        renderStock();
-        renderPOS();
-        updateCart();
-
-        const todayStr = new Date().toISOString().slice(0, 10);
-        const weekAgo = new Date();
-        weekAgo.setDate(weekAgo.getDate() - 7);
-        $('customFrom').value = weekAgo.toISOString().slice(0, 10);
-        $('customTo').value = todayStr;
-
-        // Initial fetch
-        setTimeout(() => {
-            fetchLiveGoldPrice().then(() => {
-                if (rates.sell24k > 0) {
-                    updateAllItemPrices();
-                }
-            });
-        }, 500);
-
-        // Auto-update every 60 seconds
-        setInterval(() => {
-            fetchLiveGoldPrice().then(() => {
-                if (rates.sell24k > 0) {
-                    updateAllItemPrices();
-                }
-            });
-        }, 60000);
-
-        console.log('🌟 GoldPOS: Label prints barcode + name/purity/weight on left, making charge + supplier on right.');
+        init();
     </script>
 </body>
 </html>
