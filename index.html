@@ -3,17 +3,22 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>Gold POS · Live Kitco Rates</title>
+<title>Nejmeh Jewelry POS · Live Kitco Rates</title>
 
 <!-- ================= PWA META ================= -->
-<meta name="theme-color" content="#e9b640" />
+<meta name="theme-color" content="#0a0a0a" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<meta name="apple-mobile-web-app-title" content="GoldPOS" />
-<meta name="application-name" content="GoldPOS" />
-<meta name="description" content="Gold POS with live Kitco rates — POS, stock, suppliers, reports and user management." />
+<meta name="apple-mobile-web-app-title" content="Nejmeh POS" />
+<meta name="application-name" content="Nejmeh POS" />
+<meta name="description" content="Nejmeh Jewelry POS — live Kitco rates, POS, stock, suppliers, reports and user management." />
 <meta name="color-scheme" content="light" />
+
+<!-- ================= FONTS ================= -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
@@ -50,18 +55,39 @@
   window.__firebaseReady = true;
 
   console.log('%c🔥 Firebase ready (v12.19.0) — project: hyperpos-12210',
-              'color:#f59e0b;font-weight:bold');
+              'color:#c9a227;font-weight:bold');
 </script>
 
 <style>
-    body { background:#faf6f0; font-family:'Segoe UI', system-ui, sans-serif; }
+    :root {
+        --nj-gold:        #c9a227;
+        --nj-gold-light:  #e8c86a;
+        --nj-gold-pale:   #f7e7b4;
+        --nj-gold-deep:   #9a7a1a;
+        --nj-black:       #0a0a0a;
+        --nj-ink:         #1a1408;
+    }
+
+    body { background:#faf7f0; font-family:'Segoe UI', system-ui, sans-serif; }
     .card-shadow { box-shadow: 0 8px 24px rgba(0,0,0,.06); }
     .barcode-svg svg { max-width:120px; height:40px; }
     input:disabled { background:#f3f4f6; cursor:not-allowed; }
     .toast { transition: all .3s ease; }
-    .tab-btn.active { border-bottom:3px solid #e9b640; color:#b7791f; font-weight:600; }
+    .tab-btn.active { border-bottom:3px solid var(--nj-gold); color:#7a5c0d; font-weight:600; }
     .tab-btn { padding:.6rem 1.2rem; font-weight:500; cursor:pointer; border-bottom:3px solid transparent; transition:.2s; }
-    .tab-btn:hover { border-bottom:3px solid #f3d28c; }
+    .tab-btn:hover { border-bottom:3px solid var(--nj-gold-light); }
+
+    /* ---------- Brand script ---------- */
+    .nj-script {
+        font-family: 'Great Vibes', 'Brush Script MT', 'Lucida Handwriting', cursive;
+        font-weight: 400;
+        letter-spacing: 0;
+    }
+    .nj-caps {
+        font-family: 'Cormorant Garamond', 'Segoe UI', serif;
+        letter-spacing: .35em;
+        font-weight: 600;
+    }
 
     /* ---------- Live pulse ---------- */
     @keyframes pulse-green { 0%,100%{opacity:1} 50%{opacity:.35} }
@@ -79,37 +105,38 @@
 
     /* ---------- Kitco panel ---------- */
     .kitco-panel {
-        background: linear-gradient(135deg, #fffbeb 0%, #ffffff 55%, #fff7e6 100%);
-        border: 1px solid #f3d28c;
+        background: linear-gradient(135deg, #fffdf5 0%, #ffffff 55%, #fdf6e3 100%);
+        border: 1px solid #e8d79c;
         border-radius: 1rem;
         padding: .85rem 1rem 1rem;
         margin-top: .85rem;
         position: relative;
         overflow: hidden;
-        box-shadow: 0 6px 20px rgba(233,182,64,.14);
+        box-shadow: 0 6px 20px rgba(201,162,39,.14);
     }
     .kitco-panel::before {
         content:'';
         position:absolute; top:0; left:0; right:0; height:3px;
-        background: linear-gradient(90deg,#f59e0b,#fbbf24,#f59e0b,#fbbf24,#f59e0b);
+        background: linear-gradient(90deg,#c9a227,#e8c86a,#f7e7b4,#e8c86a,#c9a227);
     }
     .kitco-head {
         display:flex; flex-wrap:wrap; align-items:center; gap:.55rem .85rem;
         padding-bottom:.55rem; margin-bottom:.7rem;
-        border-bottom:1px dashed #f3d28c;
+        border-bottom:1px dashed #e8d79c;
         font-size:.72rem;
         color:#6b7280;
     }
     .kitco-brand {
-        background: linear-gradient(135deg,#92400e,#b45309);
-        color:#fde68a;
+        background: linear-gradient(135deg,#1a1408,#3d2f0c 60%,#0a0a0a);
+        color:var(--nj-gold-light);
         padding:3px 11px;
         border-radius:6px;
         font-weight:800;
         letter-spacing:1.4px;
         font-size:.68rem;
         display:inline-flex; align-items:center; gap:5px;
-        box-shadow:0 2px 6px rgba(146,64,14,.35);
+        box-shadow:0 2px 6px rgba(10,10,10,.4);
+        border:1px solid rgba(201,162,39,.35);
     }
     .kitco-live-label {
         display:inline-flex; align-items:center; gap:5px;
@@ -117,7 +144,7 @@
     }
     .kitco-stat { display:inline-flex; align-items:baseline; gap:4px; font-variant-numeric: tabular-nums; }
     .kitco-stat .k-label { font-size:.58rem; color:#9ca3af; font-weight:600; text-transform:uppercase; letter-spacing:.4px; }
-    .kitco-stat .k-val   { font-size:.82rem; font-weight:800; color:#78350f; }
+    .kitco-stat .k-val   { font-size:.82rem; font-weight:800; color:#5e450a; }
     .kitco-stat .k-unit  { font-size:.55rem; color:#9ca3af; font-weight:600; }
     .kitco-change { font-size:.65rem; font-weight:800; padding:2px 8px; border-radius:5px; font-variant-numeric: tabular-nums; }
     .kitco-change.up   { color:#15803d; background:#dcfce7; }
@@ -141,33 +168,33 @@
 
     .kk-tile {
         background:#fff;
-        border:1px solid #f0e2c8;
+        border:1px solid #efe2bf;
         border-radius:.7rem;
         padding:.5rem .6rem .55rem;
         transition:.18s;
         position:relative;
         overflow:hidden;
     }
-    .kk-tile:hover { border-color:#e9b640; box-shadow:0 4px 12px rgba(233,182,64,.18); transform:translateY(-1px); }
+    .kk-tile:hover { border-color:var(--nj-gold); box-shadow:0 4px 12px rgba(201,162,39,.2); transform:translateY(-1px); }
     .kk-tile-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:.35rem; }
     .kk-badge { font-size:.7rem; font-weight:800; letter-spacing:.3px; padding:2px 10px; border-radius:999px; }
     .kk-purity { font-size:.52rem; color:#9ca3af; font-weight:600; }
     .kk-row { display:flex; align-items:center; justify-content:space-between; padding:.1rem 0; font-variant-numeric: tabular-nums; }
     .kk-row .kk-side { font-size:.55rem; font-weight:800; letter-spacing:.5px; padding:1px 5px; border-radius:4px; }
-    .kk-row .kk-side.sell { color:#92400e; background:#fef3c7; }
+    .kk-row .kk-side.sell { color:#7a5c0d; background:#f7ecc7; }
     .kk-row .kk-side.buy  { color:#065f46; background:#d1fae5; }
     .kk-row .kk-price { font-size:.95rem; font-weight:800; letter-spacing:-.3px; }
-    .kk-row .kk-price.sell { color:#b45309; }
+    .kk-row .kk-price.sell { color:#9a7a1a; }
     .kk-row .kk-price.buy  { color:#047857; }
     .kk-row .kk-gram { font-size:.5rem; color:#9ca3af; font-weight:600; margin-left:2px; }
 
-    .kt-24{background:#fef3c7;color:#92400e} .kt-21{background:#dbeafe;color:#1e40af}
+    .kt-24{background:#f7ecc7;color:#7a5c0d} .kt-21{background:#dbeafe;color:#1e40af}
     .kt-18{background:#ede9fe;color:#5b21b6} .kt-14{background:#d1fae5;color:#065f46}
     .kt-10{background:#e5e7eb;color:#374151}
 
     .spread-input { width:58px; padding:.25rem .4rem; border:1px solid #d1d5db; border-radius:.4rem;
         font-size:.8rem; text-align:center; background:#fff; }
-    .spread-input:focus { outline:2px solid #e9b640; outline-offset:1px; }
+    .spread-input:focus { outline:2px solid var(--nj-gold); outline-offset:1px; }
 
     .fetch-btn { background:#3b82f6; color:#fff; padding:.3rem .8rem; border-radius:.4rem; font-size:.7rem;
         font-weight:600; border:none; cursor:pointer; transition:background .2s; display:inline-flex; align-items:center; gap:5px; }
@@ -205,10 +232,10 @@
     .photo-upload-wrapper input[type="file"] { max-width:140px; }
 
     .pos-cart-item { transition: background .2s; }
-    .pos-cart-item:hover { background:#fef3e8; }
+    .pos-cart-item:hover { background:#fdf6e3; }
 
     .badge-auto   { font-size:9px; padding:1px 7px; border-radius:99px; background:#d1fae5; color:#065f46; font-weight:600; }
-    .badge-manual { font-size:9px; padding:1px 7px; border-radius:99px; background:#fef3c7; color:#92400e; font-weight:600; }
+    .badge-manual { font-size:9px; padding:1px 7px; border-radius:99px; background:#f7ecc7; color:#7a5c0d; font-weight:600; }
 
     /* ---------- Money input with $ prefix ---------- */
     .money-input-wrap { position: relative; }
@@ -217,6 +244,38 @@
         font-weight:800; color:#059669; font-size:.85rem; pointer-events:none;
     }
     .money-input-wrap input { padding-left:1.65rem; }
+
+    /* ---------- Brand logo block ---------- */
+    .nj-logo-badge {
+        background: linear-gradient(180deg, #0a0a0a 0%, #1a1408 100%);
+        border: 1px solid rgba(201,162,39,.35);
+        border-radius: .9rem;
+        padding: .45rem .8rem .35rem;
+        display:inline-flex;
+        align-items:center;
+        gap:.55rem;
+        box-shadow: 0 4px 14px rgba(10,10,10,.25);
+    }
+    .nj-logo-badge .nj-logo-text-wrap { display:flex; flex-direction:column; line-height:1; }
+    .nj-logo-badge .nj-logo-nehmeh {
+        font-family: 'Great Vibes', 'Brush Script MT', cursive;
+        font-size: 1.65rem;
+        line-height: 1;
+        background: linear-gradient(180deg,#f7e7b4 0%, #e8c86a 40%, #c9a227 75%, #9a7a1a 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        padding: 0 .1rem;
+    }
+    .nj-logo-badge .nj-logo-jewelry {
+        font-family:'Cormorant Garamond', serif;
+        font-size: .55rem;
+        letter-spacing: .35em;
+        color: var(--nj-gold-light);
+        font-weight: 600;
+        margin-top: -.15rem;
+        padding-left: .35em;
+    }
 
     /* ---------- Large label (450px) ---------- */
     .label-print { font-family:'Segoe UI', Arial, sans-serif; width:450px; padding:22px 24px; background:#fff;
@@ -230,7 +289,7 @@
     .label-print .label-details span { display:inline-block; background:#f1f5f9; padding:2px 12px; border-radius:6px;
         margin-right:6px; font-weight:500; }
     .label-print .label-badge { display:inline-block; font-size:11px; font-weight:600; padding:3px 14px; border-radius:14px;
-        background:#fef3c7; color:#92400e; margin-top:6px; align-self:flex-start; }
+        background:#f7ecc7; color:#7a5c0d; margin-top:6px; align-self:flex-start; }
     .label-print .label-right { flex:.9; display:flex; flex-direction:column; justify-content:center; align-items:center;
         text-align:center; gap:8px; padding-left:6px; }
     .label-print .label-making { font-size:22px; font-weight:700; color:#0b3b5c; background:#e8f4fd; padding:6px 24px;
@@ -260,70 +319,117 @@
         to   { opacity:1; transform: translateY(0) scale(1); }
     }
     .login-input {
-        width:100%; padding:.65rem .85rem; border:1px solid #d1d5db; border-radius:.6rem;
-        font-size:.9rem; background:#fff; transition:.15s;
+        width:100%; padding:.65rem .85rem;
+        border:1px solid rgba(201,162,39,.35);
+        background: rgba(0,0,0,.4);
+        color:#f7e7b4;
+        border-radius:.6rem;
+        font-size:.9rem;
+        transition:.15s;
     }
-    .login-input:focus { outline:none; border-color:#e9b640; box-shadow:0 0 0 3px rgba(233,182,64,.25); }
+    .login-input::placeholder { color: rgba(247,231,180,.35); }
+    .login-input:focus { outline:none; border-color:var(--nj-gold-light); box-shadow:0 0 0 3px rgba(201,162,39,.25); }
+    .login-label { color: rgba(247,231,180,.85); font-size: .8rem; font-weight: 500; }
     .role-pill { font-size:9px; padding:2px 9px; border-radius:99px; font-weight:700; letter-spacing:.4px; }
-    .role-admin   { background:#fef3c7; color:#92400e; }
+    .role-admin   { background:#f7ecc7; color:#7a5c0d; }
     .role-cashier { background:#dbeafe; color:#1e40af; }
     .status-on  { background:#d1fae5; color:#065f46; }
     .status-off { background:#fee2e2; color:#b91c1c; }
 
     /* ---------- PWA banner (standalone mode) ---------- */
-    body.pwa-standalone { background:#faf6f0; padding-top: env(safe-area-inset-top); }
+    body.pwa-standalone { background:#faf7f0; padding-top: env(safe-area-inset-top); }
 </style>
 </head>
 
 <body>
 
-<!-- ================= LOGIN PAGE ================= -->
-<div id="loginPage" style="position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:1rem;background:linear-gradient(135deg,#1f2937 0%,#78350f 100%);">
-    <div class="login-card w-full max-w-sm bg-white rounded-2xl shadow-2xl p-6 sm:p-7">
+<!-- ================= GLOBAL SVG DEFS (gold gradient for the logo) ================= -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="njGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#f7e7b4"/>
+      <stop offset="35%"  stop-color="#e8c86a"/>
+      <stop offset="70%"  stop-color="#c9a227"/>
+      <stop offset="100%" stop-color="#9a7a1a"/>
+    </linearGradient>
+  </defs>
+</svg>
 
+<!-- ================= LOGIN PAGE ================= -->
+<div id="loginPage" style="position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:1rem;background:radial-gradient(circle at 50% 15%, #1a1408 0%, #0a0a0a 55%, #000000 100%);">
+    <div class="login-card w-full max-w-sm rounded-2xl shadow-2xl p-6 sm:p-7"
+         style="background: linear-gradient(180deg, #0a0a0a 0%, #14100a 100%); border: 1px solid rgba(201,162,39,.35); box-shadow: 0 24px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(201,162,39,.15) inset;">
+
+        <!-- ============ LOGO (page 2 style: gold on black) ============ -->
         <div class="text-center mb-6">
-            <div class="text-4xl mb-2"><i class="fas fa-crown text-amber-500"></i></div>
-            <h1 class="text-2xl font-bold text-gray-800 tracking-tight">
-                Gold<span class="text-amber-500">POS</span>
-            </h1>
-            <p class="text-[11px] text-gray-400 mt-1">Sign in to continue</p>
+            <svg viewBox="0 0 320 220" class="w-56 h-auto mx-auto" xmlns="http://www.w3.org/2000/svg" aria-label="Nejmeh Jewelry">
+                <defs>
+                    <linearGradient id="njGoldLogin" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%"   stop-color="#f7e7b4"/>
+                        <stop offset="35%"  stop-color="#e8c86a"/>
+                        <stop offset="70%"  stop-color="#c9a227"/>
+                        <stop offset="100%" stop-color="#9a7a1a"/>
+                    </linearGradient>
+                </defs>
+                <!-- 8-pointed star -->
+                <polygon points="160,20 165.74,61.14 198.89,36.11 173.86,69.26 215,75 173.86,80.74 198.89,113.89 165.74,88.86 160,130 154.26,88.86 121.11,113.89 146.14,80.74 105,75 146.14,69.26 121.11,36.11 154.26,61.14"
+                         fill="url(#njGoldLogin)"/>
+                <!-- Nejmeh script -->
+                <text x="160" y="186"
+                      font-family="'Great Vibes','Brush Script MT',cursive"
+                      font-size="72"
+                      fill="url(#njGoldLogin)"
+                      text-anchor="middle"
+                      font-weight="400">Nejmeh</text>
+                <!-- JEWELRY -->
+                <text x="160" y="210"
+                      font-family="'Cormorant Garamond',serif"
+                      font-size="13"
+                      letter-spacing="6.5"
+                      fill="url(#njGoldLogin)"
+                      text-anchor="middle"
+                      font-weight="600">JEWELRY</text>
+            </svg>
+            <p class="text-[10px] tracking-[0.4em] mt-2" style="color: rgba(201,162,39,.55);">POINT OF SALE</p>
         </div>
 
         <form id="loginForm" class="space-y-4" autocomplete="on">
             <div>
-                <label class="block text-sm font-medium text-gray-600 mb-1">Username</label>
+                <label class="block login-label mb-1">Username</label>
                 <input id="loginUsername" type="text" required autocomplete="username"
                        placeholder="admin" class="login-input" />
             </div>
 
             <div>
-                <label class="block text-sm font-medium text-gray-600 mb-1">Password</label>
+                <label class="block login-label mb-1">Password</label>
                 <div class="relative">
                     <input id="loginPassword" type="password" required autocomplete="current-password"
                            placeholder="••••••••" class="login-input pr-10" />
                     <button type="button" onclick="window.toggleLoginPassword()"
-                            class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 px-1">
+                            class="absolute right-2 top-1/2 -translate-y-1/2 px-1" style="color: rgba(201,162,39,.55);">
                         <i id="loginEye" class="fas fa-eye"></i>
                     </button>
                 </div>
             </div>
 
-            <div id="loginError" class="hidden text-xs text-red-700 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+            <div id="loginError" class="hidden text-xs rounded-lg px-3 py-2"
+                 style="color:#fecaca; background: rgba(185,28,28,.15); border:1px solid rgba(185,28,28,.35);">
                 <i class="fas fa-triangle-exclamation mr-1"></i><span id="loginErrorMsg"></span>
             </div>
 
             <button type="submit" id="loginBtn"
-                    class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-2.5 rounded-lg transition flex items-center justify-center gap-2">
+                    class="w-full font-bold py-2.5 rounded-lg transition flex items-center justify-center gap-2"
+                    style="background: linear-gradient(135deg, #c9a227, #9a7a1a); color:#0a0a0a; box-shadow:0 4px 14px rgba(201,162,39,.35);">
                 <i class="fas fa-right-to-bracket"></i> Sign in
             </button>
         </form>
 
-        <div class="mt-5 pt-4 border-t border-gray-100 text-center">
-            <p class="text-[10px] text-gray-400">
-                <i class="fas fa-shield-halved text-amber-400 mr-1"></i>
-                First run? Default account is <span class="font-mono font-semibold text-gray-500">admin / admin123</span>
+        <div class="mt-5 pt-4 text-center" style="border-top:1px solid rgba(201,162,39,.18);">
+            <p class="text-[10px]" style="color: rgba(247,231,180,.5);">
+                <i class="fas fa-shield-halved mr-1" style="color: var(--nj-gold);"></i>
+                First run? Default account is <span class="font-mono font-semibold" style="color: var(--nj-gold-light);">admin / admin123</span>
             </p>
-            <p class="text-[10px] text-gray-400 mt-1">Change it from the Users tab after signing in.</p>
+            <p class="text-[10px] mt-1" style="color: rgba(247,231,180,.35);">Change it from the Users tab after signing in.</p>
         </div>
     </div>
 </div>
@@ -334,25 +440,26 @@
     <header class="bg-white rounded-2xl card-shadow border border-gray-100 p-3 sm:p-4 mb-4">
         <div class="flex flex-wrap items-center justify-between gap-3">
 
-            <div class="flex items-center gap-2 sm:gap-3">
-                <span class="text-2xl sm:text-3xl"><i class="fas fa-crown text-amber-500"></i></span>
-                <div>
-                    <h1 class="text-xl sm:text-2xl font-bold text-gray-800 tracking-tight">
-                        Gold<span class="text-amber-500">POS</span>
-                    </h1>
-                    <p class="text-[10px] text-gray-400 -mt-0.5 hidden sm:block">
-                        live Kitco spot · all karats in grams
-                    </p>
+            <!-- ============ BRAND LOGO BADGE ============ -->
+            <div class="nj-logo-badge">
+                <svg viewBox="0 0 100 100" class="w-8 h-8 sm:w-9 sm:h-9 shrink-0" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <polygon points="50,5 54.97,37.99 81.82,18.18 62.01,45.03 95,50 62.01,54.97 81.82,81.82 54.97,62.01 50,95 45.03,62.01 18.18,81.82 37.99,54.97 5,50 37.99,45.03 18.18,18.18 45.03,37.99"
+                             fill="url(#njGoldGrad)"/>
+                </svg>
+                <div class="nj-logo-text-wrap">
+                    <span class="nj-logo-nehmeh">Nejmeh</span>
+                    <span class="nj-logo-jewelry">JEWELRY&nbsp;·&nbsp;POS</span>
                 </div>
             </div>
 
             <div class="flex flex-wrap items-center gap-2">
                 <!-- ===== INSTALL PWA BUTTON ===== -->
-                <button id="installBtn" class="install-btn hidden" title="Install Gold POS as an app">
+                <button id="installBtn" class="install-btn hidden" title="Install Nejmeh POS as an app">
                     <i class="fas fa-download"></i> Install App
                 </button>
 
-                <div class="flex items-center gap-1 bg-amber-50 px-2 py-1 rounded-xl border border-amber-200">
+                <div class="flex items-center gap-1 px-2 py-1 rounded-xl border"
+                     style="background:#fdf6e3; border-color:#e8d79c;">
                     <label class="text-[10px] text-gray-600">Markup %</label>
                     <input id="sellSpread" type="number" step="0.1" value="3" class="spread-input" />
                 </div>
@@ -370,7 +477,7 @@
 
                 <!-- ===== USER BADGE ===== -->
                 <div class="flex items-center gap-2 bg-gray-50 px-2 py-1 rounded-xl border border-gray-200">
-                    <i class="fas fa-user-circle text-amber-500"></i>
+                    <i class="fas fa-user-circle" style="color: var(--nj-gold);"></i>
                     <span id="currentUserName" class="text-[11px] font-semibold text-gray-700 max-w-[110px] truncate">—</span>
                     <span id="currentUserRole" class="role-pill role-admin">admin</span>
                     <button onclick="window.logout()" title="Sign out"
@@ -404,7 +511,7 @@
                 <span class="kitco-time" id="kitcoTime">--:--:--</span>
                 <span class="kitco-source" id="kitcoSource"><i class="fas fa-circle-notch fa-spin"></i> connecting…</span>
 
-                <span class="ml-auto text-[10px] text-amber-700 font-semibold" id="kitcoCountdown">
+                <span class="ml-auto text-[10px] font-semibold" id="kitcoCountdown" style="color: var(--nj-gold-deep);">
                     auto-refresh 30s
                 </span>
             </div>
@@ -412,7 +519,7 @@
             <div class="kitco-grid" id="kitcoGrid"></div>
 
             <div class="text-[9px] text-gray-400 mt-2 flex flex-wrap items-center gap-2">
-                <span><i class="fas fa-info-circle text-amber-500 mr-1"></i>Sell = spot + markup · Buy = sell − buy-back</span>
+                <span><i class="fas fa-info-circle mr-1" style="color: var(--nj-gold);"></i>Sell = spot + markup · Buy = sell − buy-back</span>
                 <span class="text-gray-300">|</span>
                 <span>All karat prices shown per gram</span>
             </div>
@@ -435,11 +542,12 @@
 
             <div class="lg:col-span-2 bg-white rounded-2xl card-shadow p-4 border border-gray-100">
                 <h2 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                    <i class="fas fa-search text-amber-500"></i> Select Items
+                    <i class="fas fa-search" style="color: var(--nj-gold);"></i> Select Items
                 </h2>
                 <div class="mb-4">
                     <input id="posSearch" type="text" placeholder="Search by name or code..."
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400 focus:outline-none" />
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:outline-none"
+                           style="--tw-ring-color: var(--nj-gold-light);" />
                 </div>
                 <div class="max-h-[440px] overflow-y-auto">
                     <table class="w-full text-sm">
@@ -461,15 +569,16 @@
                     </div>
                 </div>
                 <p class="text-[10px] text-gray-400 mt-2">
-                    <i class="fas fa-pen text-amber-500 mr-1"></i>
+                    <i class="fas fa-pen mr-1" style="color: var(--nj-gold);"></i>
                     You can edit the price before adding to the cart, and again inside the cart.
                 </p>
             </div>
 
             <div class="lg:col-span-1 bg-white rounded-2xl card-shadow p-4 border border-gray-100 flex flex-col">
                 <h2 class="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
-                    <i class="fas fa-shopping-cart text-amber-500"></i> Cart
-                    <span id="cartCount" class="ml-auto bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full text-xs">0</span>
+                    <i class="fas fa-shopping-cart" style="color: var(--nj-gold);"></i> Cart
+                    <span id="cartCount" class="ml-auto px-2 py-0.5 rounded-full text-xs"
+                          style="background:#f7ecc7; color:#7a5c0d;">0</span>
                 </h2>
                 <div class="flex-1 max-h-[340px] overflow-y-auto mb-3 border-b border-gray-100">
                     <div id="cartItems" class="space-y-1"></div>
@@ -489,11 +598,12 @@
                         <span class="text-sm text-gray-500">- <span id="cartDiscountAmount">0.00</span></span>
                     </div>
                     <div class="flex justify-between text-lg font-bold border-t pt-2">
-                        <span>Total</span><span id="cartTotal" class="text-amber-600">0.00</span>
+                        <span>Total</span><span id="cartTotal" style="color: var(--nj-gold-deep);">0.00</span>
                     </div>
                     <div class="flex gap-2">
                         <button onclick="window.checkout()"
-                                class="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 rounded-lg transition flex items-center justify-center gap-2">
+                                class="flex-1 font-bold py-2 rounded-lg transition flex items-center justify-center gap-2"
+                                style="background: linear-gradient(135deg, #c9a227, #9a7a1a); color:#0a0a0a; box-shadow:0 3px 10px rgba(201,162,39,.3);">
                             <i class="fas fa-check"></i> Checkout
                         </button>
                         <button onclick="window.clearCart()"
@@ -518,7 +628,7 @@
     <div id="stockTab" class="tab-content hidden">
         <div class="bg-white rounded-2xl card-shadow p-6 mb-8 border border-gray-100">
             <h2 class="text-lg font-semibold text-gray-800 mb-5 flex items-center gap-2">
-                <i class="fas fa-plus-circle text-amber-500"></i> Add / Edit Item
+                <i class="fas fa-plus-circle" style="color: var(--nj-gold);"></i> Add / Edit Item
             </h2>
 
             <form id="itemForm" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
@@ -527,12 +637,12 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1">Item Name *</label>
                     <input id="itemName" type="text" required placeholder="e.g. Gold Ring"
-                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400" />
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2" />
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1">Purity *</label>
-                    <select id="purity" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400">
+                    <select id="purity" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2">
                         <option value="24K">24K</option>
                         <option value="21K">21K</option>
                         <option value="18K">18K</option>
@@ -544,7 +654,7 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1">Weight (g) *</label>
                     <input id="weight" type="number" step="0.01" required placeholder="2.50"
-                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400" />
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2" />
                 </div>
 
                 <div>
@@ -552,7 +662,7 @@
                     <div class="money-input-wrap">
                         <span class="money-prefix">$</span>
                         <input id="makingCharge" type="number" step="0.01" required placeholder="15.00"
-                               class="w-full py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400" />
+                               class="w-full py-2 border border-gray-300 rounded-lg focus:ring-2" />
                     </div>
                 </div>
 
@@ -583,7 +693,8 @@
                         <div class="money-input-wrap flex-1">
                             <span class="money-prefix">$</span>
                             <input id="salePrice" type="number" step="0.01" placeholder="0.00"
-                                   class="w-full py-2 border border-gray-300 rounded-lg bg-amber-50 font-semibold text-amber-700 focus:ring-2 focus:ring-amber-400" />
+                                   class="w-full py-2 border border-gray-300 rounded-lg font-semibold focus:ring-2"
+                                   style="background:#fdf6e3; color:#7a5c0d;" />
                         </div>
                         <button type="button" onclick="window.unlockSellPrice()" title="Recalculate from live rate"
                                 class="px-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-gray-600">
@@ -595,12 +706,12 @@
                 <div class="md:col-span-2">
                     <label class="block text-sm font-medium text-gray-600 mb-1">Description</label>
                     <input id="description" type="text" placeholder="Optional notes"
-                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400" />
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2" />
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1">Supplier</label>
-                    <select id="itemSupplier" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400">
+                    <select id="itemSupplier" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2">
                         <option value="">None</option>
                     </select>
                 </div>
@@ -608,7 +719,7 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1">Stock Qty</label>
                     <input id="stockQty" type="number" step="1" min="1" value="1"
-                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400" />
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2" />
                 </div>
 
                 <div>
@@ -626,7 +737,8 @@
 
                 <div class="flex items-end gap-2 flex-wrap lg:col-span-2">
                     <button type="submit"
-                            class="bg-amber-500 hover:bg-amber-600 text-white font-medium px-5 py-2 rounded-lg transition flex items-center justify-center gap-2">
+                            class="font-medium px-5 py-2 rounded-lg transition flex items-center justify-center gap-2"
+                            style="background: linear-gradient(135deg, #c9a227, #9a7a1a); color:#0a0a0a;">
                         <i class="fas fa-save"></i> <span id="formBtnText">Add Item</span>
                     </button>
                     <button type="button" onclick="window.resetItemForm()"
@@ -653,7 +765,7 @@
         <div class="bg-white rounded-2xl card-shadow p-4 border border-gray-100 overflow-x-auto">
             <div class="flex justify-between items-center mb-3">
                 <h3 class="text-lg font-semibold text-gray-800">
-                    <i class="fas fa-list-ul text-amber-500 mr-2"></i>Stock Inventory
+                    <i class="fas fa-list-ul mr-2" style="color: var(--nj-gold);"></i>Stock Inventory
                 </h3>
                 <span id="itemCount" class="text-sm bg-gray-100 px-3 py-1 rounded-full text-gray-600">0 items</span>
             </div>
@@ -685,7 +797,7 @@
     <div id="suppliersTab" class="tab-content hidden">
         <div class="bg-white rounded-2xl card-shadow p-6 border border-gray-100">
             <h2 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                <i class="fas fa-truck text-amber-500"></i> Suppliers
+                <i class="fas fa-truck" style="color: var(--nj-gold);"></i> Suppliers
             </h2>
 
             <form id="supplierForm" class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end mb-6">
@@ -693,17 +805,17 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1">Supplier ID *</label>
                     <input id="supplierId" type="text" required placeholder="SUP-001"
-                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400" />
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2" />
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1">Name *</label>
                     <input id="supplierName" type="text" required placeholder="ABC Gold"
-                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400" />
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2" />
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1">Phone</label>
                     <input id="supplierPhone" type="text" placeholder="+1 234 5678"
-                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400" />
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2" />
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1">Logo</label>
@@ -717,7 +829,8 @@
                 </div>
                 <div class="md:col-span-4 flex gap-2">
                     <button type="submit"
-                            class="bg-amber-500 hover:bg-amber-600 text-white px-5 py-2 rounded-lg transition flex items-center gap-2">
+                            class="font-medium px-5 py-2 rounded-lg transition flex items-center gap-2"
+                            style="background: linear-gradient(135deg, #c9a227, #9a7a1a); color:#0a0a0a;">
                         <i class="fas fa-save"></i> <span id="supplierBtnText">Add Supplier</span>
                     </button>
                     <button type="button" onclick="window.resetSupplierForm()"
@@ -752,37 +865,39 @@
         <div class="bg-white rounded-2xl card-shadow p-6 border border-gray-100">
             <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
                 <h2 class="text-lg font-semibold text-gray-800">
-                    <i class="fas fa-file-alt text-amber-500 mr-2"></i>Reports &amp; Export
+                    <i class="fas fa-file-alt mr-2" style="color: var(--nj-gold);"></i>Reports &amp; Export
                 </h2>
                 <div class="flex flex-wrap items-center gap-2">
-                    <button onclick="window.filterReport('daily')" class="px-4 py-1.5 rounded-lg border border-gray-300 text-sm hover:bg-amber-50 transition">Today</button>
-                    <button onclick="window.filterReport('weekly')" class="px-4 py-1.5 rounded-lg border border-gray-300 text-sm hover:bg-amber-50 transition">Week</button>
-                    <button onclick="window.filterReport('monthly')" class="px-4 py-1.5 rounded-lg border border-gray-300 text-sm hover:bg-amber-50 transition">Month</button>
-                    <button onclick="window.filterReport('all')" class="px-4 py-1.5 rounded-lg border border-gray-300 text-sm hover:bg-amber-50 transition">All</button>
+                    <button onclick="window.filterReport('daily')" class="px-4 py-1.5 rounded-lg border border-gray-300 text-sm transition hover:bg-amber-50">Today</button>
+                    <button onclick="window.filterReport('weekly')" class="px-4 py-1.5 rounded-lg border border-gray-300 text-sm transition hover:bg-amber-50">Week</button>
+                    <button onclick="window.filterReport('monthly')" class="px-4 py-1.5 rounded-lg border border-gray-300 text-sm transition hover:bg-amber-50">Month</button>
+                    <button onclick="window.filterReport('all')" class="px-4 py-1.5 rounded-lg border border-gray-300 text-sm transition hover:bg-amber-50">All</button>
                     <div class="flex items-center gap-1">
                         <input id="customFrom" type="date" class="px-2 py-1.5 border border-gray-300 rounded-lg text-sm" />
                         <span class="text-gray-400">—</span>
                         <input id="customTo" type="date" class="px-2 py-1.5 border border-gray-300 rounded-lg text-sm" />
                         <button onclick="window.filterReport('custom')"
-                                class="px-3 py-1.5 bg-amber-500 text-white rounded-lg text-sm hover:bg-amber-600 transition">Go</button>
+                                class="px-3 py-1.5 text-sm rounded-lg transition"
+                                style="background: linear-gradient(135deg, #c9a227, #9a7a1a); color:#0a0a0a;">Go</button>
                     </div>
                 </div>
             </div>
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                <div class="bg-amber-50 p-4 rounded-xl border border-amber-200">
+                <div class="p-4 rounded-xl border" style="background:#fdf6e3; border-color:#e8d79c;">
                     <p class="text-xs text-gray-500">Total Items</p>
                     <p id="reportCount" class="text-2xl font-bold text-gray-800">0</p>
                 </div>
-                <div class="bg-amber-50 p-4 rounded-xl border border-amber-200">
+                <div class="p-4 rounded-xl border" style="background:#fdf6e3; border-color:#e8d79c;">
                     <p class="text-xs text-gray-500">Total Weight (g)</p>
                     <p id="reportWeight" class="text-2xl font-bold text-gray-800">0.00</p>
                 </div>
-                <div class="bg-amber-50 p-4 rounded-xl border border-amber-200">
+                <div class="p-4 rounded-xl border" style="background:#fdf6e3; border-color:#e8d79c;">
                     <p class="text-xs text-gray-500">Total Value (Sell)</p>
-                    <p id="reportValue" class="text-2xl font-bold text-amber-600">0.00</p>
+                    <p id="reportValue" class="text-2xl font-bold" style="color: var(--nj-gold-deep);">0.00</p>
                 </div>
-                <div class="bg-amber-50 p-4 rounded-xl border border-amber-200 flex items-center justify-around flex-wrap gap-2">
+                <div class="p-4 rounded-xl border flex items-center justify-around flex-wrap gap-2"
+                     style="background:#fdf6e3; border-color:#e8d79c;">
                     <button onclick="window.exportCSV()" class="bg-green-600 hover:bg-green-700 text-white text-sm px-3 py-2 rounded-lg transition flex items-center gap-1"><i class="fas fa-file-csv"></i> CSV</button>
                     <button onclick="window.exportPDF()" class="bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-2 rounded-lg transition flex items-center gap-1"><i class="fas fa-file-pdf"></i> PDF</button>
                     <button onclick="window.exportXLSX()" class="bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-2 rounded-lg transition flex items-center gap-1"><i class="fas fa-file-export"></i> XLSX</button>
@@ -818,7 +933,7 @@
 
             <div class="bg-white rounded-2xl card-shadow p-6 border border-gray-100">
                 <h2 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                    <i class="fas fa-database text-amber-500"></i> Save &amp; Restore Database
+                    <i class="fas fa-database" style="color: var(--nj-gold);"></i> Save &amp; Restore Database
                 </h2>
 
                 <div class="space-y-3">
@@ -850,15 +965,16 @@
                         </button>
                     </div>
 
-                    <div class="bg-amber-50 border border-amber-200 rounded-xl p-4">
-                        <p class="text-sm font-semibold text-amber-800 mb-1">
+                    <div class="border rounded-xl p-4" style="background:#fdf6e3; border-color:#e8d79c;">
+                        <p class="text-sm font-semibold mb-1" style="color:#7a5c0d;">
                             <i class="fas fa-cloud-upload-alt mr-1"></i> Save snapshot to cloud
                         </p>
-                        <p class="text-xs text-amber-700 mb-3">
+                        <p class="text-xs mb-3" style="color:#8a6d15;">
                             Stores a dated copy of the whole database in Firestore (<code>backups</code> collection).
                         </p>
                         <button onclick="window.saveCloudSnapshot()"
-                                class="bg-amber-500 hover:bg-amber-600 text-white text-sm px-4 py-2 rounded-lg transition">
+                                class="text-sm px-4 py-2 rounded-lg transition"
+                                style="background: linear-gradient(135deg, #c9a227, #9a7a1a); color:#0a0a0a;">
                             <i class="fas fa-cloud-upload-alt mr-1"></i> Save snapshot now
                         </button>
                     </div>
@@ -881,7 +997,7 @@
             <div class="bg-white rounded-2xl card-shadow p-6 border border-gray-100">
                 <div class="flex items-center justify-between mb-4">
                     <h2 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
-                        <i class="fas fa-clock-rotate-left text-amber-500"></i> Cloud Snapshots
+                        <i class="fas fa-clock-rotate-left" style="color: var(--nj-gold);"></i> Cloud Snapshots
                     </h2>
                     <button onclick="window.loadSnapshots()"
                             class="text-xs bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-lg transition">
@@ -902,7 +1018,7 @@
             <!-- Add / edit user -->
             <div class="lg:col-span-1 bg-white rounded-2xl card-shadow p-6 border border-gray-100">
                 <h2 class="text-lg font-semibold text-gray-800 mb-5 flex items-center gap-2">
-                    <i class="fas fa-user-plus text-amber-500"></i> Add / Edit User
+                    <i class="fas fa-user-plus" style="color: var(--nj-gold);"></i> Add / Edit User
                 </h2>
 
                 <form id="userForm" class="space-y-4">
@@ -912,20 +1028,20 @@
                         <label class="block text-sm font-medium text-gray-600 mb-1">Username *</label>
                         <input id="userUsername" type="text" required placeholder="cashier1"
                                autocomplete="off"
-                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400" />
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2" />
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-600 mb-1">Full Name</label>
                         <input id="userFullName" type="text" placeholder="John Smith"
-                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400" />
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2" />
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-600 mb-1">Password *</label>
                         <input id="userPassword" type="password" placeholder="••••••••"
                                autocomplete="new-password"
-                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400" />
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2" />
                         <p id="userPasswordHint" class="text-[10px] text-gray-400 mt-1">
                             Leave blank when editing to keep the current password.
                         </p>
@@ -934,7 +1050,7 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-600 mb-1">Role</label>
                         <select id="userRole"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400">
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2">
                             <option value="cashier">Cashier — POS and Stock only</option>
                             <option value="admin">Administrator — full access</option>
                         </select>
@@ -947,7 +1063,8 @@
 
                     <div class="flex gap-2 pt-1">
                         <button type="submit"
-                                class="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-medium px-4 py-2 rounded-lg transition flex items-center justify-center gap-2">
+                                class="flex-1 font-medium px-4 py-2 rounded-lg transition flex items-center justify-center gap-2"
+                                style="background: linear-gradient(135deg, #c9a227, #9a7a1a); color:#0a0a0a;">
                             <i class="fas fa-save"></i> <span id="userBtnText">Add User</span>
                         </button>
                         <button type="button" onclick="window.resetUserForm()"
@@ -959,7 +1076,7 @@
 
                 <div class="mt-5 pt-4 border-t border-gray-100 text-[11px] text-gray-500 leading-relaxed">
                     <p class="font-semibold text-gray-600 mb-1">
-                        <i class="fas fa-circle-info text-amber-500 mr-1"></i> Role permissions
+                        <i class="fas fa-circle-info mr-1" style="color: var(--nj-gold);"></i> Role permissions
                     </p>
                     <p><span class="role-pill role-admin mr-1">ADMIN</span> All tabs incl. Suppliers, Reports, Database &amp; Users.</p>
                     <p class="mt-1"><span class="role-pill role-cashier mr-1">CASHIER</span> POS and Stock only.</p>
@@ -970,7 +1087,7 @@
             <div class="lg:col-span-2 bg-white rounded-2xl card-shadow p-4 border border-gray-100">
                 <div class="flex justify-between items-center mb-3">
                     <h3 class="text-lg font-semibold text-gray-800">
-                        <i class="fas fa-users text-amber-500 mr-2"></i>System Users
+                        <i class="fas fa-users mr-2" style="color: var(--nj-gold);"></i>System Users
                     </h3>
                     <span id="userCount" class="text-sm bg-gray-100 px-3 py-1 rounded-full text-gray-600">0 users</span>
                 </div>
@@ -1006,7 +1123,7 @@
 
 <script>
 /* ============================================================
-   GOLD POS · PWA (installable)
+   NEJMEH JEWELRY POS · PWA (installable)
    Live Kitco panel · Login · Users · Cashier = POS + Stock only
    Making charge in USD ($)
    Firebase v12.19.0
@@ -1107,6 +1224,38 @@ const sellLockBadge = $('sellLockBadge'), buyLockBadge = $('buyLockBadge');
 const userForm = $('userForm'), userTbody = $('userTbody'), emptyUser = $('emptyUser');
 
 /* ============================================================
+   BRAND SVG HELPERS
+   ============================================================ */
+const NJ_STAR_POINTS_SMALL = "50,5 54.97,37.99 81.82,18.18 62.01,45.03 95,50 62.01,54.97 81.82,81.82 54.97,62.01 50,95 45.03,62.01 18.18,81.82 37.99,54.97 5,50 37.99,45.03 18.18,18.18 45.03,37.99";
+
+function njStarSvg(size = 24, className = '') {
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="${className}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <polygon points="${NJ_STAR_POINTS_SMALL}" fill="url(#njGoldGrad)"/>
+    </svg>`;
+}
+
+/* Small inline logo (star + Nejmeh + JEWELRY) for labels */
+function njCompactLogoSvg(width = 180) {
+    const height = Math.round(width * 0.62);
+    return `<svg viewBox="0 0 320 220" width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg" aria-label="Nejmeh Jewelry">
+        <defs>
+            <linearGradient id="njGoldLbl${Date.now()}" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%"   stop-color="#f7e7b4"/>
+                <stop offset="35%"  stop-color="#e8c86a"/>
+                <stop offset="70%"  stop-color="#c9a227"/>
+                <stop offset="100%" stop-color="#9a7a1a"/>
+            </linearGradient>
+        </defs>
+        <polygon points="160,20 165.74,61.14 198.89,36.11 173.86,69.26 215,75 173.86,80.74 198.89,113.89 165.74,88.86 160,130 154.26,88.86 121.11,113.89 146.14,80.74 105,75 146.14,69.26 121.11,36.11 154.26,61.14"
+                 fill="url(#njGoldGrad)"/>
+        <text x="160" y="186" font-family="'Great Vibes','Brush Script MT',cursive" font-size="72"
+              fill="url(#njGoldGrad)" text-anchor="middle">Nejmeh</text>
+        <text x="160" y="210" font-family="'Cormorant Garamond',serif" font-size="13" letter-spacing="6.5"
+              fill="url(#njGoldGrad)" text-anchor="middle" font-weight="600">JEWELRY</text>
+    </svg>`;
+}
+
+/* ============================================================
    PWA INSTALLABILITY
    ============================================================ */
 let deferredInstallPrompt = null;
@@ -1116,40 +1265,57 @@ function isStandalone() {
            window.navigator.standalone === true;
 }
 
-/* ---- generate app icons via canvas (PNG data URIs) ---- */
+/* ---- generate app icons via canvas (PNG data URIs) ----
+   Icon design mirrors the black-and-gold "Nejmeh" logo (page 2 style). */
 function generateAppIcon(size) {
     const canvas = document.createElement('canvas');
     canvas.width = size;
     canvas.height = size;
     const ctx = canvas.getContext('2d');
 
-    // Background gradient
-    const grad = ctx.createLinearGradient(0, 0, size, size);
-    grad.addColorStop(0, '#fbbf24');
-    grad.addColorStop(0.5, '#f59e0b');
-    grad.addColorStop(1, '#b45309');
-    ctx.fillStyle = grad;
+    // Deep black background (matches page 2 of the logo)
+    ctx.fillStyle = '#0a0a0a';
     ctx.fillRect(0, 0, size, size);
 
-    // Subtle inner ring
-    ctx.strokeStyle = 'rgba(255,255,255,0.25)';
-    ctx.lineWidth = Math.max(1, size * 0.03);
-    ctx.beginPath();
-    ctx.arc(size/2, size/2, size * 0.42, 0, Math.PI * 2);
-    ctx.stroke();
+    // Subtle gold radial glow
+    const glow = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size * 0.75);
+    glow.addColorStop(0, 'rgba(201,162,39,0.20)');
+    glow.addColorStop(0.6, 'rgba(201,162,39,0.05)');
+    glow.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, size, size);
 
-    // Big "G"
-    ctx.fillStyle = '#ffffff';
-    ctx.font = `bold ${Math.round(size * 0.6)}px "Segoe UI", Arial, sans-serif`;
+    // Gold gradient fill
+    const grad = ctx.createLinearGradient(0, 0, size, size);
+    grad.addColorStop(0,    '#f7e7b4');
+    grad.addColorStop(0.35, '#e8c86a');
+    grad.addColorStop(0.70, '#c9a227');
+    grad.addColorStop(1,    '#9a7a1a');
+
+    // 8-pointed star (centered, upper part)
+    const cx = size / 2;
+    const cy = size * 0.42;
+    const R  = size * 0.30;
+    const r  = size * 0.075;
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    for (let i = 0; i < 16; i++) {
+        const angle = (Math.PI * 2 * i) / 16 - Math.PI / 2;
+        const rad = (i % 2 === 0) ? R : r;
+        const x = cx + rad * Math.cos(angle);
+        const y = cy + rad * Math.sin(angle);
+        if (i === 0) ctx.moveTo(x, y);
+        else         ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.fill();
+
+    // "Nejmeh" script text at bottom
+    ctx.fillStyle = grad;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('G', size / 2, size / 2 + size * 0.06);
-
-    // Small crown dot above
-    ctx.fillStyle = '#fde68a';
-    ctx.beginPath();
-    ctx.arc(size / 2, size * 0.19, size * 0.045, 0, Math.PI * 2);
-    ctx.fill();
+    ctx.font = `italic ${Math.round(size * 0.20)}px "Great Vibes","Brush Script MT",cursive`;
+    ctx.fillText('Nejmeh', size / 2, size * 0.82);
 
     return canvas.toDataURL('image/png');
 }
@@ -1164,16 +1330,16 @@ function setupManifest() {
             : './';
 
         const manifest = {
-            name: 'Gold POS — Live Kitco Rates',
-            short_name: 'GoldPOS',
-            description: 'Gold POS with live Kitco rates, stock, suppliers, reports and users.',
+            name: 'Nejmeh Jewelry POS — Live Kitco Rates',
+            short_name: 'Nejmeh POS',
+            description: 'Nejmeh Jewelry POS with live Kitco rates, stock, suppliers, reports and users.',
             start_url: startUrl,
             scope: './',
             display: 'standalone',
             display_override: ['standalone', 'minimal-ui'],
             orientation: 'any',
-            background_color: '#faf6f0',
-            theme_color: '#e9b640',
+            background_color: '#0a0a0a',
+            theme_color: '#0a0a0a',
             lang: 'en',
             dir: 'ltr',
             categories: ['business', 'finance', 'productivity'],
@@ -1217,7 +1383,7 @@ function setupManifest() {
         fav.type = 'image/png';
         fav.href = icon192;
 
-        console.log('📱 PWA manifest injected');
+        console.log('📱 Nejmeh POS PWA manifest injected');
     } catch (err) {
         console.warn('Manifest setup failed:', err);
     }
@@ -1227,15 +1393,11 @@ async function registerServiceWorker() {
     if (!('serviceWorker' in navigator)) return;
     if (!location.protocol.startsWith('http')) return; // needs http(s)
 
-    // Service Worker code — cache-first for same-origin, network for APIs
     const swCode = `
-        const CACHE = 'goldpos-v1';
+        const CACHE = 'nejmehpos-v1';
 
         self.addEventListener('install', () => self.skipWaiting());
-
-        self.addEventListener('activate', (e) => {
-            e.waitUntil(self.clients.claim());
-        });
+        self.addEventListener('activate', (e) => { e.waitUntil(self.clients.claim()); });
 
         self.addEventListener('fetch', (e) => {
             const req = e.request;
@@ -1244,7 +1406,6 @@ async function registerServiceWorker() {
             let url;
             try { url = new URL(req.url); } catch(_) { return; }
 
-            // Never touch live data or third-party APIs
             const host = url.hostname;
             if (host.includes('firestore') ||
                 host.includes('firebase') ||
@@ -1278,7 +1439,6 @@ async function registerServiceWorker() {
         const reg = await navigator.serviceWorker.register(swUrl, { scope: './' });
         console.log('✅ Service worker registered ·', reg.scope);
     } catch (err) {
-        // Blob-URL SW is blocked by Chrome. Install still works via the browser menu.
         console.info('ℹ️ Blob-based SW registration blocked (expected for single-file apps).',
                      'Use the browser menu → "Install app" to install.');
     }
@@ -1303,39 +1463,30 @@ function setupInstallPrompt() {
     window.addEventListener('appinstalled', () => {
         deferredInstallPrompt = null;
         btn.classList.add('hidden');
-        showToast('✅ Gold POS installed — you can now launch it from your home screen / app list!', 'success');
+        showToast('✅ Nejmeh POS installed — launch it from your home screen / app list!', 'success');
     });
 
     btn.addEventListener('click', async () => {
         if (deferredInstallPrompt) {
             deferredInstallPrompt.prompt();
             const { outcome } = await deferredInstallPrompt.userChoice;
-            if (outcome === 'accepted') {
-                showToast('Installing Gold POS…', 'success');
-            } else {
-                showToast('Install cancelled', 'info');
-            }
+            if (outcome === 'accepted') showToast('Installing Nejmeh POS…', 'success');
+            else                         showToast('Install cancelled', 'info');
             deferredInstallPrompt = null;
             btn.classList.add('hidden');
             return;
         }
 
-        // Fallback: manual instructions
         const ua = navigator.userAgent;
         const isIOS = /iPhone|iPad|iPod/.test(ua) && !window.MSStream;
         const isAndroid = /Android/.test(ua);
         const isEdge = /Edg\//.test(ua);
         let msg;
 
-        if (isIOS) {
-            msg = 'iPhone/iPad: tap the Share icon → "Add to Home Screen"';
-        } else if (isAndroid) {
-            msg = 'Android: tap the ⋮ menu → "Install app" / "Add to Home screen"';
-        } else if (isEdge) {
-            msg = 'Edge: click the ⋯ menu → Apps → "Install this site as an app"';
-        } else {
-            msg = 'Chrome: click the ⋮ menu → "Install Gold POS…" (or the ⊕ icon in the address bar)';
-        }
+        if (isIOS)          msg = 'iPhone/iPad: tap the Share icon → "Add to Home Screen"';
+        else if (isAndroid) msg = 'Android: tap the ⋮ menu → "Install app" / "Add to Home screen"';
+        else if (isEdge)    msg = 'Edge: click the ⋯ menu → Apps → "Install this site as an app"';
+        else                msg = 'Chrome: click the ⋮ menu → "Install Nejmeh POS…" (or the ⊕ icon in the address bar)';
         showToast('📲 ' + msg, 'info');
     });
 }
@@ -1470,7 +1621,7 @@ window.toggleLoginPassword = function () {
 };
 
 window.logout = function () {
-    if (!confirm('Sign out of Gold POS?')) return;
+    if (!confirm('Sign out of Nejmeh POS?')) return;
     localStorage.removeItem(SESSION_KEY);
     currentUser = null;
     location.reload();
@@ -1543,7 +1694,7 @@ function renderUsers() {
             <tr class="border-b hover:bg-amber-50/50 transition">
                 <td class="p-3 font-medium text-gray-800">
                     ${u.name || '—'}
-                    ${isSelf ? '<span class="text-[9px] text-amber-600 font-bold ml-1">(you)</span>' : ''}
+                    ${isSelf ? '<span class="text-[9px] font-bold ml-1" style="color: var(--nj-gold-deep);">(you)</span>' : ''}
                 </td>
                 <td class="p-3 font-mono text-xs text-gray-600">${u.username}</td>
                 <td class="p-3">${rolePill}</td>
@@ -2245,7 +2396,7 @@ function generateItemCode() {
         .map(i => parseInt((i.itemCode || '').replace(/\D/g, ''), 10))
         .filter(n => !isNaN(n));
     const next = nums.length ? Math.max(...nums) + 1 : 1;
-    return `JWL-${String(next).padStart(4, '0')}`;
+    return `NJM-${String(next).padStart(4, '0')}`;
 }
 
 window.resetItemForm = function () {
@@ -2417,7 +2568,7 @@ function renderStock() {
         const supObj = suppliers.find(s => s.id === item.supplier);
         const supName = supObj ? supObj.name : '—';
         const lockIcon = item.sellLocked
-            ? '<i class="fas fa-lock text-amber-500 text-[10px] ml-1" title="Manual price"></i>'
+            ? '<i class="fas fa-lock text-[10px] ml-1" title="Manual price" style="color: var(--nj-gold);"></i>'
             : '';
 
         return `
@@ -2432,7 +2583,7 @@ function renderStock() {
                 <td class="p-3"><span class="px-2 py-0.5 rounded-full text-xs font-semibold ${purityClass(item.purity)}">${item.purity}</span></td>
                 <td class="p-3">${num(item.weight).toFixed(2)}</td>
                 <td class="p-3 font-mono text-sm text-green-700">${money(item.boughtPrice)}</td>
-                <td class="p-3 font-bold text-amber-600">${money(item.finalSalePrice)}${lockIcon}</td>
+                <td class="p-3 font-bold" style="color: var(--nj-gold-deep);">${money(item.finalSalePrice)}${lockIcon}</td>
                 <td class="p-3">${item.stockQty || 1}</td>
                 <td class="p-3 text-xs text-gray-600">${supName}</td>
                 <td class="p-3 text-center whitespace-nowrap">
@@ -2498,7 +2649,7 @@ function renderPOS() {
                 <td class="p-2 text-center">
                     <input id="posPrice-${item.id}" type="number" step="0.01"
                            value="${money(item.finalSalePrice)}"
-                           class="w-20 px-1 py-0.5 border border-gray-300 rounded text-right text-xs focus:ring-2 focus:ring-amber-400" />
+                           class="w-20 px-1 py-0.5 border border-gray-300 rounded text-right text-xs focus:ring-2" />
                 </td>
                 <td class="p-2 text-center">
                     <input id="posQty-${item.id}" type="number" min="1" max="${available}" value="1"
@@ -2506,7 +2657,8 @@ function renderPOS() {
                 </td>
                 <td class="p-2 text-center">
                     <button onclick="window.addToCart('${item.id}')"
-                            class="bg-amber-500 hover:bg-amber-600 text-white px-3 py-1 rounded-lg text-sm transition">
+                            class="px-3 py-1 rounded-lg text-sm transition"
+                            style="background: linear-gradient(135deg, #c9a227, #9a7a1a); color:#0a0a0a;">
                         <i class="fas fa-plus"></i>
                     </button>
                 </td>
@@ -2602,7 +2754,7 @@ function updateCart() {
                         <div class="font-medium truncate">${line.name}</div>
                         <div class="text-[10px] text-gray-500">
                             ${line.purity} · ${line.weight.toFixed(2)}g · list ${money(line.listPrice)}
-                            ${changed ? '<span class="text-amber-600 font-semibold"> · edited</span>' : ''}
+                            ${changed ? '<span class="font-semibold" style="color: var(--nj-gold-deep);"> · edited</span>' : ''}
                         </div>
                     </div>
                     <button onclick="window.removeFromCart(${index})" class="text-red-400 hover:text-red-600 transition">
@@ -2617,8 +2769,8 @@ function updateCart() {
                     <label class="text-[10px] text-gray-500">Price</label>
                     <input type="number" step="0.01" value="${money(line.unitPrice)}"
                            onchange="window.updateCartPrice(${index}, this.value)"
-                           class="w-20 px-1 py-0.5 border border-gray-300 rounded text-right text-xs focus:ring-2 focus:ring-amber-400" />
-                    <span class="ml-auto font-bold text-amber-600">${lineTotal.toFixed(2)}</span>
+                           class="w-20 px-1 py-0.5 border border-gray-300 rounded text-right text-xs focus:ring-2" />
+                    <span class="ml-auto font-bold" style="color: var(--nj-gold-deep);">${lineTotal.toFixed(2)}</span>
                 </div>
             </div>`;
     }).join('');
@@ -2685,7 +2837,7 @@ window.checkout = async function () {
 };
 
 /* ============================================================
-   PRINT RECEIPT
+   PRINT RECEIPT  (uses the Nejmeh logo header)
    ============================================================ */
 window.printReceipt = function () {
     if (!lastReceipt) { showToast('No sale to print', 'warning'); return; }
@@ -2696,8 +2848,9 @@ window.printReceipt = function () {
     let html = `
         <div style="font-family:'Courier New',monospace;font-size:12px;padding:20px;max-width:350px;margin:0 auto;">
             <div style="text-align:center;border-bottom:1px dashed #000;padding-bottom:8px;">
-                <h2 style="margin:0;font-size:18px;">GOLD POS</h2>
-                <p style="margin:2px 0;font-size:10px;">${d.toLocaleDateString()} ${d.toLocaleTimeString()}</p>
+                <div style="font-family:'Great Vibes','Brush Script MT',cursive;font-size:32px;line-height:1;color:#0a0a0a;">Nejmeh</div>
+                <div style="font-family:Arial,sans-serif;font-size:9px;letter-spacing:5px;color:#0a0a0a;margin-top:-2px;font-weight:600;">JEWELRY</div>
+                <p style="margin:6px 0 2px;font-size:10px;">${d.toLocaleDateString()} ${d.toLocaleTimeString()}</p>
                 ${cashier ? `<p style="margin:2px 0;font-size:10px;">Cashier: ${cashier}</p>` : ''}
             </div>
             <div style="padding:8px 0;border-bottom:1px dashed #000;">`;
@@ -2742,6 +2895,25 @@ function buildLabelHTML(item, supplier) {
     const logo = supplier?.logo || '';
     const supplierName = supplier?.name || '';
 
+    // Inline the Nejmeh brand mark so we don't depend on the parent page defs.
+    const brandMark = `
+        <svg viewBox="0 0 320 220" width="150" height="103" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+                <linearGradient id="njGoldLblIn${Date.now()}" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%"   stop-color="#f7e7b4"/>
+                    <stop offset="35%"  stop-color="#e8c86a"/>
+                    <stop offset="70%"  stop-color="#c9a227"/>
+                    <stop offset="100%" stop-color="#9a7a1a"/>
+                </linearGradient>
+            </defs>
+            <polygon points="160,20 165.74,61.14 198.89,36.11 173.86,69.26 215,75 173.86,80.74 198.89,113.89 165.74,88.86 160,130 154.26,88.86 121.11,113.89 146.14,80.74 105,75 146.14,69.26 121.11,36.11 154.26,61.14"
+                     fill="url(#njGoldGrad)"/>
+            <text x="160" y="186" font-family="'Great Vibes','Brush Script MT',cursive" font-size="72"
+                  fill="url(#njGoldGrad)" text-anchor="middle">Nejmeh</text>
+            <text x="160" y="210" font-family="'Cormorant Garamond',serif" font-size="13" letter-spacing="6.5"
+                  fill="url(#njGoldGrad)" text-anchor="middle" font-weight="600">JEWELRY</text>
+        </svg>`;
+
     return `
         <div class="label-print">
             <div class="label-row">
@@ -2753,15 +2925,15 @@ function buildLabelHTML(item, supplier) {
                         <span>${num(item.weight).toFixed(2)} g</span>
                         ${item.stockQty ? `<span>Qty: ${item.stockQty}</span>` : ''}
                     </div>
-                    <div class="label-badge">✦ Gold POS</div>
+                    <div class="label-badge">✦ Nejmeh Jewelry</div>
                 </div>
                 <div class="label-right">
                     <div class="label-making">$${money(item.makingCharge)} Making</div>
-                    ${logo ? `<img src="${logo}" class="label-supplier-logo" alt="supplier logo" />` : '<div style="font-size:14px;color:#94a3b8;padding:4px 0;">No logo</div>'}
+                    ${logo ? `<img src="${logo}" class="label-supplier-logo" alt="supplier logo" />` : brandMark}
                     ${supplierName ? `<div class="label-supplier-name">${supplierName}</div>` : ''}
                 </div>
             </div>
-            <div class="label-footer">Gold POS · Item Label · ${new Date().toLocaleDateString()}</div>
+            <div class="label-footer">Nejmeh Jewelry · Item Label · ${new Date().toLocaleDateString()}</div>
         </div>
         <script>
             (function(){
@@ -2779,6 +2951,7 @@ function buildLabelHTML(item, supplier) {
 }
 
 const LABEL_STYLES = `
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@600&display=swap');
     body { margin:0; padding:20px; background:#fff; display:flex; justify-content:center; align-items:center;
            min-height:100vh; font-family:'Segoe UI',Arial,sans-serif; }
     .label-print { width:450px; padding:22px 24px; background:#fff; border-radius:14px; border:1px solid #d1d5db;
@@ -2792,7 +2965,7 @@ const LABEL_STYLES = `
     .label-print .label-details span { display:inline-block; background:#f1f5f9; padding:2px 12px;
            border-radius:6px; margin-right:6px; font-weight:500; }
     .label-print .label-badge { display:inline-block; font-size:11px; font-weight:600; padding:3px 14px;
-           border-radius:14px; background:#fef3c7; color:#92400e; margin-top:6px; align-self:flex-start; }
+           border-radius:14px; background:#f7ecc7; color:#7a5c0d; margin-top:6px; align-self:flex-start; }
     .label-print .label-right { flex:.9; display:flex; flex-direction:column; justify-content:center;
            align-items:center; text-align:center; gap:8px; padding-left:6px; }
     .label-print .label-making { font-size:22px; font-weight:700; color:#0b3b5c; background:#e8f4fd;
@@ -2844,12 +3017,12 @@ function buildSmallLabelHTML(item, supplier) {
     const barcodeId = 'sl-barcode-' + Date.now();
     const price = num(item.finalSalePrice);
     const logo = supplier?.logo || '';
-    const supplierName = supplier?.name || 'Gold POS';
+    const supplierName = supplier?.name || 'Nejmeh Jewelry';
 
     return `
         <div class="small-label">
             <div class="sl-top">
-                ${logo ? `<img src="${logo}" class="sl-logo" alt="" />` : ''}
+                ${logo ? `<img src="${logo}" class="sl-logo" alt="" />` : '<span class="sl-star">✦</span>'}
                 <span class="sl-supplier">${supplierName}</span>
                 <span class="sl-code">${code}</span>
             </div>
@@ -2915,6 +3088,12 @@ const SMALL_LABEL_STYLES = `
         flex: 0 0 auto;
         border-radius: 0.5mm;
         background: #fff;
+    }
+    .sl-star {
+        flex: 0 0 auto;
+        font-size: 8pt;
+        line-height: 1;
+        color: #c9a227;
     }
     .sl-supplier {
         flex: 1 1 auto;
@@ -3062,7 +3241,7 @@ function renderReport(data) {
                 <td class="p-3">${item.purity}</td>
                 <td class="p-3">${num(item.weight).toFixed(2)}</td>
                 <td class="p-3 font-mono text-sm text-green-700">${money(item.boughtPrice)}</td>
-                <td class="p-3 font-bold text-amber-600">${money(item.finalSalePrice)}</td>
+                <td class="p-3 font-bold" style="color: var(--nj-gold-deep);">${money(item.finalSalePrice)}</td>
                 <td class="p-3">${q}</td>
                 <td class="p-3 text-gray-500 text-xs">${d}</td>
             </tr>`;
@@ -3087,7 +3266,7 @@ window.exportCSV = function () {
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = `stock_report_${new Date().toISOString().slice(0,10)}.csv`;
+    link.download = `nejmeh_stock_report_${new Date().toISOString().slice(0,10)}.csv`;
     link.click();
     URL.revokeObjectURL(link.href);
     showToast('CSV exported!', 'success');
@@ -3104,7 +3283,7 @@ window.exportXLSX = function () {
     const wb = XLSX.utils.book_new();
     const ws = XLSX.utils.json_to_sheet(data);
     XLSX.utils.book_append_sheet(wb, ws, 'Stock');
-    XLSX.writeFile(wb, `stock_report_${new Date().toISOString().slice(0,10)}.xlsx`);
+    XLSX.writeFile(wb, `nejmeh_stock_report_${new Date().toISOString().slice(0,10)}.xlsx`);
     showToast('XLSX exported!', 'success');
 };
 
@@ -3112,7 +3291,8 @@ window.exportPDF = function () {
     if (!reportData.length) { showToast('No data to export.', 'warning'); return; }
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF('landscape', 'pt', 'a4');
-    doc.text('Gold POS — Stock Report', 40, 50);
+    doc.setFontSize(16);
+    doc.text('Nejmeh Jewelry — Stock Report', 40, 50);
     doc.autoTable({
         head: [['Code','Name','Purity','Weight(g)','Bought Price','Sell Price','Qty','Date']],
         body: reportData.map(i => [
@@ -3122,9 +3302,9 @@ window.exportPDF = function () {
         ]),
         startY: 70,
         styles: { fontSize: 8 },
-        headStyles: { fillColor: [212, 175, 55] }
+        headStyles: { fillColor: [201, 162, 39] }
     });
-    doc.save(`stock_report_${new Date().toISOString().slice(0,10)}.pdf`);
+    doc.save(`nejmeh_stock_report_${new Date().toISOString().slice(0,10)}.pdf`);
     showToast('PDF exported!', 'success');
 };
 
@@ -3133,7 +3313,7 @@ window.exportPDF = function () {
    ============================================================ */
 function buildBackupPayload() {
     return {
-        app: 'GoldPOS', version: 1,
+        app: 'NejmehPOS', version: 1,
         exportedAt: new Date().toISOString(),
         counts: { items: items.length, suppliers: suppliers.length, users: users.length },
         items, suppliers, users, rates, settings
@@ -3146,7 +3326,7 @@ window.downloadBackup = function () {
         const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = `goldpos_backup_${new Date().toISOString().slice(0,19).replace(/[:T]/g,'-')}.json`;
+        link.download = `nejmehpos_backup_${new Date().toISOString().slice(0,19).replace(/[:T]/g,'-')}.json`;
         link.click();
         URL.revokeObjectURL(link.href);
         showToast('Backup downloaded!', 'success');
@@ -3167,8 +3347,9 @@ async function replaceCollection(name, newDocs) {
 }
 
 async function applyBackup(payload) {
-    if (!payload || payload.app !== 'GoldPOS') {
-        showToast('This file is not a Gold POS backup.', 'error');
+    // Accept both NejmehPOS and legacy GoldPOS backups
+    if (!payload || (payload.app !== 'NejmehPOS' && payload.app !== 'GoldPOS')) {
+        showToast('This file is not a Nejmeh POS backup.', 'error');
         return false;
     }
     items     = Array.isArray(payload.items) ? payload.items : [];
@@ -3398,7 +3579,6 @@ async function enterApp() {
 }
 
 async function init() {
-    // Set up PWA first (manifest, install button, SW)
     setupPWA();
 
     updateLockBadges();
@@ -3416,2503 +3596,7 @@ async function init() {
     }
 
     showLoginPage();
-    console.log('🔐 GoldPOS locked — awaiting sign-in');
-}
-
-init();
-</script>
-</body>
-</html>  try { getAnalytics(app); } catch (e) { console.warn('Analytics skipped:', e.message); }
-
-  // Firestore
-  const db = getFirestore(app);
-
-  // Expose to the classic <script> below
-  window.__firebase = { db, collection, doc, getDocs, getDoc, setDoc, deleteDoc, onSnapshot };
-  window.__firebaseApp = app;
-  window.__firebaseReady = true;
-
-  console.log('%c🔥 Firebase ready (v12.19.0) — project: hyperpos-12210',
-              'color:#f59e0b;font-weight:bold');
-</script>
-
-<style>
-    body { background:#faf6f0; font-family:'Segoe UI', system-ui, sans-serif; }
-    .card-shadow { box-shadow: 0 8px 24px rgba(0,0,0,.06); }
-    .barcode-svg svg { max-width:120px; height:40px; }
-    input:disabled { background:#f3f4f6; cursor:not-allowed; }
-    .toast { transition: all .3s ease; }
-    .tab-btn.active { border-bottom:3px solid #e9b640; color:#b7791f; font-weight:600; }
-    .tab-btn { padding:.6rem 1.2rem; font-weight:500; cursor:pointer; border-bottom:3px solid transparent; transition:.2s; }
-    .tab-btn:hover { border-bottom:3px solid #f3d28c; }
-
-    /* ---------- Live pulse ---------- */
-    @keyframes pulse-green { 0%,100%{opacity:1} 50%{opacity:.35} }
-    .live-dot {
-        width:8px; height:8px; border-radius:50%; background:#22c55e;
-        box-shadow: 0 0 0 0 rgba(34,197,94,.5);
-        animation: pulse-ring 2s infinite;
-        display:inline-block;
-    }
-    @keyframes pulse-ring {
-        0%   { box-shadow: 0 0 0 0 rgba(34,197,94,.6); }
-        70%  { box-shadow: 0 0 0 8px rgba(34,197,94,0); }
-        100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
-    }
-
-    /* ---------- Kitco panel ---------- */
-    .kitco-panel {
-        background: linear-gradient(135deg, #fffbeb 0%, #ffffff 55%, #fff7e6 100%);
-        border: 1px solid #f3d28c;
-        border-radius: 1rem;
-        padding: .85rem 1rem 1rem;
-        margin-top: .85rem;
-        position: relative;
-        overflow: hidden;
-        box-shadow: 0 6px 20px rgba(233,182,64,.14);
-    }
-    .kitco-panel::before {
-        content:'';
-        position:absolute; top:0; left:0; right:0; height:3px;
-        background: linear-gradient(90deg,#f59e0b,#fbbf24,#f59e0b,#fbbf24,#f59e0b);
-    }
-    .kitco-head {
-        display:flex; flex-wrap:wrap; align-items:center; gap:.55rem .85rem;
-        padding-bottom:.55rem; margin-bottom:.7rem;
-        border-bottom:1px dashed #f3d28c;
-        font-size:.72rem;
-        color:#6b7280;
-    }
-    .kitco-brand {
-        background: linear-gradient(135deg,#92400e,#b45309);
-        color:#fde68a;
-        padding:3px 11px;
-        border-radius:6px;
-        font-weight:800;
-        letter-spacing:1.4px;
-        font-size:.68rem;
-        display:inline-flex; align-items:center; gap:5px;
-        box-shadow:0 2px 6px rgba(146,64,14,.35);
-    }
-    .kitco-live-label {
-        display:inline-flex; align-items:center; gap:5px;
-        color:#16a34a; font-weight:700; font-size:.62rem; letter-spacing:.6px;
-    }
-    .kitco-stat { display:inline-flex; align-items:baseline; gap:4px; font-variant-numeric: tabular-nums; }
-    .kitco-stat .k-label { font-size:.58rem; color:#9ca3af; font-weight:600; text-transform:uppercase; letter-spacing:.4px; }
-    .kitco-stat .k-val   { font-size:.82rem; font-weight:800; color:#78350f; }
-    .kitco-stat .k-unit  { font-size:.55rem; color:#9ca3af; font-weight:600; }
-    .kitco-change { font-size:.65rem; font-weight:800; padding:2px 8px; border-radius:5px; font-variant-numeric: tabular-nums; }
-    .kitco-change.up   { color:#15803d; background:#dcfce7; }
-    .kitco-change.down { color:#b91c1c; background:#fee2e2; }
-    .kitco-change.flat { color:#6b7280; background:#f3f4f6; }
-    .kitco-sep { color:#e5e7eb; }
-    .kitco-time { font-size:.6rem; color:#9ca3af; font-weight:600; }
-    .kitco-source {
-        font-size:.58rem; color:#065f46; background:#d1fae5;
-        padding:2px 8px; border-radius:10px; font-weight:600;
-        display:inline-flex; align-items:center; gap:3px;
-    }
-
-    .kitco-grid {
-        display:grid;
-        grid-template-columns: repeat(5, minmax(0,1fr));
-        gap:.5rem;
-    }
-    @media (max-width:768px) { .kitco-grid { grid-template-columns: repeat(3, minmax(0,1fr)); } }
-    @media (max-width:520px) { .kitco-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
-
-    .kk-tile {
-        background:#fff;
-        border:1px solid #f0e2c8;
-        border-radius:.7rem;
-        padding:.5rem .6rem .55rem;
-        transition:.18s;
-        position:relative;
-        overflow:hidden;
-    }
-    .kk-tile:hover { border-color:#e9b640; box-shadow:0 4px 12px rgba(233,182,64,.18); transform:translateY(-1px); }
-    .kk-tile-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:.35rem; }
-    .kk-badge { font-size:.7rem; font-weight:800; letter-spacing:.3px; padding:2px 10px; border-radius:999px; }
-    .kk-purity { font-size:.52rem; color:#9ca3af; font-weight:600; }
-    .kk-row { display:flex; align-items:center; justify-content:space-between; padding:.1rem 0; font-variant-numeric: tabular-nums; }
-    .kk-row .kk-side { font-size:.55rem; font-weight:800; letter-spacing:.5px; padding:1px 5px; border-radius:4px; }
-    .kk-row .kk-side.sell { color:#92400e; background:#fef3c7; }
-    .kk-row .kk-side.buy  { color:#065f46; background:#d1fae5; }
-    .kk-row .kk-price { font-size:.95rem; font-weight:800; letter-spacing:-.3px; }
-    .kk-row .kk-price.sell { color:#b45309; }
-    .kk-row .kk-price.buy  { color:#047857; }
-    .kk-row .kk-gram { font-size:.5rem; color:#9ca3af; font-weight:600; margin-left:2px; }
-
-    .kt-24{background:#fef3c7;color:#92400e} .kt-21{background:#dbeafe;color:#1e40af}
-    .kt-18{background:#ede9fe;color:#5b21b6} .kt-14{background:#d1fae5;color:#065f46}
-    .kt-10{background:#e5e7eb;color:#374151}
-
-    .spread-input { width:58px; padding:.25rem .4rem; border:1px solid #d1d5db; border-radius:.4rem;
-        font-size:.8rem; text-align:center; background:#fff; }
-    .spread-input:focus { outline:2px solid #e9b640; outline-offset:1px; }
-
-    .fetch-btn { background:#3b82f6; color:#fff; padding:.3rem .8rem; border-radius:.4rem; font-size:.7rem;
-        font-weight:600; border:none; cursor:pointer; transition:background .2s; display:inline-flex; align-items:center; gap:5px; }
-    .fetch-btn:hover { background:#2563eb; }
-    .fetch-btn:disabled { opacity:.6; cursor:not-allowed; }
-
-    .item-photo { max-width:80px; max-height:80px; object-fit:cover; border-radius:6px; border:1px solid #e5e7eb; }
-    .supplier-logo { max-width:60px; max-height:60px; object-fit:contain; }
-    .photo-preview { width:60px; height:60px; object-fit:cover; border-radius:6px; border:1px solid #d1d5db; }
-    .photo-upload-wrapper { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
-    .photo-upload-wrapper input[type="file"] { max-width:140px; }
-
-    .pos-cart-item { transition: background .2s; }
-    .pos-cart-item:hover { background:#fef3e8; }
-
-    .badge-auto   { font-size:9px; padding:1px 7px; border-radius:99px; background:#d1fae5; color:#065f46; font-weight:600; }
-    .badge-manual { font-size:9px; padding:1px 7px; border-radius:99px; background:#fef3c7; color:#92400e; font-weight:600; }
-
-    /* ---------- Large label (450px) ---------- */
-    .label-print { font-family:'Segoe UI', Arial, sans-serif; width:450px; padding:22px 24px; background:#fff;
-        border-radius:14px; border:1px solid #d1d5db; box-shadow:0 4px 16px rgba(0,0,0,.07); margin:0 auto; }
-    .label-print .label-row { display:flex; gap:24px; align-items:stretch; }
-    .label-print .label-left { flex:1.4; border-right:2px dashed #e5e7eb; padding-right:20px;
-        display:flex; flex-direction:column; justify-content:center; }
-    .label-print .label-barcode svg { max-width:200px; height:56px; margin:2px 0 6px 0; }
-    .label-print .label-name { font-size:20px; font-weight:700; color:#1e293b; }
-    .label-print .label-details { font-size:15px; color:#475569; margin-top:4px; }
-    .label-print .label-details span { display:inline-block; background:#f1f5f9; padding:2px 12px; border-radius:6px;
-        margin-right:6px; font-weight:500; }
-    .label-print .label-badge { display:inline-block; font-size:11px; font-weight:600; padding:3px 14px; border-radius:14px;
-        background:#fef3c7; color:#92400e; margin-top:6px; align-self:flex-start; }
-    .label-print .label-right { flex:.9; display:flex; flex-direction:column; justify-content:center; align-items:center;
-        text-align:center; gap:8px; padding-left:6px; }
-    .label-print .label-making { font-size:22px; font-weight:700; color:#0b3b5c; background:#e8f4fd; padding:6px 24px;
-        border-radius:30px; display:inline-block; }
-    .label-print .label-supplier-logo { max-width:90px; max-height:90px; object-fit:contain; border-radius:8px;
-        border:1px solid #e5e7eb; background:#fafafa; padding:6px; }
-    .label-print .label-supplier-name { font-size:15px; font-weight:600; color:#334155; }
-    .label-print .label-footer { margin-top:14px; border-top:1px solid #e5e7eb; padding-top:10px; font-size:11px;
-        color:#94a3b8; text-align:center; letter-spacing:.4px; }
-
-    @media print {
-        body * { visibility:hidden; }
-        #printLabelContainer, #printLabelContainer * { visibility:visible; }
-        #printLabelContainer { position:absolute; left:0; top:0; width:100%; display:flex; justify-content:center;
-            align-items:center; min-height:100vh; background:#fff; padding:20px; }
-    }
-
-    @media (max-width:768px) {
-        .kk-row .kk-price { font-size:.85rem; }
-        .kitco-stat .k-val { font-size:.72rem; }
-    }
-</style>
-</head>
-
-<body>
-<div id="app" class="max-w-7xl mx-auto px-3 py-4 sm:px-4 sm:py-6">
-
-    <!-- ================= HEADER ================= -->
-    <header class="bg-white rounded-2xl card-shadow border border-gray-100 p-3 sm:p-4 mb-4">
-        <div class="flex flex-wrap items-center justify-between gap-3">
-
-            <div class="flex items-center gap-2 sm:gap-3">
-                <span class="text-2xl sm:text-3xl"><i class="fas fa-crown text-amber-500"></i></span>
-                <div>
-                    <h1 class="text-xl sm:text-2xl font-bold text-gray-800 tracking-tight">
-                        Gold<span class="text-amber-500">POS</span>
-                    </h1>
-                    <p class="text-[10px] text-gray-400 -mt-0.5 hidden sm:block">
-                        live Kitco spot · all karats in grams
-                    </p>
-                </div>
-            </div>
-
-            <div class="flex flex-wrap items-center gap-2">
-                <div class="flex items-center gap-1 bg-amber-50 px-2 py-1 rounded-xl border border-amber-200">
-                    <label class="text-[10px] text-gray-600">Markup %</label>
-                    <input id="sellSpread" type="number" step="0.1" value="3" class="spread-input" />
-                </div>
-                <div class="flex items-center gap-1 bg-green-50 px-2 py-1 rounded-xl border border-green-200">
-                    <label class="text-[10px] text-gray-600">Buy‑back %</label>
-                    <input id="buySpread" type="number" step="0.1" value="3" class="spread-input" />
-                </div>
-                <div class="flex items-center gap-1 bg-blue-50 px-2 py-1 rounded-xl border border-blue-200">
-                    <label class="text-[10px] text-gray-600">VAT %</label>
-                    <input id="vatRate" type="number" step="0.1" value="5" class="spread-input" />
-                </div>
-                <button onclick="window.fetchLivePrices()" id="fetchLiveBtn" class="fetch-btn">
-                    <i class="fas fa-sync-alt"></i> Refresh
-                </button>
-            </div>
-        </div>
-
-        <!-- ============ UNIFIED KITCO PANEL ============ -->
-        <div class="kitco-panel" id="kitcoPanel">
-            <div class="kitco-head">
-                <span class="kitco-brand"><i class="fas fa-chart-line"></i> KITCO</span>
-                <span class="kitco-live-label"><span class="live-dot"></span> LIVE</span>
-
-                <span class="kitco-stat">
-                    <span class="k-label">Spot</span>
-                    <span class="k-val" id="kitcoSpotOz">--</span>
-                    <span class="k-unit">USD/oz</span>
-                </span>
-                <span class="kitco-stat">
-                    <span class="k-label">Per gram</span>
-                    <span class="k-val" id="kitcoSpotGram">--</span>
-                    <span class="k-unit">USD/g</span>
-                </span>
-
-                <span class="kitco-change flat" id="kitcoChange">—</span>
-
-                <span class="kitco-sep">·</span>
-                <span class="kitco-time" id="kitcoTime">--:--:--</span>
-                <span class="kitco-source" id="kitcoSource"><i class="fas fa-circle-notch fa-spin"></i> connecting…</span>
-
-                <span class="ml-auto text-[10px] text-amber-700 font-semibold" id="kitcoCountdown">
-                    auto-refresh 30s
-                </span>
-            </div>
-
-            <div class="kitco-grid" id="kitcoGrid"></div>
-
-            <div class="text-[9px] text-gray-400 mt-2 flex flex-wrap items-center gap-2">
-                <span><i class="fas fa-info-circle text-amber-500 mr-1"></i>Sell = spot + markup · Buy = sell − buy-back</span>
-                <span class="text-gray-300">|</span>
-                <span>All karat prices shown per gram</span>
-            </div>
-        </div>
-    </header>
-
-    <!-- ================= TABS ================= -->
-    <div class="flex gap-1 mb-6 border-b border-gray-200 bg-white rounded-t-xl px-2 pt-2 card-shadow flex-wrap">
-        <button class="tab-btn active" data-tab="posTab"><i class="fas fa-shopping-cart mr-2"></i>POS</button>
-        <button class="tab-btn" data-tab="stockTab"><i class="fas fa-cubes mr-2"></i>Stock</button>
-        <button class="tab-btn" data-tab="suppliersTab"><i class="fas fa-truck mr-2"></i>Suppliers</button>
-        <button class="tab-btn" data-tab="reportsTab"><i class="fas fa-chart-pie mr-2"></i>Reports</button>
-        <button class="tab-btn" data-tab="databaseTab"><i class="fas fa-database mr-2"></i>Database</button>
-    </div>
-
-    <!-- ================= POS ================= -->
-    <div id="posTab" class="tab-content">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-            <div class="lg:col-span-2 bg-white rounded-2xl card-shadow p-4 border border-gray-100">
-                <h2 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                    <i class="fas fa-search text-amber-500"></i> Select Items
-                </h2>
-                <div class="mb-4">
-                    <input id="posSearch" type="text" placeholder="Search by name or code..."
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400 focus:outline-none" />
-                </div>
-                <div class="max-h-[440px] overflow-y-auto">
-                    <table class="w-full text-sm">
-                        <thead class="bg-gray-50 text-gray-600 border-b sticky top-0 z-10">
-                            <tr>
-                                <th class="text-left p-2 font-semibold">Code</th>
-                                <th class="text-left p-2 font-semibold">Name</th>
-                                <th class="text-left p-2 font-semibold">Purity</th>
-                                <th class="text-left p-2 font-semibold">Weight</th>
-                                <th class="text-center p-2 font-semibold">Price ✎</th>
-                                <th class="text-center p-2 font-semibold">Qty</th>
-                                <th class="text-center p-2 font-semibold">Add</th>
-                            </tr>
-                        </thead>
-                        <tbody id="posProductList"></tbody>
-                    </table>
-                    <div id="posEmpty" class="text-center py-8 text-gray-400 hidden">
-                        <i class="fas fa-box-open text-3xl block mb-2"></i> No items in stock.
-                    </div>
-                </div>
-                <p class="text-[10px] text-gray-400 mt-2">
-                    <i class="fas fa-pen text-amber-500 mr-1"></i>
-                    You can edit the price before adding to the cart, and again inside the cart.
-                </p>
-            </div>
-
-            <div class="lg:col-span-1 bg-white rounded-2xl card-shadow p-4 border border-gray-100 flex flex-col">
-                <h2 class="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
-                    <i class="fas fa-shopping-cart text-amber-500"></i> Cart
-                    <span id="cartCount" class="ml-auto bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full text-xs">0</span>
-                </h2>
-                <div class="flex-1 max-h-[340px] overflow-y-auto mb-3 border-b border-gray-100">
-                    <div id="cartItems" class="space-y-1"></div>
-                    <div id="cartEmpty" class="text-center py-6 text-gray-400 text-sm">
-                        <i class="fas fa-cart-plus text-2xl block mb-1"></i> Cart is empty
-                    </div>
-                </div>
-                <div class="space-y-2">
-                    <div class="flex justify-between text-sm">
-                        <span class="text-gray-600">Subtotal</span>
-                        <span id="cartSubtotal" class="font-semibold">0.00</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <label class="text-sm text-gray-600">Discount %</label>
-                        <input id="cartDiscount" type="number" step="0.5" value="0"
-                               class="w-16 px-2 py-1 border border-gray-300 rounded-lg text-sm" />
-                        <span class="text-sm text-gray-500">- <span id="cartDiscountAmount">0.00</span></span>
-                    </div>
-                    <div class="flex justify-between text-lg font-bold border-t pt-2">
-                        <span>Total</span><span id="cartTotal" class="text-amber-600">0.00</span>
-                    </div>
-                    <div class="flex gap-2">
-                        <button onclick="window.checkout()"
-                                class="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 rounded-lg transition flex items-center justify-center gap-2">
-                            <i class="fas fa-check"></i> Checkout
-                        </button>
-                        <button onclick="window.clearCart()"
-                                class="px-4 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg transition">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                    <button onclick="window.resetCartPrices()"
-                            class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-1.5 rounded-lg transition text-xs flex items-center justify-center gap-2">
-                        <i class="fas fa-rotate-left"></i> Reset all prices to list
-                    </button>
-                    <button onclick="window.printReceipt()"
-                            class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-1.5 rounded-lg transition text-sm flex items-center justify-center gap-2">
-                        <i class="fas fa-print"></i> Print Receipt (last sale)
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ================= STOCK ================= -->
-    <div id="stockTab" class="tab-content hidden">
-        <div class="bg-white rounded-2xl card-shadow p-6 mb-8 border border-gray-100">
-            <h2 class="text-lg font-semibold text-gray-800 mb-5 flex items-center gap-2">
-                <i class="fas fa-plus-circle text-amber-500"></i> Add / Edit Item
-            </h2>
-
-            <form id="itemForm" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
-                <input type="hidden" id="editId" value="" />
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1">Item Name *</label>
-                    <input id="itemName" type="text" required placeholder="e.g. Gold Ring"
-                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400" />
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1">Purity *</label>
-                    <select id="purity" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400">
-                        <option value="24K">24K</option>
-                        <option value="21K">21K</option>
-                        <option value="18K">18K</option>
-                        <option value="14K">14K</option>
-                        <option value="10K">10K</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1">Weight (g) *</label>
-                    <input id="weight" type="number" step="0.01" required placeholder="2.50"
-                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400" />
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1">Making Charge *</label>
-                    <input id="makingCharge" type="number" step="0.01" required placeholder="15.00"
-                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400" />
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1 flex items-center gap-2">
-                        Bought Price
-                        <span id="buyLockBadge" class="badge-auto">auto</span>
-                    </label>
-                    <div class="flex gap-1">
-                        <input id="boughtPrice" type="number" step="0.01" placeholder="0.00"
-                               class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-green-50 font-semibold text-gray-700 focus:ring-2 focus:ring-green-400" />
-                        <button type="button" onclick="window.unlockBuyPrice()" title="Recalculate from live rate"
-                                class="px-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-gray-600">
-                            <i class="fas fa-rotate"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1 flex items-center gap-2">
-                        Sell Price
-                        <span id="sellLockBadge" class="badge-auto">auto</span>
-                    </label>
-                    <div class="flex gap-1">
-                        <input id="salePrice" type="number" step="0.01" placeholder="0.00"
-                               class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-amber-50 font-semibold text-amber-700 focus:ring-2 focus:ring-amber-400" />
-                        <button type="button" onclick="window.unlockSellPrice()" title="Recalculate from live rate"
-                                class="px-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-gray-600">
-                            <i class="fas fa-rotate"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="md:col-span-2">
-                    <label class="block text-sm font-medium text-gray-600 mb-1">Description</label>
-                    <input id="description" type="text" placeholder="Optional notes"
-                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400" />
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1">Supplier</label>
-                    <select id="itemSupplier" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400">
-                        <option value="">None</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1">Stock Qty</label>
-                    <input id="stockQty" type="number" step="1" min="1" value="1"
-                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400" />
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1">Item Photo</label>
-                    <div class="photo-upload-wrapper">
-                        <input type="file" id="itemPhotoFile" accept="image/*" capture="environment" class="text-xs" />
-                        <button type="button" onclick="document.getElementById('itemPhotoFile').click()"
-                                class="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded text-sm">
-                            <i class="fas fa-camera"></i>
-                        </button>
-                        <img id="itemPhotoPreview" class="photo-preview hidden" alt="" />
-                        <input type="hidden" id="itemPhotoData" value="" />
-                    </div>
-                </div>
-
-                <div class="flex items-end gap-2 flex-wrap lg:col-span-2">
-                    <button type="submit"
-                            class="bg-amber-500 hover:bg-amber-600 text-white font-medium px-5 py-2 rounded-lg transition flex items-center justify-center gap-2">
-                        <i class="fas fa-save"></i> <span id="formBtnText">Add Item</span>
-                    </button>
-                    <button type="button" onclick="window.resetItemForm()"
-                            class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium px-4 py-2 rounded-lg transition flex items-center gap-2">
-                        <i class="fas fa-eraser"></i> Clear
-                    </button>
-                    <button type="button" onclick="window.printCurrentLabel()"
-                            class="bg-indigo-500 hover:bg-indigo-600 text-white font-medium px-4 py-2 rounded-lg transition flex items-center gap-2">
-                        <i class="fas fa-print"></i> Label
-                    </button>
-                    <button type="button" onclick="window.printCurrentSmallLabel()"
-                            title="Print compact label (40×20mm)"
-                            class="bg-purple-500 hover:bg-purple-600 text-white font-medium px-3 py-2 rounded-lg transition flex items-center gap-2">
-                        <i class="fas fa-tag"></i> Small Label
-                    </button>
-                </div>
-            </form>
-
-            <div id="rateWarning" class="mt-3 text-sm text-red-600 hidden">
-                <i class="fas fa-exclamation-triangle mr-1"></i> No gold price available yet. Waiting for the live feed…
-            </div>
-        </div>
-
-        <div class="bg-white rounded-2xl card-shadow p-4 border border-gray-100 overflow-x-auto">
-            <div class="flex justify-between items-center mb-3">
-                <h3 class="text-lg font-semibold text-gray-800">
-                    <i class="fas fa-list-ul text-amber-500 mr-2"></i>Stock Inventory
-                </h3>
-                <span id="itemCount" class="text-sm bg-gray-100 px-3 py-1 rounded-full text-gray-600">0 items</span>
-            </div>
-            <table class="w-full text-sm">
-                <thead class="bg-gray-50 text-gray-600 border-b">
-                    <tr>
-                        <th class="text-left p-3 font-semibold">Photo</th>
-                        <th class="text-left p-3 font-semibold">Code</th>
-                        <th class="text-left p-3 font-semibold">Barcode</th>
-                        <th class="text-left p-3 font-semibold">Name</th>
-                        <th class="text-left p-3 font-semibold">Purity</th>
-                        <th class="text-left p-3 font-semibold">Weight</th>
-                        <th class="text-left p-3 font-semibold">Bought</th>
-                        <th class="text-left p-3 font-semibold">Sell</th>
-                        <th class="text-left p-3 font-semibold">Qty</th>
-                        <th class="text-left p-3 font-semibold">Supplier</th>
-                        <th class="text-center p-3 font-semibold">Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="stockTbody"></tbody>
-            </table>
-            <div id="emptyStock" class="text-center py-10 text-gray-400 hidden">
-                <i class="fas fa-box-open text-4xl block mb-2"></i> No items added yet.
-            </div>
-        </div>
-    </div>
-
-    <!-- ================= SUPPLIERS ================= -->
-    <div id="suppliersTab" class="tab-content hidden">
-        <div class="bg-white rounded-2xl card-shadow p-6 border border-gray-100">
-            <h2 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                <i class="fas fa-truck text-amber-500"></i> Suppliers
-            </h2>
-
-            <form id="supplierForm" class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end mb-6">
-                <input type="hidden" id="editSupplierId" value="" />
-                <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1">Supplier ID *</label>
-                    <input id="supplierId" type="text" required placeholder="SUP-001"
-                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400" />
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1">Name *</label>
-                    <input id="supplierName" type="text" required placeholder="ABC Gold"
-                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400" />
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1">Phone</label>
-                    <input id="supplierPhone" type="text" placeholder="+1 234 5678"
-                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400" />
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1">Logo</label>
-                    <div class="flex items-center gap-2 flex-wrap">
-                        <input id="supplierLogoUrl" type="text" placeholder="https://...logo.png"
-                               class="flex-1 min-w-[120px] px-2 py-1 border border-gray-300 rounded-lg text-sm" />
-                        <input type="file" id="supplierLogoFile" accept="image/*" class="text-xs max-w-[130px]" />
-                        <img id="supplierLogoPreview" class="photo-preview hidden" alt="" />
-                        <input type="hidden" id="supplierLogoData" value="" />
-                    </div>
-                </div>
-                <div class="md:col-span-4 flex gap-2">
-                    <button type="submit"
-                            class="bg-amber-500 hover:bg-amber-600 text-white px-5 py-2 rounded-lg transition flex items-center gap-2">
-                        <i class="fas fa-save"></i> <span id="supplierBtnText">Add Supplier</span>
-                    </button>
-                    <button type="button" onclick="window.resetSupplierForm()"
-                            class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg transition">
-                        <i class="fas fa-eraser"></i> Clear
-                    </button>
-                </div>
-            </form>
-
-            <div class="overflow-x-auto">
-                <table class="w-full text-sm">
-                    <thead class="bg-gray-50 text-gray-600 border-b">
-                        <tr>
-                            <th class="text-left p-3">ID</th>
-                            <th class="text-left p-3">Name</th>
-                            <th class="text-left p-3">Phone</th>
-                            <th class="text-left p-3">Logo</th>
-                            <th class="text-center p-3">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="supplierTbody"></tbody>
-                </table>
-                <div id="emptySupplier" class="text-center py-8 text-gray-400 hidden">
-                    <i class="fas fa-truck text-3xl block mb-2"></i> No suppliers added.
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ================= REPORTS ================= -->
-    <div id="reportsTab" class="tab-content hidden">
-        <div class="bg-white rounded-2xl card-shadow p-6 border border-gray-100">
-            <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
-                <h2 class="text-lg font-semibold text-gray-800">
-                    <i class="fas fa-file-alt text-amber-500 mr-2"></i>Reports &amp; Export
-                </h2>
-                <div class="flex flex-wrap items-center gap-2">
-                    <button onclick="window.filterReport('daily')" class="px-4 py-1.5 rounded-lg border border-gray-300 text-sm hover:bg-amber-50 transition">Today</button>
-                    <button onclick="window.filterReport('weekly')" class="px-4 py-1.5 rounded-lg border border-gray-300 text-sm hover:bg-amber-50 transition">Week</button>
-                    <button onclick="window.filterReport('monthly')" class="px-4 py-1.5 rounded-lg border border-gray-300 text-sm hover:bg-amber-50 transition">Month</button>
-                    <button onclick="window.filterReport('all')" class="px-4 py-1.5 rounded-lg border border-gray-300 text-sm hover:bg-amber-50 transition">All</button>
-                    <div class="flex items-center gap-1">
-                        <input id="customFrom" type="date" class="px-2 py-1.5 border border-gray-300 rounded-lg text-sm" />
-                        <span class="text-gray-400">—</span>
-                        <input id="customTo" type="date" class="px-2 py-1.5 border border-gray-300 rounded-lg text-sm" />
-                        <button onclick="window.filterReport('custom')"
-                                class="px-3 py-1.5 bg-amber-500 text-white rounded-lg text-sm hover:bg-amber-600 transition">Go</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                <div class="bg-amber-50 p-4 rounded-xl border border-amber-200">
-                    <p class="text-xs text-gray-500">Total Items</p>
-                    <p id="reportCount" class="text-2xl font-bold text-gray-800">0</p>
-                </div>
-                <div class="bg-amber-50 p-4 rounded-xl border border-amber-200">
-                    <p class="text-xs text-gray-500">Total Weight (g)</p>
-                    <p id="reportWeight" class="text-2xl font-bold text-gray-800">0.00</p>
-                </div>
-                <div class="bg-amber-50 p-4 rounded-xl border border-amber-200">
-                    <p class="text-xs text-gray-500">Total Value (Sell)</p>
-                    <p id="reportValue" class="text-2xl font-bold text-amber-600">0.00</p>
-                </div>
-                <div class="bg-amber-50 p-4 rounded-xl border border-amber-200 flex items-center justify-around flex-wrap gap-2">
-                    <button onclick="window.exportCSV()" class="bg-green-600 hover:bg-green-700 text-white text-sm px-3 py-2 rounded-lg transition flex items-center gap-1"><i class="fas fa-file-csv"></i> CSV</button>
-                    <button onclick="window.exportPDF()" class="bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-2 rounded-lg transition flex items-center gap-1"><i class="fas fa-file-pdf"></i> PDF</button>
-                    <button onclick="window.exportXLSX()" class="bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-2 rounded-lg transition flex items-center gap-1"><i class="fas fa-file-export"></i> XLSX</button>
-                </div>
-            </div>
-
-            <div class="overflow-x-auto">
-                <table class="w-full text-sm">
-                    <thead class="bg-gray-50 text-gray-600 border-b">
-                        <tr>
-                            <th class="text-left p-3">Code</th>
-                            <th class="text-left p-3">Name</th>
-                            <th class="text-left p-3">Purity</th>
-                            <th class="text-left p-3">Weight</th>
-                            <th class="text-left p-3">Bought</th>
-                            <th class="text-left p-3">Sell</th>
-                            <th class="text-left p-3">Qty</th>
-                            <th class="text-left p-3">Date</th>
-                        </tr>
-                    </thead>
-                    <tbody id="reportTbody"></tbody>
-                </table>
-                <div id="emptyReport" class="text-center py-8 text-gray-400 hidden">
-                    <i class="fas fa-chart-simple text-3xl block mb-2"></i> No items in this period.
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ================= DATABASE ================= -->
-    <div id="databaseTab" class="tab-content hidden">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-            <div class="bg-white rounded-2xl card-shadow p-6 border border-gray-100">
-                <h2 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                    <i class="fas fa-database text-amber-500"></i> Save &amp; Restore Database
-                </h2>
-
-                <div class="space-y-3">
-                    <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
-                        <p class="text-sm font-semibold text-blue-800 mb-1">
-                            <i class="fas fa-download mr-1"></i> Download local backup
-                        </p>
-                        <p class="text-xs text-blue-700 mb-3">
-                            Exports all items, suppliers, rates and settings into a single JSON file.
-                        </p>
-                        <button onclick="window.downloadBackup()"
-                                class="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-2 rounded-lg transition">
-                            <i class="fas fa-file-download mr-1"></i> Download JSON backup
-                        </button>
-                    </div>
-
-                    <div class="bg-green-50 border border-green-200 rounded-xl p-4">
-                        <p class="text-sm font-semibold text-green-800 mb-1">
-                            <i class="fas fa-upload mr-1"></i> Restore from file
-                        </p>
-                        <p class="text-xs text-green-700 mb-3">
-                            Replaces the cloud database with the contents of a backup file.
-                        </p>
-                        <input type="file" id="restoreFile" accept="application/json,.json"
-                               class="text-xs mb-2 block" />
-                        <button onclick="window.restoreFromFile()"
-                                class="bg-green-600 hover:bg-green-700 text-white text-sm px-4 py-2 rounded-lg transition">
-                            <i class="fas fa-rotate-left mr-1"></i> Restore backup
-                        </button>
-                    </div>
-
-                    <div class="bg-amber-50 border border-amber-200 rounded-xl p-4">
-                        <p class="text-sm font-semibold text-amber-800 mb-1">
-                            <i class="fas fa-cloud-upload-alt mr-1"></i> Save snapshot to cloud
-                        </p>
-                        <p class="text-xs text-amber-700 mb-3">
-                            Stores a dated copy of the whole database in Firestore (<code>backups</code> collection).
-                        </p>
-                        <button onclick="window.saveCloudSnapshot()"
-                                class="bg-amber-500 hover:bg-amber-600 text-white text-sm px-4 py-2 rounded-lg transition">
-                            <i class="fas fa-cloud-upload-alt mr-1"></i> Save snapshot now
-                        </button>
-                    </div>
-
-                    <div class="bg-red-50 border border-red-200 rounded-xl p-4">
-                        <p class="text-sm font-semibold text-red-800 mb-1">
-                            <i class="fas fa-triangle-exclamation mr-1"></i> Danger zone
-                        </p>
-                        <p class="text-xs text-red-700 mb-3">
-                            Permanently deletes every item and supplier from the cloud database.
-                        </p>
-                        <button onclick="window.wipeDatabase()"
-                                class="bg-red-600 hover:bg-red-700 text-white text-sm px-4 py-2 rounded-lg transition">
-                            <i class="fas fa-trash mr-1"></i> Wipe database
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-2xl card-shadow p-6 border border-gray-100">
-                <div class="flex items-center justify-between mb-4">
-                    <h2 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
-                        <i class="fas fa-clock-rotate-left text-amber-500"></i> Cloud Snapshots
-                    </h2>
-                    <button onclick="window.loadSnapshots()"
-                            class="text-xs bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-lg transition">
-                        <i class="fas fa-sync-alt mr-1"></i> Refresh
-                    </button>
-                </div>
-                <div id="snapshotList" class="space-y-2 max-h-[520px] overflow-y-auto">
-                    <p class="text-sm text-gray-400 text-center py-6">Loading snapshots…</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="printLabelContainer" style="display:none;"></div>
-
-<div id="toast" class="fixed bottom-6 right-6 bg-gray-800 text-white px-5 py-3 rounded-xl shadow-xl toast translate-y-20 opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-3 z-50">
-    <i class="fas fa-check-circle text-green-400"></i> <span id="toastMsg">Success</span>
-</div>
-
-<script>
-/* ============================================================
-   GOLD POS · Live Kitco panel (all karats, grams)
-   Labels (large + small) show supplier logo & name
-   Firebase v12.19.0 backend (Firestore: items, suppliers, meta, backups)
-   ============================================================ */
-
-const waitForFirebase = () => new Promise(resolve => {
-    if (window.__firebaseReady) return resolve();
-    const t = setInterval(() => {
-        if (window.__firebaseReady) { clearInterval(t); resolve(); }
-    }, 100);
-});
-
-const KARATS = [
-    { key:'24', label:'24K', factor: 1,      css:'kt-24' },
-    { key:'21', label:'21K', factor: 0.875,  css:'kt-21' },
-    { key:'18', label:'18K', factor: 0.75,   css:'kt-18' },
-    { key:'14', label:'14K', factor: 0.5833, css:'kt-14' },
-    { key:'10', label:'10K', factor: 0.4167, css:'kt-10' },
-];
-
-let items = [];
-let suppliers = [];
-let rates = {
-    sell24k:0, buy24k:0, sell21k:0, buy21k:0, sell18k:0, buy18k:0,
-    sell14k:0, buy14k:0, sell10k:0, buy10k:0
-};
-let settings = { markup:3, buyback:3, vat:5 };
-
-let editingId = null;
-let editingSupplierId = null;
-let reportData = [];
-let cart = [];
-let lastReceipt = null;
-let unsubscribeItems = null;
-let unsubscribeSuppliers = null;
-
-let isFetching = false;
-let autoRefreshInterval = null;
-let countdownInterval = null;
-let refreshCountdown = 30;
-let lastSpotPerGram = 0;
-let lastSpotPerOunce = 0;
-let previousKitcoPrice = null;
-
-let formSellLocked = false;
-let formBuyLocked  = false;
-
-const $ = id => document.getElementById(id);
-const num = v => (typeof v === 'number' && isFinite(v)) ? v : (parseFloat(v) || 0);
-const money = v => num(v).toFixed(2);
-
-/* ---------- DOM refs ---------- */
-const sellSpreadInput = $('sellSpread');
-const buySpreadInput  = $('buySpread');
-const vatRateInput    = $('vatRate');
-
-const itemName = $('itemName'), purity = $('purity'), weight = $('weight'), makingCharge = $('makingCharge');
-const boughtPrice = $('boughtPrice'), salePrice = $('salePrice'), stockQty = $('stockQty');
-const form = $('itemForm'), editId = $('editId'), formBtnText = $('formBtnText');
-const stockTbody = $('stockTbody'), emptyStock = $('emptyStock'), itemCount = $('itemCount');
-const rateWarning = $('rateWarning');
-const posProductList = $('posProductList'), posEmpty = $('posEmpty');
-const cartItems = $('cartItems'), cartEmpty = $('cartEmpty'), cartCount = $('cartCount');
-const cartSubtotal = $('cartSubtotal'), cartDiscount = $('cartDiscount');
-const cartDiscountAmount = $('cartDiscountAmount'), cartTotal = $('cartTotal');
-const posSearch = $('posSearch');
-const supplierTbody = $('supplierTbody'), emptySupplier = $('emptySupplier');
-const supplierForm = $('supplierForm'), supplierId = $('supplierId'), supplierName = $('supplierName');
-const supplierPhone = $('supplierPhone'), supplierLogoUrl = $('supplierLogoUrl');
-const supplierLogoFile = $('supplierLogoFile'), supplierLogoPreview = $('supplierLogoPreview');
-const supplierLogoData = $('supplierLogoData'), editSupplierId = $('editSupplierId');
-const supplierBtnText = $('supplierBtnText');
-const itemSupplier = $('itemSupplier');
-const itemPhotoFile = $('itemPhotoFile'), itemPhotoPreview = $('itemPhotoPreview'), itemPhotoData = $('itemPhotoData');
-const description = $('description');
-const fetchLiveBtn = $('fetchLiveBtn');
-
-const kitcoSpotOzEl    = $('kitcoSpotOz');
-const kitcoSpotGramEl  = $('kitcoSpotGram');
-const kitcoChangeEl    = $('kitcoChange');
-const kitcoTimeEl      = $('kitcoTime');
-const kitcoSourceEl    = $('kitcoSource');
-const kitcoGridEl      = $('kitcoGrid');
-const kitcoCountdownEl = $('kitcoCountdown');
-
-const sellLockBadge = $('sellLockBadge'), buyLockBadge = $('buyLockBadge');
-
-/* ============================================================
-   FIRESTORE
-   ============================================================ */
-async function fb() { await waitForFirebase(); return window.__firebase; }
-
-async function saveItemsToFirestore() {
-    const { db, doc, setDoc } = await fb();
-    for (const item of items) await setDoc(doc(db, 'items', item.id), item);
-}
-async function saveSuppliersToFirestore() {
-    const { db, doc, setDoc } = await fb();
-    for (const s of suppliers) await setDoc(doc(db, 'suppliers', s.id), s);
-}
-async function saveRatesToFirestore() {
-    const { db, doc, setDoc } = await fb();
-    await setDoc(doc(db, 'meta', 'rates'), rates);
-}
-async function saveSettingsToFirestore() {
-    const { db, doc, setDoc } = await fb();
-    await setDoc(doc(db, 'meta', 'settings'), settings);
-}
-
-/* ============================================================
-   LISTENERS
-   ============================================================ */
-function startListeners() {
-    waitForFirebase().then(() => {
-        const { db, collection, onSnapshot } = window.__firebase;
-
-        if (unsubscribeItems) unsubscribeItems();
-        unsubscribeItems = onSnapshot(collection(db, 'items'), snapshot => {
-            const newItems = [];
-            snapshot.forEach(d => newItems.push({ id: d.id, ...d.data() }));
-            if (JSON.stringify(newItems) !== JSON.stringify(items)) {
-                items = newItems;
-                renderStock(); renderPOS(); updateCart();
-            }
-        }, err => showToast('Sync error: ' + err.message, 'error'));
-
-        if (unsubscribeSuppliers) unsubscribeSuppliers();
-        unsubscribeSuppliers = onSnapshot(collection(db, 'suppliers'), snapshot => {
-            const newSuppliers = [];
-            snapshot.forEach(d => newSuppliers.push({ id: d.id, ...d.data() }));
-            if (JSON.stringify(newSuppliers) !== JSON.stringify(suppliers)) {
-                suppliers = newSuppliers;
-                renderSuppliers(); renderSupplierDropdown(); renderStock();
-            }
-        });
-    });
-}
-
-/* ============================================================
-   LOAD
-   ============================================================ */
-async function loadAllData() {
-    await waitForFirebase();
-    const { db, collection, getDocs, doc, getDoc } = window.__firebase;
-
-    try {
-        const itemsSnap = await getDocs(collection(db, 'items'));
-        items = [];
-        itemsSnap.forEach(d => items.push({ id: d.id, ...d.data() }));
-
-        const supSnap = await getDocs(collection(db, 'suppliers'));
-        suppliers = [];
-        supSnap.forEach(d => suppliers.push({ id: d.id, ...d.data() }));
-
-        const ratesDoc = await getDoc(doc(db, 'meta', 'rates'));
-        if (ratesDoc.exists()) rates = { ...rates, ...ratesDoc.data() };
-
-        const setSnap = await getDoc(doc(db, 'meta', 'settings'));
-        if (setSnap.exists()) settings = { ...settings, ...setSnap.data() };
-    } catch (err) {
-        try {
-            items     = JSON.parse(localStorage.getItem('gp_items'))     || [];
-            suppliers = JSON.parse(localStorage.getItem('gp_suppliers')) || [];
-            rates     = JSON.parse(localStorage.getItem('gp_rates'))     || rates;
-            settings  = JSON.parse(localStorage.getItem('gp_settings'))  || settings;
-        } catch (e) {}
-        showToast('Using local cache (Firestore unavailable)', 'warning');
-    }
-
-    sellSpreadInput.value = settings.markup ?? 3;
-    buySpreadInput.value  = settings.buyback ?? 3;
-    vatRateInput.value    = settings.vat ?? 5;
-
-    renderKitcoGrid();
-    renderSuppliers();
-    renderSupplierDropdown();
-    renderStock();
-    renderPOS();
-    updateCart();
-
-    startListeners();
-    startAutoRefresh();
-    setTimeout(() => fetchLivePrices(true), 400);
-}
-
-/* ============================================================
-   AUTO REFRESH
-   ============================================================ */
-function startAutoRefresh() {
-    if (autoRefreshInterval) clearInterval(autoRefreshInterval);
-    if (countdownInterval) clearInterval(countdownInterval);
-
-    refreshCountdown = 30;
-    updateCountdownLabel();
-
-    countdownInterval = setInterval(() => {
-        refreshCountdown--;
-        if (refreshCountdown <= 0) refreshCountdown = 30;
-        updateCountdownLabel();
-    }, 1000);
-
-    autoRefreshInterval = setInterval(() => {
-        fetchLivePrices(true);
-        refreshCountdown = 30;
-        updateCountdownLabel();
-    }, 30000);
-}
-
-function updateCountdownLabel() {
-    if (kitcoCountdownEl) kitcoCountdownEl.textContent = `auto-refresh ${refreshCountdown}s`;
-}
-
-/* ============================================================
-   RATE COMPUTATION
-   ============================================================ */
-function computeRatesFromSpot(spotPerGram) {
-    const markup  = parseFloat(sellSpreadInput.value) || 0;
-    const buyback = parseFloat(buySpreadInput.value) || 0;
-
-    const sell24 = spotPerGram * (1 + markup / 100);
-    const buy24  = sell24 * (1 - buyback / 100);
-
-    const out = {};
-    KARATS.forEach(k => {
-        out[`sell${k.key}k`] = +(sell24 * k.factor).toFixed(2);
-        out[`buy${k.key}k`]  = +(buy24  * k.factor).toFixed(2);
-    });
-    return out;
-}
-
-function rateFor(purityLabel, type) {
-    const k = KARATS.find(x => x.label === purityLabel);
-    if (!k) return 0;
-    return num(rates[`${type}${k.key}k`]);
-}
-
-function applySpot(spotPerGram, spotPerOunce, silent, source) {
-    lastSpotPerGram = spotPerGram;
-    lastSpotPerOunce = spotPerOunce;
-
-    Object.assign(rates, computeRatesFromSpot(spotPerGram));
-
-    renderKitcoGrid();
-    updateKitcoHead(spotPerOunce, spotPerGram, source);
-    saveRatesToFirestore().catch(() => {});
-    updateAllItemPrices(silent);
-}
-
-/* ============================================================
-   KITCO HEAD
-   ============================================================ */
-function updateKitcoHead(spotPerOunce, spotPerGram, source) {
-    if (!spotPerOunce || spotPerOunce <= 0) {
-        kitcoSpotOzEl.textContent   = '--';
-        kitcoSpotGramEl.textContent = '--';
-        kitcoTimeEl.textContent     = '--:--:--';
-        kitcoChangeEl.textContent   = '—';
-        kitcoChangeEl.className     = 'kitco-change flat';
-        return;
-    }
-
-    kitcoSpotOzEl.textContent   = Number(spotPerOunce).toFixed(2);
-    kitcoSpotGramEl.textContent = Number(spotPerGram).toFixed(2);
-    kitcoTimeEl.textContent     = new Date().toLocaleTimeString();
-
-    if (previousKitcoPrice !== null) {
-        const diff = spotPerOunce - previousKitcoPrice;
-        if (Math.abs(diff) < 0.005) {
-            kitcoChangeEl.textContent = '0.00';
-            kitcoChangeEl.className   = 'kitco-change flat';
-        } else if (diff > 0) {
-            kitcoChangeEl.textContent = '▲ +' + diff.toFixed(2);
-            kitcoChangeEl.className   = 'kitco-change up';
-        } else {
-            kitcoChangeEl.textContent = '▼ ' + diff.toFixed(2);
-            kitcoChangeEl.className   = 'kitco-change down';
-        }
-    } else {
-        kitcoChangeEl.textContent = '—';
-        kitcoChangeEl.className   = 'kitco-change flat';
-    }
-    previousKitcoPrice = spotPerOunce;
-
-    if (source) {
-        kitcoSourceEl.innerHTML = `<i class="fas fa-check-circle"></i> ${source}`;
-    }
-}
-
-/* ============================================================
-   KITCO GRID — all karats / gram
-   ============================================================ */
-function renderKitcoGrid() {
-    const fmt = v => (v && v > 0) ? Number(v).toFixed(2) : '--';
-    let html = '';
-    KARATS.forEach(k => {
-        const sell = rates[`sell${k.key}k`];
-        const buy  = rates[`buy${k.key}k`];
-        html += `
-            <div class="kk-tile">
-                <div class="kk-tile-head">
-                    <span class="kk-badge ${k.css}">${k.label}</span>
-                    <span class="kk-purity">${(k.factor * 100).toFixed(1)}%</span>
-                </div>
-                <div class="kk-row">
-                    <span class="kk-side sell">S</span>
-                    <span class="kk-price sell">${fmt(sell)}<span class="kk-gram">/g</span></span>
-                </div>
-                <div class="kk-row">
-                    <span class="kk-side buy">B</span>
-                    <span class="kk-price buy">${fmt(buy)}<span class="kk-gram">/g</span></span>
-                </div>
-            </div>`;
-    });
-    kitcoGridEl.innerHTML = html;
-}
-
-/* ============================================================
-   FETCH LIVE PRICES
-   ============================================================ */
-window.fetchLivePrices = async function (silent = false) {
-    if (isFetching) return;
-    isFetching = true;
-
-    if (!silent) {
-        fetchLiveBtn.disabled = true;
-        fetchLiveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-        kitcoSourceEl.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> fetching…';
-    }
-
-    try {
-        let spotPerOunce = null;
-        let source = '';
-
-        try {
-            const res = await fetch('https://api.gold-api.com/price/XAU', {
-                headers: { 'Accept': 'application/json' },
-                cache: 'no-store'
-            });
-            if (res.ok) {
-                const data = await res.json();
-                const p = parseFloat(data.price);
-                if (p > 0) { spotPerOunce = p; source = 'gold-api.com'; }
-            }
-        } catch (e) { console.warn('gold-api failed:', e.message); }
-
-        if (!spotPerOunce) {
-            try {
-                const res2 = await fetch('https://api.metals.live/v1/spot/gold', { cache: 'no-store' });
-                if (res2.ok) {
-                    const d2 = await res2.json();
-                    const p2 = Array.isArray(d2) ? parseFloat(d2[0]?.price) : parseFloat(d2?.price);
-                    if (p2 > 0) { spotPerOunce = p2; source = 'metals.live'; }
-                }
-            } catch (e) { console.warn('metals.live failed:', e.message); }
-        }
-
-        if (!spotPerOunce || spotPerOunce <= 0) throw new Error('No valid spot price');
-
-        const spotPerGram = spotPerOunce / 31.1035;
-        applySpot(spotPerGram, spotPerOunce, silent, source);
-        rateWarning.classList.add('hidden');
-
-        if (!silent) showToast(`✅ Live rates updated (${source})`, 'success');
-        console.log(`💹 Spot: $${spotPerOunce.toFixed(2)}/oz → $${spotPerGram.toFixed(2)}/g (${source})`);
-
-    } catch (error) {
-        kitcoSourceEl.innerHTML = '<i class="fas fa-triangle-exclamation"></i> offline';
-        if (!silent) showToast('Failed to fetch live prices: ' + error.message, 'error');
-    } finally {
-        isFetching = false;
-        if (!silent) {
-            fetchLiveBtn.disabled = false;
-            fetchLiveBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh';
-        }
-    }
-};
-
-/* ============================================================
-   ITEM PRICE CALC
-   ============================================================ */
-function computeAutoPrices(purityLabel, w, mc) {
-    const buyRate  = rateFor(purityLabel, 'buy');
-    const sellRate = rateFor(purityLabel, 'sell');
-    if (!buyRate || !sellRate || w <= 0) return null;
-
-    const vatPct = parseFloat(vatRateInput.value) || 0;
-    const bought = w * buyRate;
-    const base   = w * sellRate;
-    const sub    = base + num(mc);
-    const vat    = sub * (vatPct / 100);
-    const sell   = sub + vat;
-
-    return { bought, sell, base, vat, sub };
-}
-
-function updateAllItemPrices(silent = true) {
-    let updated = 0;
-
-    items.forEach(item => {
-        const auto = computeAutoPrices(item.purity, num(item.weight), num(item.makingCharge));
-        if (!auto) return;
-
-        if (!item.buyLocked && Math.abs(num(item.boughtPrice) - auto.bought) > 0.001) {
-            item.boughtPrice = +auto.bought.toFixed(2); updated++;
-        }
-        if (!item.sellLocked && Math.abs(num(item.finalSalePrice) - auto.sell) > 0.001) {
-            item.finalSalePrice = +auto.sell.toFixed(2); updated++;
-        }
-    });
-
-    if (updated > 0) {
-        saveItemsToFirestore().catch(() => {});
-        if (!silent) showToast(`🔄 Updated ${updated} price value(s)`, 'success');
-    }
-
-    renderStock();
-    renderPOS();
-    updateCart();
-    recalcFormPrices(false);
-}
-
-/* ============================================================
-   FORM PRICE LOCKS
-   ============================================================ */
-function updateLockBadges() {
-    if (sellLockBadge) {
-        sellLockBadge.textContent = formSellLocked ? 'manual' : 'auto';
-        sellLockBadge.className = formSellLocked ? 'badge-manual' : 'badge-auto';
-    }
-    if (buyLockBadge) {
-        buyLockBadge.textContent = formBuyLocked ? 'manual' : 'auto';
-        buyLockBadge.className = formBuyLocked ? 'badge-manual' : 'badge-auto';
-    }
-}
-
-function recalcFormPrices(force) {
-    const w  = parseFloat(weight.value) || 0;
-    const mc = parseFloat(makingCharge.value) || 0;
-    const auto = computeAutoPrices(purity.value, w, mc);
-
-    if (!auto) {
-        if (force) { boughtPrice.value = ''; salePrice.value = ''; }
-        return null;
-    }
-
-    if (force || !formBuyLocked)  boughtPrice.value = auto.bought.toFixed(2);
-    if (force || !formSellLocked) salePrice.value   = auto.sell.toFixed(2);
-    return auto;
-}
-
-window.unlockSellPrice = function () {
-    formSellLocked = false; updateLockBadges(); recalcFormPrices(false);
-    showToast('Sell price set back to automatic', 'info');
-};
-window.unlockBuyPrice = function () {
-    formBuyLocked = false; updateLockBadges(); recalcFormPrices(false);
-    showToast('Bought price set back to automatic', 'info');
-};
-
-salePrice.addEventListener('input', () => { formSellLocked = true; updateLockBadges(); });
-boughtPrice.addEventListener('input', () => { formBuyLocked = true; updateLockBadges(); });
-[purity, weight, makingCharge].forEach(el => el.addEventListener('input', () => recalcFormPrices(false)));
-
-[sellSpreadInput, buySpreadInput, vatRateInput].forEach(el => {
-    el.addEventListener('change', async () => {
-        settings.markup  = parseFloat(sellSpreadInput.value) || 0;
-        settings.buyback = parseFloat(buySpreadInput.value)  || 0;
-        settings.vat     = parseFloat(vatRateInput.value)    || 0;
-        await saveSettingsToFirestore().catch(() => {});
-
-        if (lastSpotPerGram > 0) applySpot(lastSpotPerGram, lastSpotPerOunce, false);
-        else updateAllItemPrices(false);
-        showToast('Pricing settings applied to all items', 'success');
-    });
-});
-
-/* ============================================================
-   IMAGE HELPERS
-   ============================================================ */
-function fileToBase64(file) {
-    return new Promise(resolve => {
-        const reader = new FileReader();
-        reader.onload = e => resolve(e.target.result);
-        reader.readAsDataURL(file);
-    });
-}
-
-supplierLogoFile.addEventListener('change', async function () {
-    if (this.files && this.files[0]) {
-        const b64 = await fileToBase64(this.files[0]);
-        supplierLogoData.value = b64;
-        supplierLogoPreview.src = b64;
-        supplierLogoPreview.classList.remove('hidden');
-        supplierLogoUrl.value = '';
-    }
-});
-
-supplierLogoUrl.addEventListener('input', function () {
-    const url = this.value.trim();
-    if (url) {
-        supplierLogoPreview.src = url;
-        supplierLogoPreview.classList.remove('hidden');
-        supplierLogoData.value = '';
-        supplierLogoFile.value = '';
-    } else {
-        supplierLogoPreview.classList.add('hidden');
-    }
-});
-
-itemPhotoFile.addEventListener('change', async function () {
-    if (this.files && this.files[0]) {
-        const b64 = await fileToBase64(this.files[0]);
-        itemPhotoData.value = b64;
-        itemPhotoPreview.src = b64;
-        itemPhotoPreview.classList.remove('hidden');
-    }
-});
-
-/* ============================================================
-   SUPPLIERS
-   ============================================================ */
-function renderSupplierDropdown() {
-    const current = itemSupplier.value;
-    itemSupplier.innerHTML = '<option value="">None</option>';
-    suppliers.forEach(s => {
-        const opt = document.createElement('option');
-        opt.value = s.id;
-        opt.textContent = s.name;
-        itemSupplier.appendChild(opt);
-    });
-    if (current) itemSupplier.value = current;
-}
-
-function renderSuppliers() {
-    if (!suppliers.length) {
-        supplierTbody.innerHTML = '';
-        emptySupplier.classList.remove('hidden');
-        renderSupplierDropdown();
-        return;
-    }
-    emptySupplier.classList.add('hidden');
-
-    supplierTbody.innerHTML = suppliers.map(s => {
-        const logo = s.logo
-            ? `<img src="${s.logo}" class="supplier-logo rounded border" alt="logo" />`
-            : '<span class="text-gray-400 text-xs">No logo</span>';
-        return `
-            <tr class="border-b hover:bg-amber-50/50">
-                <td class="p-3 font-mono text-sm">${s.id}</td>
-                <td class="p-3 font-medium">${s.name}</td>
-                <td class="p-3">${s.phone || '—'}</td>
-                <td class="p-3">${logo}</td>
-                <td class="p-3 text-center">
-                    <button onclick="window.editSupplier('${s.id}')" class="text-blue-500 hover:text-blue-700 mr-2"><i class="fas fa-edit"></i></button>
-                    <button onclick="window.deleteSupplier('${s.id}')" class="text-red-400 hover:text-red-600"><i class="fas fa-trash-alt"></i></button>
-                </td>
-            </tr>`;
-    }).join('');
-
-    renderSupplierDropdown();
-}
-
-window.resetSupplierForm = function () {
-    editingSupplierId = null;
-    supplierForm.reset();
-    supplierLogoPreview.classList.add('hidden');
-    supplierLogoData.value = '';
-    supplierBtnText.innerText = 'Add Supplier';
-    editSupplierId.value = '';
-};
-
-window.editSupplier = function (id) {
-    const s = suppliers.find(x => x.id === id);
-    if (!s) return;
-    editingSupplierId = id;
-    supplierId.value = s.id;
-    supplierName.value = s.name;
-    supplierPhone.value = s.phone || '';
-    supplierLogoUrl.value = s.logo || '';
-    supplierLogoData.value = '';
-    supplierLogoFile.value = '';
-    if (s.logo) {
-        supplierLogoPreview.src = s.logo;
-        supplierLogoPreview.classList.remove('hidden');
-    } else {
-        supplierLogoPreview.classList.add('hidden');
-    }
-    supplierBtnText.innerText = 'Update Supplier';
-    editSupplierId.value = id;
-};
-
-window.deleteSupplier = async function (id) {
-    if (!confirm('Delete this supplier?')) return;
-    const { db, doc, deleteDoc } = await fb();
-    try {
-        await deleteDoc(doc(db, 'suppliers', id));
-        suppliers = suppliers.filter(s => s.id !== id);
-        renderSuppliers();
-        showToast('Supplier deleted', 'info');
-    } catch (err) { showToast('Delete failed: ' + err.message, 'error'); }
-};
-
-supplierForm.addEventListener('submit', async function (e) {
-    e.preventDefault();
-    const id = supplierId.value.trim();
-    const name = supplierName.value.trim();
-    const phone = supplierPhone.value.trim();
-    const logo = supplierLogoUrl.value.trim() || supplierLogoData.value || '';
-
-    if (!id || !name) { showToast('ID and Name are required', 'warning'); return; }
-
-    if (editingSupplierId) {
-        const idx = suppliers.findIndex(s => s.id === editingSupplierId);
-        if (idx > -1) suppliers[idx] = { id, name, phone, logo };
-        editingSupplierId = null;
-        supplierBtnText.innerText = 'Add Supplier';
-        editSupplierId.value = '';
-    } else {
-        if (suppliers.find(s => s.id === id)) { showToast('Supplier ID already exists', 'warning'); return; }
-        suppliers.push({ id, name, phone, logo });
-    }
-
-    try {
-        await saveSuppliersToFirestore();
-        renderSuppliers();
-        window.resetSupplierForm();
-        showToast('Supplier saved', 'success');
-    } catch (err) { showToast('Save failed: ' + err.message, 'error'); }
-});
-
-/* ============================================================
-   ITEM CRUD
-   ============================================================ */
-function generateItemCode() {
-    const nums = items
-        .map(i => parseInt((i.itemCode || '').replace(/\D/g, ''), 10))
-        .filter(n => !isNaN(n));
-    const next = nums.length ? Math.max(...nums) + 1 : 1;
-    return `JWL-${String(next).padStart(4, '0')}`;
-}
-
-window.resetItemForm = function () {
-    editingId = null;
-    formSellLocked = false;
-    formBuyLocked = false;
-    form.reset();
-    boughtPrice.value = '';
-    salePrice.value = '';
-    editId.value = '';
-    stockQty.value = '1';
-    itemPhotoData.value = '';
-    itemPhotoPreview.classList.add('hidden');
-    itemPhotoPreview.removeAttribute('src');
-    itemPhotoFile.value = '';
-    formBtnText.innerText = 'Add Item';
-    updateLockBadges();
-};
-
-form.addEventListener('submit', async function (e) {
-    e.preventDefault();
-
-    const name = itemName.value.trim();
-    const pur  = purity.value;
-    const w    = parseFloat(weight.value) || 0;
-    const mc   = parseFloat(makingCharge.value) || 0;
-    const qty  = parseInt(stockQty.value) || 1;
-    const sup  = itemSupplier.value || '';
-    const photo = itemPhotoData.value || '';
-
-    if (!name || w <= 0) { showToast('Please fill in name and a valid weight.', 'warning'); return; }
-
-    let finalBuy  = parseFloat(boughtPrice.value);
-    let finalSell = parseFloat(salePrice.value);
-
-    const auto = computeAutoPrices(pur, w, mc);
-
-    if (isNaN(finalBuy) || finalBuy < 0) {
-        if (!auto) {
-            rateWarning.classList.remove('hidden');
-            rateWarning.innerText = '⚠️ No live gold price available yet. Enter the price manually.';
-            return;
-        }
-        finalBuy = auto.bought;
-    }
-    if (isNaN(finalSell) || finalSell <= 0) {
-        if (!auto) {
-            rateWarning.classList.remove('hidden');
-            rateWarning.innerText = '⚠️ No live gold price available yet. Enter the sell price manually.';
-            return;
-        }
-        finalSell = auto.sell;
-    }
-
-    rateWarning.classList.add('hidden');
-    const now = new Date().toISOString();
-
-    try {
-        if (editingId) {
-            const idx = items.findIndex(i => i.id === editingId);
-            if (idx === -1) { showToast('Item not found', 'error'); return; }
-            items[idx] = {
-                ...items[idx],
-                name, purity: pur, weight: w, makingCharge: mc,
-                boughtPrice: +finalBuy.toFixed(2),
-                finalSalePrice: +finalSell.toFixed(2),
-                buyLocked: formBuyLocked, sellLocked: formSellLocked,
-                description: description.value.trim(),
-                stockQty: qty, supplier: sup,
-                photo: photo || items[idx].photo || '',
-                dateAdded: now
-            };
-            showToast('Item updated!', 'success');
-        } else {
-            items.push({
-                id: Date.now().toString(36) + Math.random().toString(36).slice(2, 5),
-                itemCode: generateItemCode(),
-                name, purity: pur, weight: w, makingCharge: mc,
-                boughtPrice: +finalBuy.toFixed(2),
-                finalSalePrice: +finalSell.toFixed(2),
-                buyLocked: formBuyLocked, sellLocked: formSellLocked,
-                description: description.value.trim(),
-                stockQty: qty, supplier: sup,
-                photo: photo || '',
-                dateAdded: now
-            });
-            showToast('Item added!', 'success');
-        }
-
-        await saveItemsToFirestore();
-        window.resetItemForm();
-        renderStock();
-        renderPOS();
-        updateCart();
-    } catch (err) { showToast('Save failed: ' + err.message, 'error'); }
-});
-
-window.deleteItem = async function (id) {
-    if (!confirm('Delete this item?')) return;
-    const { db, doc, deleteDoc } = await fb();
-    try {
-        await deleteDoc(doc(db, 'items', id));
-        items = items.filter(i => i.id !== id);
-        renderStock(); renderPOS(); updateCart();
-        showToast('Item deleted.', 'info');
-    } catch (err) { showToast('Delete failed: ' + err.message, 'error'); }
-};
-
-window.editItem = function (id) {
-    const item = items.find(i => i.id === id);
-    if (!item) return;
-
-    editingId = id;
-    formSellLocked = !!item.sellLocked;
-    formBuyLocked  = !!item.buyLocked;
-
-    itemName.value = item.name;
-    purity.value = item.purity;
-    weight.value = item.weight;
-    makingCharge.value = item.makingCharge;
-    description.value = item.description || '';
-    stockQty.value = item.stockQty || 1;
-    itemSupplier.value = item.supplier || '';
-    boughtPrice.value = money(item.boughtPrice);
-    salePrice.value = money(item.finalSalePrice);
-
-    if (item.photo) {
-        itemPhotoPreview.src = item.photo;
-        itemPhotoPreview.classList.remove('hidden');
-        itemPhotoData.value = item.photo;
-    } else {
-        itemPhotoPreview.classList.add('hidden');
-        itemPhotoData.value = '';
-    }
-
-    updateLockBadges();
-    formBtnText.innerText = 'Update Item';
-    editId.value = id;
-
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelector('[data-tab="stockTab"]').classList.add('active');
-    document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
-    $('stockTab').classList.remove('hidden');
-
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-};
-
-/* ============================================================
-   RENDER STOCK
-   ============================================================ */
-function purityClass(p) {
-    if (p === '24K') return 'bg-amber-100 text-amber-800';
-    if (p === '21K') return 'bg-blue-100 text-blue-800';
-    if (p === '18K') return 'bg-violet-100 text-violet-800';
-    if (p === '14K') return 'bg-emerald-100 text-emerald-800';
-    return 'bg-gray-200 text-gray-700';
-}
-
-function renderStock() {
-    if (!items.length) {
-        stockTbody.innerHTML = '';
-        emptyStock.classList.remove('hidden');
-        itemCount.innerText = '0 items';
-        return;
-    }
-    emptyStock.classList.add('hidden');
-    itemCount.innerText = `${items.length} item${items.length > 1 ? 's' : ''}`;
-
-    stockTbody.innerHTML = items.map(item => {
-        const photoHtml = item.photo
-            ? `<img src="${item.photo}" class="item-photo" alt="" />`
-            : '<span class="text-gray-400 text-xs">No img</span>';
-        const supObj = suppliers.find(s => s.id === item.supplier);
-        const supName = supObj ? supObj.name : '—';
-        const lockIcon = item.sellLocked
-            ? '<i class="fas fa-lock text-amber-500 text-[10px] ml-1" title="Manual price"></i>'
-            : '';
-
-        return `
-            <tr class="border-b hover:bg-amber-50/50 transition">
-                <td class="p-3">${photoHtml}</td>
-                <td class="p-3 font-mono text-xs font-semibold text-gray-700">${item.itemCode || '—'}</td>
-                <td class="p-3">
-                    <svg id="barcode-${item.id}" class="barcode-svg"></svg>
-                    <span id="barcodeFallback-${item.id}" style="display:none;font-size:10px;color:#666;">${item.itemCode || ''}</span>
-                </td>
-                <td class="p-3 font-medium text-gray-800">${item.name}</td>
-                <td class="p-3"><span class="px-2 py-0.5 rounded-full text-xs font-semibold ${purityClass(item.purity)}">${item.purity}</span></td>
-                <td class="p-3">${num(item.weight).toFixed(2)}</td>
-                <td class="p-3 font-mono text-sm text-green-700">${money(item.boughtPrice)}</td>
-                <td class="p-3 font-bold text-amber-600">${money(item.finalSalePrice)}${lockIcon}</td>
-                <td class="p-3">${item.stockQty || 1}</td>
-                <td class="p-3 text-xs text-gray-600">${supName}</td>
-                <td class="p-3 text-center whitespace-nowrap">
-                    <button onclick="window.editItem('${item.id}')" class="text-blue-500 hover:text-blue-700 mr-1 transition" title="Edit"><i class="fas fa-edit"></i></button>
-                    <button onclick="window.deleteItem('${item.id}')" class="text-red-400 hover:text-red-600 mr-1 transition" title="Delete"><i class="fas fa-trash-alt"></i></button>
-                    <button onclick="window.printLabel('${item.id}')" class="text-indigo-500 hover:text-indigo-700 mr-1 transition" title="Large label (450px)"><i class="fas fa-tag"></i></button>
-                    <button onclick="window.printSmallLabel('${item.id}')" class="text-purple-500 hover:text-purple-700 transition" title="Small label (40×20mm)"><i class="fas fa-compress-alt"></i></button>
-                </td>
-            </tr>`;
-    }).join('');
-
-    setTimeout(() => {
-        items.forEach(item => {
-            const svg = document.getElementById(`barcode-${item.id}`);
-            const fallback = document.getElementById(`barcodeFallback-${item.id}`);
-            if (svg && typeof JsBarcode !== 'undefined' && item.itemCode) {
-                try {
-                    JsBarcode(svg, item.itemCode, {
-                        format: 'CODE128', width: 1.8, height: 40,
-                        displayValue: true, fontSize: 12, font: 'monospace',
-                        background: '#ffffff', lineColor: '#1e293b'
-                    });
-                    svg.style.display = '';
-                    if (fallback) fallback.style.display = 'none';
-                } catch (e) {
-                    if (fallback) { svg.style.display = 'none'; fallback.style.display = 'inline'; }
-                }
-            } else if (fallback) {
-                if (svg) svg.style.display = 'none';
-                fallback.style.display = 'inline';
-            }
-        });
-    }, 100);
-}
-
-/* ============================================================
-   POS
-   ============================================================ */
-function renderPOS() {
-    const search = posSearch.value.toLowerCase().trim();
-    let filtered = items.filter(i => (i.stockQty || 1) > 0);
-    if (search) {
-        filtered = filtered.filter(i =>
-            i.name.toLowerCase().includes(search) ||
-            (i.itemCode || '').toLowerCase().includes(search)
-        );
-    }
-    if (!filtered.length) {
-        posProductList.innerHTML = '';
-        posEmpty.classList.remove('hidden');
-        return;
-    }
-    posEmpty.classList.add('hidden');
-
-    posProductList.innerHTML = filtered.map(item => {
-        const available = item.stockQty || 1;
-        return `
-            <tr class="border-b hover:bg-amber-50/50 transition">
-                <td class="p-2 font-mono text-xs text-gray-600">${item.itemCode || '—'}</td>
-                <td class="p-2 font-medium text-gray-800">${item.name}</td>
-                <td class="p-2"><span class="px-2 py-0.5 rounded-full text-xs font-semibold ${purityClass(item.purity)}">${item.purity}</span></td>
-                <td class="p-2">${num(item.weight).toFixed(2)}g</td>
-                <td class="p-2 text-center">
-                    <input id="posPrice-${item.id}" type="number" step="0.01"
-                           value="${money(item.finalSalePrice)}"
-                           class="w-20 px-1 py-0.5 border border-gray-300 rounded text-right text-xs focus:ring-2 focus:ring-amber-400" />
-                </td>
-                <td class="p-2 text-center">
-                    <input id="posQty-${item.id}" type="number" min="1" max="${available}" value="1"
-                           class="w-12 px-1 py-0.5 border border-gray-300 rounded text-center text-sm" />
-                </td>
-                <td class="p-2 text-center">
-                    <button onclick="window.addToCart('${item.id}')"
-                            class="bg-amber-500 hover:bg-amber-600 text-white px-3 py-1 rounded-lg text-sm transition">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </td>
-            </tr>`;
-    }).join('');
-}
-
-/* ============================================================
-   CART
-   ============================================================ */
-window.addToCart = function (itemId) {
-    const item = items.find(i => i.id === itemId);
-    if (!item) return;
-
-    const qtyInput = document.getElementById(`posQty-${itemId}`);
-    const priceInput = document.getElementById(`posPrice-${itemId}`);
-    const qty = Math.max(1, parseInt(qtyInput?.value) || 1);
-    let price = parseFloat(priceInput?.value);
-    if (isNaN(price) || price < 0) price = num(item.finalSalePrice);
-
-    const available = item.stockQty || 1;
-    if (qty > available) { showToast(`Only ${available} in stock`, 'warning'); return; }
-
-    const existing = cart.find(c => c.id === itemId);
-    if (existing) {
-        const newQty = existing.qty + qty;
-        if (newQty > available) { showToast(`Only ${available} in stock`, 'warning'); return; }
-        existing.qty = newQty;
-        existing.unitPrice = price;
-    } else {
-        cart.push({
-            id: item.id, itemCode: item.itemCode, name: item.name,
-            purity: item.purity, weight: num(item.weight),
-            listPrice: num(item.finalSalePrice),
-            unitPrice: price, qty
-        });
-    }
-    updateCart();
-    showToast(`Added ${qty} × ${item.name}`, 'success');
-};
-
-window.removeFromCart = function (index) { cart.splice(index, 1); updateCart(); };
-
-window.updateCartQty = function (index, value) {
-    const line = cart[index]; if (!line) return;
-    const item = items.find(i => i.id === line.id);
-    const available = item ? (item.stockQty || 1) : 9999;
-    let q = parseInt(value) || 1;
-    if (q < 1) q = 1;
-    if (q > available) { q = available; showToast(`Only ${available} in stock`, 'warning'); }
-    line.qty = q;
-    updateCart();
-};
-
-window.updateCartPrice = function (index, value) {
-    const line = cart[index]; if (!line) return;
-    let p = parseFloat(value);
-    if (isNaN(p) || p < 0) p = line.listPrice;
-    line.unitPrice = p;
-    updateCart();
-};
-
-window.resetCartPrices = function () {
-    if (!cart.length) return;
-    cart.forEach(line => { line.unitPrice = line.listPrice; });
-    updateCart();
-    showToast('Cart prices reset to list price', 'info');
-};
-
-function cartSubtotalValue() {
-    return cart.reduce((sum, l) => sum + (num(l.unitPrice) * l.qty), 0);
-}
-
-function updateCart() {
-    if (!cart.length) {
-        cartItems.innerHTML = '';
-        cartEmpty.classList.remove('hidden');
-        cartCount.innerText = '0';
-        cartSubtotal.innerText = '0.00';
-        cartTotal.innerText = '0.00';
-        cartDiscountAmount.innerText = '0.00';
-        return;
-    }
-    cartEmpty.classList.add('hidden');
-
-    cartItems.innerHTML = cart.map((line, index) => {
-        const lineTotal = num(line.unitPrice) * line.qty;
-        const changed = Math.abs(num(line.unitPrice) - num(line.listPrice)) > 0.001;
-        return `
-            <div class="pos-cart-item p-2 border-b border-gray-100 text-sm">
-                <div class="flex justify-between items-start gap-2">
-                    <div class="flex-1 min-w-0">
-                        <div class="font-medium truncate">${line.name}</div>
-                        <div class="text-[10px] text-gray-500">
-                            ${line.purity} · ${line.weight.toFixed(2)}g · list ${money(line.listPrice)}
-                            ${changed ? '<span class="text-amber-600 font-semibold"> · edited</span>' : ''}
-                        </div>
-                    </div>
-                    <button onclick="window.removeFromCart(${index})" class="text-red-400 hover:text-red-600 transition">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                <div class="flex items-center gap-2 mt-1.5">
-                    <label class="text-[10px] text-gray-500">Qty</label>
-                    <input type="number" min="1" value="${line.qty}"
-                           onchange="window.updateCartQty(${index}, this.value)"
-                           class="w-14 px-1 py-0.5 border border-gray-300 rounded text-center text-xs" />
-                    <label class="text-[10px] text-gray-500">Price</label>
-                    <input type="number" step="0.01" value="${money(line.unitPrice)}"
-                           onchange="window.updateCartPrice(${index}, this.value)"
-                           class="w-20 px-1 py-0.5 border border-gray-300 rounded text-right text-xs focus:ring-2 focus:ring-amber-400" />
-                    <span class="ml-auto font-bold text-amber-600">${lineTotal.toFixed(2)}</span>
-                </div>
-            </div>`;
-    }).join('');
-
-    cartCount.innerText = cart.reduce((s, c) => s + c.qty, 0);
-
-    const subtotal = cartSubtotalValue();
-    const discount = parseFloat(cartDiscount.value) || 0;
-    const discountAmount = subtotal * (discount / 100);
-    const total = subtotal - discountAmount;
-
-    cartSubtotal.innerText = subtotal.toFixed(2);
-    cartDiscountAmount.innerText = discountAmount.toFixed(2);
-    cartTotal.innerText = total.toFixed(2);
-}
-
-window.clearCart = function () {
-    if (!cart.length) return;
-    if (!confirm('Clear the cart?')) return;
-    cart = [];
-    updateCart();
-    showToast('Cart cleared', 'info');
-};
-
-/* ============================================================
-   CHECKOUT
-   ============================================================ */
-window.checkout = async function () {
-    if (!cart.length) { showToast('Cart is empty', 'warning'); return; }
-
-    for (const c of cart) {
-        const item = items.find(i => i.id === c.id);
-        if (!item) { showToast(`Item ${c.name} no longer exists`, 'error'); return; }
-        const available = item.stockQty || 1;
-        if (c.qty > available) { showToast(`Only ${available} × ${c.name} in stock`, 'warning'); return; }
-    }
-
-    for (const c of cart) {
-        const item = items.find(i => i.id === c.id);
-        if (item) item.stockQty = Math.max(0, (item.stockQty || 1) - c.qty);
-    }
-
-    const subtotal = cartSubtotalValue();
-    const discount = parseFloat(cartDiscount.value) || 0;
-    const discountAmount = subtotal * (discount / 100);
-    const total = subtotal - discountAmount;
-
-    lastReceipt = {
-        items: cart.map(c => ({ ...c })),
-        subtotal, discount, discountAmount, total,
-        date: new Date().toISOString()
-    };
-
-    try { await saveItemsToFirestore(); }
-    catch (err) { showToast('Saved locally — cloud sync failed: ' + err.message, 'warning'); }
-
-    cart = [];
-    cartDiscount.value = 0;
-    updateCart();
-    renderStock();
-    renderPOS();
-    showToast(`Sale complete! Total: ${total.toFixed(2)}`, 'success');
-};
-
-/* ============================================================
-   PRINT RECEIPT
-   ============================================================ */
-window.printReceipt = function () {
-    if (!lastReceipt) { showToast('No sale to print', 'warning'); return; }
-
-    const { items: rItems, subtotal, discount, discountAmount, total, date } = lastReceipt;
-    const d = new Date(date);
-
-    let html = `
-        <div style="font-family:'Courier New',monospace;font-size:12px;padding:20px;max-width:350px;margin:0 auto;">
-            <div style="text-align:center;border-bottom:1px dashed #000;padding-bottom:8px;">
-                <h2 style="margin:0;font-size:18px;">GOLD POS</h2>
-                <p style="margin:2px 0;font-size:10px;">${d.toLocaleDateString()} ${d.toLocaleTimeString()}</p>
-            </div>
-            <div style="padding:8px 0;border-bottom:1px dashed #000;">`;
-
-    rItems.forEach(it => {
-        const lineTotal = num(it.unitPrice) * it.qty;
-        html += `
-            <div style="display:flex;justify-content:space-between;font-size:11px;padding:2px 0;">
-                <span>${it.name} (${it.purity}) ×${it.qty}</span>
-                <span>${lineTotal.toFixed(2)}</span>
-            </div>`;
-    });
-
-    html += `
-            </div>
-            <div style="padding:6px 0;">
-                <div style="display:flex;justify-content:space-between;"><span>Subtotal</span><span>${subtotal.toFixed(2)}</span></div>
-                <div style="display:flex;justify-content:space-between;"><span>Discount (${discount}%)</span><span>-${discountAmount.toFixed(2)}</span></div>
-                <div style="display:flex;justify-content:space-between;font-weight:bold;font-size:14px;border-top:1px solid #000;padding-top:4px;margin-top:4px;">
-                    <span>TOTAL</span><span>${total.toFixed(2)}</span>
-                </div>
-            </div>
-            <div style="text-align:center;border-top:1px dashed #000;padding-top:8px;font-size:10px;color:#666;">
-                Thank you for your purchase!
-            </div>
-        </div>`;
-
-    const w = window.open('', '_blank', 'width=400,height=600');
-    if (!w) { showToast('Please allow popups to print', 'warning'); return; }
-    w.document.write(`<html><head><title>Receipt</title></head>
-        <body style="margin:0;background:#fff;" onload="window.print();setTimeout(()=>window.close(),600);">
-        ${html}</body></html>`);
-    w.document.close();
-};
-
-/* ============================================================
-   LARGE LABEL  (450px) — includes supplier logo & name
-   ============================================================ */
-function buildLabelHTML(item, supplier) {
-    const code = item.itemCode || 'N/A';
-    const barcodeId = 'label-barcode-' + Date.now();
-    const logo = supplier?.logo || '';
-    const supplierName = supplier?.name || '';
-
-    return `
-        <div class="label-print">
-            <div class="label-row">
-                <div class="label-left">
-                    <div class="label-barcode"><svg id="${barcodeId}"></svg></div>
-                    <div class="label-name">${item.name || ''}</div>
-                    <div class="label-details">
-                        <span>${item.purity || ''}</span>
-                        <span>${num(item.weight).toFixed(2)} g</span>
-                        ${item.stockQty ? `<span>Qty: ${item.stockQty}</span>` : ''}
-                    </div>
-                    <div class="label-badge">✦ Gold POS</div>
-                </div>
-                <div class="label-right">
-                    <div class="label-making">${money(item.makingCharge)} Making</div>
-                    ${logo ? `<img src="${logo}" class="label-supplier-logo" alt="supplier logo" />` : '<div style="font-size:14px;color:#94a3b8;padding:4px 0;">No logo</div>'}
-                    ${supplierName ? `<div class="label-supplier-name">${supplierName}</div>` : ''}
-                </div>
-            </div>
-            <div class="label-footer">Gold POS · Item Label · ${new Date().toLocaleDateString()}</div>
-        </div>
-        <script>
-            (function(){
-                var svg = document.getElementById('${barcodeId}');
-                if (svg && typeof JsBarcode !== 'undefined') {
-                    try {
-                        JsBarcode(svg, '${code}', {
-                            format:"CODE128", width:2.0, height:56,
-                            displayValue:false, background:"#ffffff", lineColor:"#1e293b"
-                        });
-                    } catch(e){}
-                }
-            })();
-        <\/script>`;
-}
-
-const LABEL_STYLES = `
-    body { margin:0; padding:20px; background:#fff; display:flex; justify-content:center; align-items:center;
-           min-height:100vh; font-family:'Segoe UI',Arial,sans-serif; }
-    .label-print { width:450px; padding:22px 24px; background:#fff; border-radius:14px; border:1px solid #d1d5db;
-           box-shadow:0 4px 16px rgba(0,0,0,.07); margin:0 auto; }
-    .label-print .label-row { display:flex; gap:24px; align-items:stretch; }
-    .label-print .label-left { flex:1.4; border-right:2px dashed #e5e7eb; padding-right:20px;
-           display:flex; flex-direction:column; justify-content:center; }
-    .label-print .label-barcode svg { max-width:200px; height:56px; margin:2px 0 6px 0; }
-    .label-print .label-name { font-size:20px; font-weight:700; color:#1e293b; }
-    .label-print .label-details { font-size:15px; color:#475569; margin-top:4px; }
-    .label-print .label-details span { display:inline-block; background:#f1f5f9; padding:2px 12px;
-           border-radius:6px; margin-right:6px; font-weight:500; }
-    .label-print .label-badge { display:inline-block; font-size:11px; font-weight:600; padding:3px 14px;
-           border-radius:14px; background:#fef3c7; color:#92400e; margin-top:6px; align-self:flex-start; }
-    .label-print .label-right { flex:.9; display:flex; flex-direction:column; justify-content:center;
-           align-items:center; text-align:center; gap:8px; padding-left:6px; }
-    .label-print .label-making { font-size:22px; font-weight:700; color:#0b3b5c; background:#e8f4fd;
-           padding:6px 24px; border-radius:30px; display:inline-block; }
-    .label-print .label-supplier-logo { max-width:90px; max-height:90px; object-fit:contain; border-radius:8px;
-           border:1px solid #e5e7eb; background:#fafafa; padding:6px; }
-    .label-print .label-supplier-name { font-size:15px; font-weight:600; color:#334155; }
-    .label-print .label-footer { margin-top:14px; border-top:1px solid #e5e7eb; padding-top:10px; font-size:11px;
-           color:#94a3b8; text-align:center; letter-spacing:.4px; }
-    @media print {
-        body { padding:0; background:#fff; }
-        .label-print { border:none !important; box-shadow:none !important; padding:16px 20px !important; width:420px !important; }
-        .label-print .label-left { border-right:2px dashed #aaa !important; }
-    }`;
-
-window.printLabel = function (id) {
-    const item = items.find(i => i.id === id);
-    if (!item) { showToast('Item not found', 'error'); return; }
-    const supplier = suppliers.find(s => s.id === item.supplier) || null;
-    const content = buildLabelHTML(item, supplier);
-
-    const w = window.open('', '_blank', 'width=540,height=440');
-    if (!w) { showToast('Please allow popups to print', 'warning'); return; }
-    w.document.write(`<html>
-        <head>
-            <title>Label - ${item.itemCode || ''}</title>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.6/JsBarcode.all.min.js"><\/script>
-            <style>${LABEL_STYLES}</style>
-        </head>
-        <body onload="setTimeout(()=>{window.print();},300);">
-            ${content}
-        </body>
-    </html>`);
-    w.document.close();
-    showToast(`Label ready for ${item.name}`, 'success');
-};
-
-window.printCurrentLabel = function () {
-    const id = editId.value;
-    if (id) window.printLabel(id);
-    else showToast('Save the item first, then print its label from the stock list.', 'warning');
-};
-
-/* ============================================================
-   SMALL LABEL (40×20mm) — includes supplier logo & name
-   ============================================================ */
-function buildSmallLabelHTML(item, supplier) {
-    const code = item.itemCode || 'N/A';
-    const barcodeId = 'sl-barcode-' + Date.now();
-    const price = num(item.finalSalePrice);
-    const logo = supplier?.logo || '';
-    const supplierName = supplier?.name || 'Gold POS';
-
-    return `
-        <div class="small-label">
-            <div class="sl-top">
-                ${logo ? `<img src="${logo}" class="sl-logo" alt="" />` : ''}
-                <span class="sl-supplier">${supplierName}</span>
-                <span class="sl-code">${code}</span>
-            </div>
-            <div class="sl-barcode-wrap">
-                <svg id="${barcodeId}" class="sl-barcode"></svg>
-            </div>
-            <div class="sl-bottom">
-                <span class="sl-purity">${item.purity || ''} · ${num(item.weight).toFixed(2)}g</span>
-                <span class="sl-price">$${price.toFixed(2)}</span>
-            </div>
-        </div>
-        <script>
-            (function(){
-                var svg = document.getElementById('${barcodeId}');
-                if (svg && typeof JsBarcode !== 'undefined') {
-                    try {
-                        JsBarcode(svg, '${code}', {
-                            format:"CODE128",
-                            width:1.1,
-                            height:22,
-                            displayValue:false,
-                            margin:0,
-                            background:"#ffffff",
-                            lineColor:"#000000"
-                        });
-                    } catch(e){}
-                }
-            })();
-        <\/script>`;
-}
-
-const SMALL_LABEL_STYLES = `
-    @page { size: 40mm 20mm; margin: 0; }
-    * { box-sizing: border-box; }
-    html, body { margin:0; padding:0; background:#fff; font-family: Arial, Helvetica, sans-serif; }
-    body { display:flex; align-items:center; justify-content:center; min-height:100vh; }
-
-    .small-label {
-        width: 40mm;
-        height: 20mm;
-        padding: 0.9mm 1.2mm;
-        background: #fff;
-        display: flex;
-        flex-direction: column;
-        gap: 0.3mm;
-        overflow: hidden;
-        page-break-after: avoid;
-    }
-
-    .sl-top {
-        display: flex;
-        align-items: center;
-        gap: 1mm;
-        height: 4mm;
-        flex: 0 0 auto;
-        line-height: 1;
-        overflow: hidden;
-    }
-    .sl-logo {
-        width: 4mm;
-        height: 4mm;
-        object-fit: contain;
-        flex: 0 0 auto;
-        border-radius: 0.5mm;
-        background: #fff;
-    }
-    .sl-supplier {
-        flex: 1 1 auto;
-        min-width: 0;
-        font-size: 5.5pt;
-        font-weight: 800;
-        color: #000;
-        letter-spacing: 0.1px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-    .sl-code {
-        flex: 0 0 auto;
-        font-family: 'Courier New', monospace;
-        font-size: 5pt;
-        font-weight: 700;
-        color: #111;
-        white-space: nowrap;
-    }
-
-    .sl-barcode-wrap {
-        flex: 1 1 auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        min-height: 0;
-    }
-    .sl-barcode {
-        width: 100%;
-        height: 100%;
-        max-height: 8mm;
-        display: block;
-    }
-
-    .sl-bottom {
-        flex: 0 0 auto;
-        height: 3.6mm;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-size: 5.5pt;
-        font-weight: 700;
-        color: #000;
-        line-height: 1;
-        white-space: nowrap;
-    }
-    .sl-purity { letter-spacing: 0.1px; }
-    .sl-price  { font-size: 8pt; font-weight: 800; }
-
-    @media print {
-        html, body { min-height: 0; }
-        body { display: block; }
-        .small-label { margin: 0; }
-    }`;
-
-window.printSmallLabel = function (id) {
-    const item = items.find(i => i.id === id);
-    if (!item) { showToast('Item not found', 'error'); return; }
-
-    const supplier = suppliers.find(s => s.id === item.supplier) || null;
-    const content = buildSmallLabelHTML(item, supplier);
-
-    const w = window.open('', '_blank', 'width=320,height=200');
-    if (!w) { showToast('Please allow popups to print', 'warning'); return; }
-
-    w.document.write(`<html>
-        <head>
-            <title>Small Label - ${item.itemCode || ''}</title>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.6/JsBarcode.all.min.js"><\/script>
-            <style>${SMALL_LABEL_STYLES}</style>
-        </head>
-        <body onload="setTimeout(()=>{window.print();},350);">
-            ${content}
-        </body>
-    </html>`);
-    w.document.close();
-    showToast(`Small label ready for ${item.name}`, 'success');
-};
-
-window.printCurrentSmallLabel = function () {
-    const id = editId.value;
-    if (id) window.printSmallLabel(id);
-    else showToast('Save the item first, then print its small label from the stock list.', 'warning');
-};
-
-/* ============================================================
-   REPORTS
-   ============================================================ */
-window.filterReport = function (type) {
-    const now = new Date();
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    let filtered = [...items];
-
-    if (type === 'daily') {
-        filtered = items.filter(i => new Date(i.dateAdded) >= today);
-    } else if (type === 'weekly') {
-        const w = new Date(today); w.setDate(w.getDate() - 7);
-        filtered = items.filter(i => new Date(i.dateAdded) >= w);
-    } else if (type === 'monthly') {
-        const m = new Date(today); m.setMonth(m.getMonth() - 1);
-        filtered = items.filter(i => new Date(i.dateAdded) >= m);
-    } else if (type === 'all') {
-        filtered = [...items];
-    } else if (type === 'custom') {
-        const from = new Date($('customFrom').value);
-        const to = new Date($('customTo').value);
-        if (isNaN(from) || isNaN(to)) { showToast('Select a valid date range.', 'warning'); return; }
-        to.setHours(23, 59, 59);
-        filtered = items.filter(i => {
-            const d = new Date(i.dateAdded);
-            return d >= from && d <= to;
-        });
-    }
-
-    reportData = filtered;
-    renderReport(filtered);
-};
-
-function renderReport(data) {
-    const tbody = $('reportTbody'), empty = $('emptyReport');
-
-    if (!data.length) {
-        tbody.innerHTML = '';
-        empty.classList.remove('hidden');
-        $('reportCount').innerText = '0';
-        $('reportWeight').innerText = '0.00';
-        $('reportValue').innerText = '0.00';
-        return;
-    }
-    empty.classList.add('hidden');
-
-    let totalWeight = 0, totalValue = 0;
-
-    tbody.innerHTML = data.map(item => {
-        const q = item.stockQty || 1;
-        totalWeight += num(item.weight) * q;
-        totalValue  += num(item.finalSalePrice) * q;
-        const d = item.dateAdded ? new Date(item.dateAdded).toLocaleDateString() : '—';
-        return `
-            <tr class="border-b">
-                <td class="p-3 font-mono text-xs">${item.itemCode || '—'}</td>
-                <td class="p-3">${item.name}</td>
-                <td class="p-3">${item.purity}</td>
-                <td class="p-3">${num(item.weight).toFixed(2)}</td>
-                <td class="p-3 font-mono text-sm text-green-700">${money(item.boughtPrice)}</td>
-                <td class="p-3 font-bold text-amber-600">${money(item.finalSalePrice)}</td>
-                <td class="p-3">${q}</td>
-                <td class="p-3 text-gray-500 text-xs">${d}</td>
-            </tr>`;
-    }).join('');
-
-    $('reportCount').innerText = data.length;
-    $('reportWeight').innerText = totalWeight.toFixed(2);
-    $('reportValue').innerText = totalValue.toFixed(2);
-}
-
-/* ============================================================
-   EXPORTS
-   ============================================================ */
-window.exportCSV = function () {
-    if (!reportData.length) { showToast('No data to export.', 'warning'); return; }
-    const rows = [['Code','Name','Purity','Weight(g)','Bought Price','Sell Price','Qty','Date']];
-    reportData.forEach(i => rows.push([
-        i.itemCode, i.name, i.purity, i.weight, i.boughtPrice || 0, i.finalSalePrice,
-        i.stockQty || 1, i.dateAdded ? new Date(i.dateAdded).toLocaleDateString() : ''
-    ]));
-    const csv = rows.map(r => r.map(v => `"${String(v ?? '').replace(/"/g,'""')}"`).join(',')).join('\n');
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `stock_report_${new Date().toISOString().slice(0,10)}.csv`;
-    link.click();
-    URL.revokeObjectURL(link.href);
-    showToast('CSV exported!', 'success');
-};
-
-window.exportXLSX = function () {
-    if (!reportData.length) { showToast('No data to export.', 'warning'); return; }
-    const data = reportData.map(i => ({
-        Code: i.itemCode, Name: i.name, Purity: i.purity, Weight: i.weight,
-        'Bought Price': i.boughtPrice || 0, 'Sell Price': i.finalSalePrice,
-        Qty: i.stockQty || 1,
-        Date: i.dateAdded ? new Date(i.dateAdded).toLocaleDateString() : ''
-    }));
-    const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.json_to_sheet(data);
-    XLSX.utils.book_append_sheet(wb, ws, 'Stock');
-    XLSX.writeFile(wb, `stock_report_${new Date().toISOString().slice(0,10)}.xlsx`);
-    showToast('XLSX exported!', 'success');
-};
-
-window.exportPDF = function () {
-    if (!reportData.length) { showToast('No data to export.', 'warning'); return; }
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF('landscape', 'pt', 'a4');
-    doc.text('Gold POS — Stock Report', 40, 50);
-    doc.autoTable({
-        head: [['Code','Name','Purity','Weight(g)','Bought Price','Sell Price','Qty','Date']],
-        body: reportData.map(i => [
-            i.itemCode, i.name, i.purity, num(i.weight).toFixed(2),
-            money(i.boughtPrice), money(i.finalSalePrice), i.stockQty || 1,
-            i.dateAdded ? new Date(i.dateAdded).toLocaleDateString() : ''
-        ]),
-        startY: 70,
-        styles: { fontSize: 8 },
-        headStyles: { fillColor: [212, 175, 55] }
-    });
-    doc.save(`stock_report_${new Date().toISOString().slice(0,10)}.pdf`);
-    showToast('PDF exported!', 'success');
-};
-
-/* ============================================================
-   BACKUP / RESTORE / SNAPSHOTS
-   ============================================================ */
-function buildBackupPayload() {
-    return {
-        app: 'GoldPOS', version: 1,
-        exportedAt: new Date().toISOString(),
-        counts: { items: items.length, suppliers: suppliers.length },
-        items, suppliers, rates, settings
-    };
-}
-
-window.downloadBackup = function () {
-    try {
-        const payload = buildBackupPayload();
-        const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = `goldpos_backup_${new Date().toISOString().slice(0,19).replace(/[:T]/g,'-')}.json`;
-        link.click();
-        URL.revokeObjectURL(link.href);
-        showToast('Backup downloaded!', 'success');
-    } catch (err) { showToast('Backup failed: ' + err.message, 'error'); }
-};
-
-async function replaceCollection(name, newDocs) {
-    const { db, collection, doc, setDoc, deleteDoc, getDocs } = await fb();
-    const snap = await getDocs(collection(db, name));
-    const existing = new Set();
-    snap.forEach(d => existing.add(d.id));
-    for (const d of newDocs) {
-        const id = d.id || (Date.now().toString(36) + Math.random().toString(36).slice(2,5));
-        await setDoc(doc(db, name, id), { ...d, id });
-        existing.delete(id);
-    }
-    for (const id of existing) await deleteDoc(doc(db, name, id));
-}
-
-async function applyBackup(payload) {
-    if (!payload || payload.app !== 'GoldPOS') {
-        showToast('This file is not a Gold POS backup.', 'error');
-        return false;
-    }
-    items     = Array.isArray(payload.items) ? payload.items : [];
-    suppliers = Array.isArray(payload.suppliers) ? payload.suppliers : [];
-    rates     = payload.rates ? { ...rates, ...payload.rates } : rates;
-    settings  = payload.settings ? { ...settings, ...payload.settings } : settings;
-
-    await replaceCollection('items', items);
-    await replaceCollection('suppliers', suppliers);
-    await saveRatesToFirestore();
-    await saveSettingsToFirestore();
-
-    sellSpreadInput.value = settings.markup ?? 3;
-    buySpreadInput.value  = settings.buyback ?? 3;
-    vatRateInput.value    = settings.vat ?? 5;
-
-    renderKitcoGrid();
-    renderSuppliers();
-    renderSupplierDropdown();
-    renderStock();
-    renderPOS();
-    updateCart();
-    return true;
-}
-
-window.restoreFromFile = async function () {
-    const input = $('restoreFile');
-    if (!input.files || !input.files[0]) { showToast('Choose a backup file first.', 'warning'); return; }
-    if (!confirm('This will REPLACE the current database with the backup file. Continue?')) return;
-    try {
-        const text = await input.files[0].text();
-        const payload = JSON.parse(text);
-        const ok = await applyBackup(payload);
-        if (ok) {
-            showToast(`Restored ${items.length} items and ${suppliers.length} suppliers.`, 'success');
-            input.value = '';
-        }
-    } catch (err) { showToast('Restore failed: ' + err.message, 'error'); }
-};
-
-window.saveCloudSnapshot = async function () {
-    try {
-        const { db, doc, setDoc } = await fb();
-        const id = new Date().toISOString().replace(/[:.]/g, '-');
-        const payload = buildBackupPayload();
-        payload.snapshotId = id;
-        await setDoc(doc(db, 'backups', id), payload);
-        showToast('Snapshot saved to cloud!', 'success');
-        loadSnapshots();
-    } catch (err) { showToast('Snapshot failed: ' + err.message, 'error'); }
-};
-
-window.loadSnapshots = async function () {
-    const list = $('snapshotList');
-    list.innerHTML = '<p class="text-sm text-gray-400 text-center py-6">Loading snapshots…</p>';
-    try {
-        const { db, collection, getDocs } = await fb();
-        const snap = await getDocs(collection(db, 'backups'));
-        const docs = [];
-        snap.forEach(d => docs.push({ id: d.id, ...d.data() }));
-        docs.sort((a, b) => (b.exportedAt || '').localeCompare(a.exportedAt || ''));
-        if (!docs.length) {
-            list.innerHTML = '<p class="text-sm text-gray-400 text-center py-6">No snapshots saved yet.</p>';
-            return;
-        }
-        list.innerHTML = docs.map(d => {
-            const when = d.exportedAt ? new Date(d.exportedAt).toLocaleString() : d.id;
-            const c = d.counts || {};
-            return `
-                <div class="border border-gray-200 rounded-xl p-3 flex items-center justify-between gap-3 hover:bg-amber-50/40 transition">
-                    <div class="min-w-0">
-                        <p class="text-sm font-semibold text-gray-800 truncate">${when}</p>
-                        <p class="text-[11px] text-gray-500">
-                            ${c.items ?? (d.items ? d.items.length : 0)} items ·
-                            ${c.suppliers ?? (d.suppliers ? d.suppliers.length : 0)} suppliers
-                        </p>
-                    </div>
-                    <div class="flex gap-1 shrink-0">
-                        <button onclick="window.restoreSnapshot('${d.id}')"
-                                class="text-xs bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-lg transition">
-                            <i class="fas fa-rotate-left"></i> Restore
-                        </button>
-                        <button onclick="window.deleteSnapshot('${d.id}')"
-                                class="text-xs bg-red-100 hover:bg-red-200 text-red-600 px-2 py-1.5 rounded-lg transition">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </div>`;
-        }).join('');
-    } catch (err) {
-        list.innerHTML = `<p class="text-sm text-red-500 text-center py-6">Failed to load: ${err.message}</p>`;
-    }
-};
-
-window.restoreSnapshot = async function (id) {
-    if (!confirm('Restore this snapshot? The current database will be replaced.')) return;
-    try {
-        const { db, doc, getDoc } = await fb();
-        const snap = await getDoc(doc(db, 'backups', id));
-        if (!snap.exists()) { showToast('Snapshot not found.', 'error'); return; }
-        const ok = await applyBackup(snap.data());
-        if (ok) showToast('Snapshot restored!', 'success');
-    } catch (err) { showToast('Restore failed: ' + err.message, 'error'); }
-};
-
-window.deleteSnapshot = async function (id) {
-    if (!confirm('Delete this snapshot?')) return;
-    try {
-        const { db, doc, deleteDoc } = await fb();
-        await deleteDoc(doc(db, 'backups', id));
-        showToast('Snapshot deleted', 'info');
-        loadSnapshots();
-    } catch (err) { showToast('Delete failed: ' + err.message, 'error'); }
-};
-
-window.wipeDatabase = async function () {
-    if (!confirm('This will DELETE every item and supplier from the cloud database. Are you sure?')) return;
-    if (!confirm('Last chance — this cannot be undone. Continue?')) return;
-    try {
-        const { db, collection, doc, deleteDoc, getDocs } = await fb();
-        for (const name of ['items', 'suppliers']) {
-            const snap = await getDocs(collection(db, name));
-            for (const d of snap.docs) await deleteDoc(doc(db, name, d.id));
-        }
-        items = []; suppliers = []; cart = [];
-        renderSuppliers(); renderSupplierDropdown(); renderStock(); renderPOS(); updateCart();
-        showToast('Database wiped.', 'info');
-    } catch (err) { showToast('Wipe failed: ' + err.message, 'error'); }
-};
-
-/* ============================================================
-   TOAST
-   ============================================================ */
-function showToast(msg, type = 'success') {
-    const toast = $('toast'), toastMsg = $('toastMsg');
-    toastMsg.innerText = msg;
-    toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
-    const icon = toast.querySelector('i');
-    if (type === 'warning')      icon.className = 'fas fa-exclamation-triangle text-yellow-400';
-    else if (type === 'info')    icon.className = 'fas fa-info-circle text-blue-400';
-    else if (type === 'error')   icon.className = 'fas fa-times-circle text-red-400';
-    else                         icon.className = 'fas fa-check-circle text-green-400';
-    clearTimeout(toast._timer);
-    toast._timer = setTimeout(() => {
-        toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
-    }, 2800);
-}
-
-/* ============================================================
-   BINDINGS
-   ============================================================ */
-cartDiscount.addEventListener('input', updateCart);
-posSearch.addEventListener('input', renderPOS);
-
-document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', function () {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-        document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
-        $(this.dataset.tab).classList.remove('hidden');
-        if (this.dataset.tab === 'reportsTab') window.filterReport('daily');
-        if (this.dataset.tab === 'posTab') renderPOS();
-        if (this.dataset.tab === 'suppliersTab') renderSuppliers();
-        if (this.dataset.tab === 'databaseTab') loadSnapshots();
-    });
-});
-
-/* ============================================================
-   INIT
-   ============================================================ */
-async function init() {
-    updateLockBadges();
-    await loadAllData();
-
-    const todayStr = new Date().toISOString().slice(0, 10);
-    const weekAgo = new Date();
-    weekAgo.setDate(weekAgo.getDate() - 7);
-    $('customFrom').value = weekAgo.toISOString().slice(0, 10);
-    $('customTo').value = todayStr;
-
-    if (rates.sell24k > 0) {
-        rateWarning.classList.add('hidden');
-    } else {
-        rateWarning.classList.remove('hidden');
-        rateWarning.innerText = '⏳ Fetching live gold prices…';
-    }
-
-    renderStock();
-    renderPOS();
-    updateCart();
-
-    console.log('🌟 GoldPOS ready · Kitco panel (all karats in grams) · supplier logo on labels');
+    console.log('🔐 Nejmeh POS locked — awaiting sign-in');
 }
 
 init();
