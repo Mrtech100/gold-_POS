@@ -77,7 +77,6 @@
     .tab-btn { padding:.6rem 1.2rem; font-weight:500; cursor:pointer; border-bottom:3px solid transparent; transition:.2s; }
     .tab-btn:hover { border-bottom:3px solid var(--nj-gold-light); }
 
-    /* ---------- Brand script ---------- */
     .nj-script {
         font-family: 'Great Vibes', 'Brush Script MT', 'Lucida Handwriting', cursive;
         font-weight: 400;
@@ -89,7 +88,6 @@
         font-weight: 600;
     }
 
-    /* ---------- Live pulse ---------- */
     @keyframes pulse-green { 0%,100%{opacity:1} 50%{opacity:.35} }
     .live-dot {
         width:8px; height:8px; border-radius:50%; background:#22c55e;
@@ -103,7 +101,6 @@
         100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
     }
 
-    /* ---------- Kitco panel ---------- */
     .kitco-panel {
         background: linear-gradient(135deg, #fffdf5 0%, #ffffff 55%, #fdf6e3 100%);
         border: 1px solid #e8d79c;
@@ -201,7 +198,6 @@
     .fetch-btn:hover { background:#2563eb; }
     .fetch-btn:disabled { opacity:.6; cursor:not-allowed; }
 
-    /* ---------- Install PWA button ---------- */
     .install-btn {
         background: linear-gradient(135deg, #10b981, #059669);
         color:#fff;
@@ -237,7 +233,6 @@
     .badge-auto   { font-size:9px; padding:1px 7px; border-radius:99px; background:#d1fae5; color:#065f46; font-weight:600; }
     .badge-manual { font-size:9px; padding:1px 7px; border-radius:99px; background:#f7ecc7; color:#7a5c0d; font-weight:600; }
 
-    /* ---------- Money input with $ prefix ---------- */
     .money-input-wrap { position: relative; }
     .money-input-wrap .money-prefix {
         position:absolute; left:.65rem; top:50%; transform:translateY(-50%);
@@ -245,7 +240,6 @@
     }
     .money-input-wrap input { padding-left:1.65rem; }
 
-    /* ---------- Brand logo block ---------- */
     .nj-logo-badge {
         background: linear-gradient(180deg, #0a0a0a 0%, #1a1408 100%);
         border: 1px solid rgba(201,162,39,.35);
@@ -277,7 +271,6 @@
         padding-left: .35em;
     }
 
-    /* ---------- Large label (450px) ---------- */
     .label-print { font-family:'Segoe UI', Arial, sans-serif; width:450px; padding:22px 24px; background:#fff;
         border-radius:14px; border:1px solid #d1d5db; box-shadow:0 4px 16px rgba(0,0,0,.07); margin:0 auto; }
     .label-print .label-row { display:flex; gap:24px; align-items:stretch; }
@@ -300,19 +293,11 @@
     .label-print .label-footer { margin-top:14px; border-top:1px solid #e5e7eb; padding-top:10px; font-size:11px;
         color:#94a3b8; text-align:center; letter-spacing:.4px; }
 
-    @media print {
-        body * { visibility:hidden; }
-        #printLabelContainer, #printLabelContainer * { visibility:visible; }
-        #printLabelContainer { position:absolute; left:0; top:0; width:100%; display:flex; justify-content:center;
-            align-items:center; min-height:100vh; background:#fff; padding:20px; }
-    }
-
     @media (max-width:768px) {
         .kk-row .kk-price { font-size:.85rem; }
         .kitco-stat .k-val { font-size:.72rem; }
     }
 
-    /* ---------- Login page ---------- */
     .login-card { animation: loginPop .35s ease-out; }
     @keyframes loginPop {
         from { opacity:0; transform: translateY(14px) scale(.98); }
@@ -322,7 +307,7 @@
         width:100%; padding:.65rem .85rem;
         border:1px solid rgba(201,162,39,.35);
         background: rgba(0,0,0,.4);
-        color:#f7e7b4;
+        color:#2e2c26;
         border-radius:.6rem;
         font-size:.9rem;
         transition:.15s;
@@ -336,14 +321,247 @@
     .status-on  { background:#d1fae5; color:#065f46; }
     .status-off { background:#fee2e2; color:#b91c1c; }
 
-    /* ---------- PWA banner (standalone mode) ---------- */
     body.pwa-standalone { background:#faf7f0; padding-top: env(safe-area-inset-top); }
+
+    /* ============================================================
+       TAG PREVIEW OVERLAY
+       ============================================================ */
+    .tag-overlay {
+        position: fixed; inset: 0;
+        background: radial-gradient(circle at 50% 0%, #1a1408 0%, #0a0a0a 60%, #000 100%);
+        z-index: 500;
+        display: none;
+        flex-direction: column;
+    }
+    .tag-overlay.open { display: flex; }
+
+    .tag-overlay-bar {
+        flex: 0 0 auto;
+        display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+        padding: 10px 16px;
+        background: linear-gradient(180deg, #0a0a0a 0%, #1a1408 100%);
+        border-bottom: 2px solid #c9a227;
+        color: #f7e7b4;
+        box-shadow: 0 4px 18px rgba(0,0,0,.6);
+    }
+    .tag-overlay-brand {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 12px; letter-spacing: .35em; font-weight: 700;
+        color: #c9a227; white-space: nowrap;
+    }
+    .tag-overlay-title {
+        font-size: 13px; font-weight: 600;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        max-width: 30vw;
+    }
+    .tag-overlay-spacer { flex: 1; }
+    .tag-overlay-btn {
+        padding: 8px 18px;
+        border-radius: 8px;
+        font-size: 13px; font-weight: 700;
+        border: none; cursor: pointer;
+        transition: .15s;
+        font-family: inherit;
+    }
+    .tag-overlay-print {
+        background: linear-gradient(135deg, #c9a227, #9a7a1a);
+        color: #0a0a0a;
+        box-shadow: 0 2px 10px rgba(201,162,39,.45);
+    }
+    .tag-overlay-print:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .tag-overlay-close {
+        background: rgba(255,255,255,.10);
+        color: #f7e7b4;
+        border: 1px solid rgba(201,162,39,.35);
+    }
+    .tag-overlay-close:hover { background: rgba(255,255,255,.18); }
+
+    .tag-overlay-stage {
+        flex: 1 1 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 24px;
+        overflow: auto;
+    }
+    .tag-overlay-card {
+        background: #fff;
+        padding: 36px;
+        border-radius: 14px;
+        box-shadow: 0 30px 80px rgba(0,0,0,.7),
+                    0 0 0 1px rgba(201,162,39,.35);
+        display: flex; flex-direction: column; align-items: center; gap: 22px;
+        max-width: 92vw;
+    }
+    .tag-overlay-scale { transform-origin: center center; }
+    .tag-overlay-caption {
+        font-size: 11px; color: #6b7280;
+        letter-spacing: .3px;
+        text-align: center;
+        border-top: 1px dashed #e5e7eb;
+        padding-top: 14px;
+        width: 100%;
+    }
+    .tag-overlay-caption strong { color: #9a7a1a; }
+
+    .tag-ctl {
+        display:flex; align-items:center; gap:.4rem; flex-wrap:wrap;
+    }
+    .tag-ctl label { font-size:10px; color:#6b7280; font-weight:600; }
+    .tag-ctl input[type=number] {
+        width:64px; padding:.35rem .5rem; border:1px solid #d1d5db;
+        border-radius:.4rem; font-size:.75rem; text-align:center; background:#fff;
+    }
+    .tag-ctl input[type=number]:focus { outline:2px solid var(--nj-gold); outline-offset:1px; }
+
+    .batch-bar {
+        display:flex; align-items:center; gap:.6rem; flex-wrap:wrap;
+        background:#0a0a0a; color:#f7e7b4; padding:.55rem .85rem; border-radius:.6rem;
+        font-size:.72rem; font-weight:600; margin-bottom:.6rem;
+        border:1px solid rgba(201,162,39,.35);
+    }
+    .batch-bar label { font-size:.68rem; opacity:.85; font-weight:600; }
+    .batch-bar input,
+    .batch-bar select {
+        background:#fff; color:#000;
+        padding:.28rem .5rem; border-radius:.35rem; border:none;
+        font-size:.72rem; font-weight:700;
+        min-width:0;
+    }
+    .batch-bar input[type=number] { width:64px; text-align:center; }
+    .batch-bar button {
+        background: linear-gradient(135deg,#c9a227,#9a7a1a); color:#0a0a0a;
+        padding:.32rem .8rem; border:none; border-radius:.4rem; font-weight:800;
+        cursor:pointer; font-size:.7rem;
+        display:inline-flex; align-items:center; gap:5px;
+    }
+    .batch-bar button:hover { filter:brightness(1.08); }
+    .batch-bar button:disabled { opacity:.4; cursor:not-allowed; }
+
+    /* ---------- Diagnostic panel ---------- */
+    .diag-panel {
+        background: #0a0a0a; color: #f7e7b4;
+        border: 1px solid rgba(201,162,39,.35);
+        border-radius: .6rem;
+        padding: .8rem 1rem;
+        margin-bottom: .6rem;
+        font-size: .72rem;
+        line-height: 1.5;
+        display: none;
+    }
+    .diag-panel.show { display: block; }
+    .diag-panel .diag-title {
+        font-weight: 800; color: #c9a227;
+        letter-spacing: .3px;
+        margin-bottom: .35rem;
+        display: flex; align-items: center; gap: 6px;
+    }
+    .diag-panel ul { margin: 0; padding-left: 1.1rem; }
+    .diag-panel li { margin: .15rem 0; }
+    .diag-ok   { color: #4ade80; }
+    .diag-warn { color: #fbbf24; }
+    .diag-bad  { color: #f87171; }
+    .diag-close {
+        float: right;
+        background: rgba(255,255,255,.1);
+        border: 1px solid rgba(201,162,39,.35);
+        color: #f7e7b4;
+        border-radius: 4px;
+        padding: 1px 8px;
+        font-size: .65rem;
+        cursor: pointer;
+        margin-left: 8px;
+    }
+
+    /* ---------- Print iframe (kept in DOM, off-screen, full opacity) ---------- */
+    .nj-print-frame {
+        position: fixed !important;
+        top: 0 !important;
+        left: -99999px !important;
+        border: 0 !important;
+        background: #ffffff !important;
+        pointer-events: none !important;
+    }
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Great+Vibes&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style id="njTheme">
+/* ===== GOLD STORE THEME (visual only) ===== */
+:root{ --nj-ivory:#fffaf0; --nj-cream:#f6ecd2; --nj-line:#e3cf93; --nj-espresso:#241a07; }
+body{
+  background:
+    radial-gradient(1200px 500px at 50% -10%, rgba(232,200,106,.28), transparent 70%),
+    repeating-linear-gradient(45deg, rgba(201,162,39,.035) 0 2px, transparent 2px 14px),
+    linear-gradient(180deg,#fbf3dc 0%,#f6ecd2 100%) fixed !important;
+  color:#2b2108;
+}
+h1,h2,h3,.nj-caps{ font-family:'Cormorant Garamond','Playfair Display',serif !important; }
+h2,h3{ letter-spacing:.02em; font-weight:700; }
+body::before{ content:''; position:fixed; top:0; left:0; right:0; height:5px; z-index:900;
+  background:linear-gradient(90deg,#9a7a1a,#e8c86a,#fff3c4,#e8c86a,#9a7a1a); }
+
+/* cards */
+.bg-white{ background:linear-gradient(180deg,#fffdf6,#fff8e6) !important; }
+.rounded-2xl,.rounded-xl{ border-color:var(--nj-line) !important; }
+.border-gray-100,.border-gray-200,.border{ border-color:var(--nj-line) !important; }
+.card-shadow{ box-shadow:0 10px 28px rgba(122,92,13,.14), inset 0 0 0 1px rgba(255,255,255,.7) !important; }
+
+/* header = dark showcase band */
+header.bg-white{
+  background:linear-gradient(135deg,#0a0a0a 0%,#241a07 55%,#3d2f0c 100%) !important;
+  border:1px solid #c9a227 !important; color:#f7e7b4;
+  box-shadow:0 12px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(247,231,180,.25) !important;
+}
+header.bg-white h1,header.bg-white h2,header.bg-white .text-gray-800,header.bg-white .text-gray-700{ color:#cdb77a !important; }
+header.bg-white .text-gray-500,header.bg-white .text-gray-600,header.bg-white .text-gray-400{ color:#cdb77a !important; }
+
+/* tabs */
+.tab-btn{ color:#6b5a2a; text-transform:uppercase; letter-spacing:.08em; font-size:.78rem; }
+.tab-btn.active{ color:#7a5c0d; border-bottom:3px solid #c9a227;
+  background:linear-gradient(180deg,transparent,rgba(201,162,39,.16)); border-radius:8px 8px 0 0; }
+
+/* tables */
+table thead,.bg-gray-50{ background:linear-gradient(180deg,#f7e7b4,#ecd58a) !important; color:#4a3808 !important; }
+thead th{ text-transform:uppercase; letter-spacing:.06em; font-size:.7rem; }
+tbody tr:nth-child(even){ background:rgba(246,236,210,.45); }
+tbody tr:hover{ background:rgba(232,200,106,.28) !important; }
+
+/* inputs */
+input:not([type=checkbox]):not([type=radio]),select,textarea{ border-color:var(--nj-line) !important; background:#fffdf7; }
+input:focus,select:focus,textarea:focus{ outline:2px solid #c9a227 !important; outline-offset:1px; box-shadow:0 0 0 4px rgba(201,162,39,.18); }
+
+/* primary buttons → gold */
+.bg-indigo-600,.bg-blue-600,.bg-purple-600,.bg-amber-500,.bg-yellow-500,.bg-amber-600{
+  background:linear-gradient(135deg,#e8c86a,#c9a227 55%,#9a7a1a) !important; color:#1a1408 !important;
+  font-weight:700; text-shadow:0 1px 0 rgba(255,255,255,.35); box-shadow:0 3px 10px rgba(154,122,26,.4);
+}
+.bg-indigo-600:hover,.bg-blue-600:hover,.bg-purple-600:hover,.bg-amber-500:hover{ filter:brightness(1.07); }
+.text-indigo-500,.text-indigo-600,.text-purple-500{ color:#9a7a1a !important; }
+
+/* stat / karat chips & scrollbars */
+::-webkit-scrollbar{ width:10px;height:10px } ::-webkit-scrollbar-thumb{ background:linear-gradient(#e8c86a,#9a7a1a); border-radius:8px }
+::-webkit-scrollbar-track{ background:#f1e4bb }
+.kitco-panel{ background:linear-gradient(135deg,#fffdf2,#fbf0cf) !important; border-color:#d9bf6b !important; }
+.batch-bar{ background:linear-gradient(135deg,#0a0a0a,#241a07) !important; border:1px solid #c9a227 !important; }
+</style>
+<style>
+    /* Override header text colors to black for inputs and labels */
+    header.bg-white label,
+    header.bg-white input,
+    header.bg-white #currentUserName {
+        color: #000000 !important;
+    }
+    
+    /* Keep the role pill (Admin/Cashier) with its original dark text */
+    header.bg-white .role-pill {
+        color: #7a5c0d !important;
+    }
 </style>
 </head>
 
 <body>
 
-<!-- ================= GLOBAL SVG DEFS (gold gradient for the logo) ================= -->
+<!-- ================= GLOBAL SVG DEFS ================= -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <linearGradient id="njGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -360,7 +578,6 @@
     <div class="login-card w-full max-w-sm rounded-2xl shadow-2xl p-6 sm:p-7"
          style="background: linear-gradient(180deg, #0a0a0a 0%, #14100a 100%); border: 1px solid rgba(201,162,39,.35); box-shadow: 0 24px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(201,162,39,.15) inset;">
 
-        <!-- ============ LOGO (page 2 style: gold on black) ============ -->
         <div class="text-center mb-6">
             <svg viewBox="0 0 320 220" class="w-56 h-auto mx-auto" xmlns="http://www.w3.org/2000/svg" aria-label="Nejmeh Jewelry">
                 <defs>
@@ -371,17 +588,14 @@
                         <stop offset="100%" stop-color="#9a7a1a"/>
                     </linearGradient>
                 </defs>
-                <!-- 8-pointed star -->
                 <polygon points="160,20 165.74,61.14 198.89,36.11 173.86,69.26 215,75 173.86,80.74 198.89,113.89 165.74,88.86 160,130 154.26,88.86 121.11,113.89 146.14,80.74 105,75 146.14,69.26 121.11,36.11 154.26,61.14"
                          fill="url(#njGoldLogin)"/>
-                <!-- Nejmeh script -->
                 <text x="160" y="186"
                       font-family="'Great Vibes','Brush Script MT',cursive"
                       font-size="72"
                       fill="url(#njGoldLogin)"
                       text-anchor="middle"
                       font-weight="400">Nejmeh</text>
-                <!-- JEWELRY -->
                 <text x="160" y="210"
                       font-family="'Cormorant Garamond',serif"
                       font-size="13"
@@ -424,13 +638,7 @@
             </button>
         </form>
 
-        <div class="mt-5 pt-4 text-center" style="border-top:1px solid rgba(201,162,39,.18);">
-            <p class="text-[10px]" style="color: rgba(247,231,180,.5);">
-                <i class="fas fa-shield-halved mr-1" style="color: var(--nj-gold);"></i>
-                First run? Default account is <span class="font-mono font-semibold" style="color: var(--nj-gold-light);">admin / admin123</span>
-            </p>
-            <p class="text-[10px] mt-1" style="color: rgba(247,231,180,.35);">Change it from the Users tab after signing in.</p>
-        </div>
+        
     </div>
 </div>
 
@@ -440,7 +648,6 @@
     <header class="bg-white rounded-2xl card-shadow border border-gray-100 p-3 sm:p-4 mb-4">
         <div class="flex flex-wrap items-center justify-between gap-3">
 
-            <!-- ============ BRAND LOGO BADGE ============ -->
             <div class="nj-logo-badge">
                 <svg viewBox="0 0 100 100" class="w-8 h-8 sm:w-9 sm:h-9 shrink-0" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <polygon points="50,5 54.97,37.99 81.82,18.18 62.01,45.03 95,50 62.01,54.97 81.82,81.82 54.97,62.01 50,95 45.03,62.01 18.18,81.82 37.99,54.97 5,50 37.99,45.03 18.18,18.18 45.03,37.99"
@@ -453,7 +660,6 @@
             </div>
 
             <div class="flex flex-wrap items-center gap-2">
-                <!-- ===== INSTALL PWA BUTTON ===== -->
                 <button id="installBtn" class="install-btn hidden" title="Install Nejmeh POS as an app">
                     <i class="fas fa-download"></i> Install App
                 </button>
@@ -475,7 +681,6 @@
                     <i class="fas fa-sync-alt"></i> Refresh
                 </button>
 
-                <!-- ===== USER BADGE ===== -->
                 <div class="flex items-center gap-2 bg-gray-50 px-2 py-1 rounded-xl border border-gray-200">
                     <i class="fas fa-user-circle" style="color: var(--nj-gold);"></i>
                     <span id="currentUserName" class="text-[11px] font-semibold text-gray-700 max-w-[110px] truncate">—</span>
@@ -488,7 +693,6 @@
             </div>
         </div>
 
-        <!-- ============ UNIFIED KITCO PANEL ============ -->
         <div class="kitco-panel" id="kitcoPanel">
             <div class="kitco-head">
                 <span class="kitco-brand"><i class="fas fa-chart-line"></i> KITCO</span>
@@ -735,7 +939,7 @@
                     </div>
                 </div>
 
-                <div class="flex items-end gap-2 flex-wrap lg:col-span-2">
+                <div class="flex items-end gap-2 flex-wrap lg:col-span-3">
                     <button type="submit"
                             class="font-medium px-5 py-2 rounded-lg transition flex items-center justify-center gap-2"
                             style="background: linear-gradient(135deg, #c9a227, #9a7a1a); color:#0a0a0a;">
@@ -747,12 +951,13 @@
                     </button>
                     <button type="button" onclick="window.printCurrentLabel()"
                             class="bg-indigo-500 hover:bg-indigo-600 text-white font-medium px-4 py-2 rounded-lg transition flex items-center gap-2">
-                        <i class="fas fa-print"></i> Label
+                        <i class="fas fa-print"></i> Large Label
                     </button>
-                    <button type="button" onclick="window.printCurrentSmallLabel()"
-                            title="Print compact label (40×20mm)"
+                    <button type="button"
+                            onclick="window.printCurrentSmallLabel()"
+                            title="Preview and print the jewelry tag"
                             class="bg-purple-500 hover:bg-purple-600 text-white font-medium px-3 py-2 rounded-lg transition flex items-center gap-2">
-                        <i class="fas fa-tag"></i> Small Label
+                        <i class="fas fa-tag"></i> Print Tag
                     </button>
                 </div>
             </form>
@@ -763,15 +968,119 @@
         </div>
 
         <div class="bg-white rounded-2xl card-shadow p-4 border border-gray-100 overflow-x-auto">
-            <div class="flex justify-between items-center mb-3">
+            <div class="flex justify-between items-center mb-3 flex-wrap gap-2">
                 <h3 class="text-lg font-semibold text-gray-800">
                     <i class="fas fa-list-ul mr-2" style="color: var(--nj-gold);"></i>Stock Inventory
                 </h3>
                 <span id="itemCount" class="text-sm bg-gray-100 px-3 py-1 rounded-full text-gray-600">0 items</span>
             </div>
+
+            <!-- ============== PRINTER SETUP & DIAGNOSTICS ============== -->
+            <div class="batch-bar">
+                <i class="fas fa-print"></i>
+                <span>Label setup</span>
+
+                <label>Preset</label>
+                <select id="tagSizeSelect" onchange="window.__setTagPreset(this.value)">
+                    <option value="auto">Fill page (driver size)</option>
+                    <optgroup label="★ XPRINTER · FULL INFO + READABLE BARCODE">
+                        <option value="xp25x15">Xprinter 25×15 mm</option>
+                        <option value="xp30x20">Xprinter 30×20 mm</option>
+                        <option value="xp40x20">Xprinter 40×20 mm</option>
+                        <option value="xp40x30" selected>Xprinter 40×30 mm</option>
+                        <option value="xp50x30">Xprinter 50×30 mm</option>
+                        <option value="xp50x40">Xprinter 50×40 mm</option>
+                        <option value="xp60x40">Xprinter 60×40 mm</option>
+                        <option value="xp70x50">Xprinter 70×50 mm</option>
+                        <option value="xp100x100">Xprinter 100×100 mm</option>
+                    </optgroup>
+                    <optgroup label="★ Small gold · FULL INFO + BARCODE">
+                        <option value="f25x15">25×15 · Full info + barcode</option>
+                        <option value="f30x15">30×15 · Full info + barcode</option>
+                        <option value="f30x20">30×20 · Full info + barcode</option>
+                        <option value="f35x20">35×20 · Full info + barcode</option>
+                    </optgroup>
+                    <optgroup label="★ Small gold items (no barcode)">
+                        <option value="g10x6">10×6 · Gold mini</option>
+                        <option value="g15x8">15×8 · Gold small</option>
+                        <option value="g20x10">20×10 · Gold small</option>
+                        <option value="g25x12">25×12 · Gold medium</option>
+                        <option value="g30x15">30×15 · Gold + code</option>
+                    </optgroup>
+                    <optgroup label="Fold-over tags · no barcode">
+                        <option value="tiny">15×8 · Mini studs</option>
+                        <option value="xxs">20×10 · Earrings</option>
+                        <option value="xs">25×10 · Rings</option>
+                        <option value="sm">30×10 · Chains</option>
+                        <option value="sm35">35×12 · Bracelets</option>
+                        <option value="sm40">40×10 · Long chains</option>
+                        <option value="sm45">45×12 · Necklaces</option>
+                    </optgroup>
+                    <optgroup label="With barcode">
+                        <option value="md">30×15 · +Barcode</option>
+                        <option value="md35">35×15 · +Barcode</option>
+                        <option value="md40">40×15 · +Barcode</option>
+                        <option value="lg">40×20 · Large</option>
+                        <option value="xl">50×30 · XL</option>
+                        <option value="xxl">60×40 · XXL</option>
+                    </optgroup>
+                </select>
+
+                <label>W (mm)</label>
+                <input id="tagWidth" type="number" step="0.1" min="5" max="300" value="40" />
+
+                <label>H (mm)</label>
+                <input id="tagHeight" type="number" step="0.1" min="5" max="300" value="30" />
+
+                <button onclick="window.__applyLabelSize()" title="Save label size">
+                    <i class="fas fa-save"></i> Save Size
+                </button>
+
+                <span class="opacity-50">|</span>
+
+                <label>Copies</label>
+                <input id="tagCopies" type="number" min="1" max="50" value="1" />
+
+                <label>Off X</label>
+                <input id="tagOffsetX" type="number" step="0.1" value="0" />
+
+                <label>Off Y</label>
+                <input id="tagOffsetY" type="number" step="0.1" value="0" />
+
+                <button onclick="window.__savePrinterCalibration()" title="Save offsets locally">
+                    <i class="fas fa-crosshairs"></i> Save
+                </button>
+                <button onclick="window.__printTestTag()" title="Preview a calibration test tag">
+                    <i class="fas fa-vial"></i> Test Tag
+                </button>
+                <button onclick="window.__runDiagnostics()" title="Check printer pipeline">
+                    <i class="fas fa-stethoscope"></i> Diagnose
+                </button>
+
+                <span class="ml-auto opacity-80">Batch:</span>
+                <span id="batchCount" class="font-mono">0</span>
+                <button onclick="window.__printBatchTags()" id="batchPrintBtn">
+                    <i class="fas fa-layer-group"></i> Print tags
+                </button>
+                <button onclick="window.__clearBatch()">Clear</button>
+            </div>
+
+            <!-- Diagnostics result panel -->
+            <div id="diagPanel" class="diag-panel">
+                <div class="diag-title">
+                    <i class="fas fa-stethoscope"></i> Printer diagnostics
+                    <button class="diag-close" onclick="document.getElementById('diagPanel').classList.remove('show')">✕</button>
+                </div>
+                <ul id="diagList"></ul>
+            </div>
+
             <table class="w-full text-sm">
                 <thead class="bg-gray-50 text-gray-600 border-b">
                     <tr>
+                        <th class="text-center p-2 font-semibold w-8">
+                            <input type="checkbox" id="selectAllItems" onchange="window.__toggleSelectAll(this.checked)"
+                                   class="w-4 h-4 accent-amber-500" />
+                        </th>
                         <th class="text-left p-3 font-semibold">Photo</th>
                         <th class="text-left p-3 font-semibold">Code</th>
                         <th class="text-left p-3 font-semibold">Barcode</th>
@@ -1015,7 +1324,6 @@
     <div id="usersTab" class="tab-content hidden">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-            <!-- Add / edit user -->
             <div class="lg:col-span-1 bg-white rounded-2xl card-shadow p-6 border border-gray-100">
                 <h2 class="text-lg font-semibold text-gray-800 mb-5 flex items-center gap-2">
                     <i class="fas fa-user-plus" style="color: var(--nj-gold);"></i> Add / Edit User
@@ -1083,7 +1391,6 @@
                 </div>
             </div>
 
-            <!-- Users list -->
             <div class="lg:col-span-2 bg-white rounded-2xl card-shadow p-4 border border-gray-100">
                 <div class="flex justify-between items-center mb-3">
                     <h3 class="text-lg font-semibold text-gray-800">
@@ -1115,7 +1422,39 @@
     </div>
 </div>
 
-<div id="printLabelContainer" style="display:none;"></div>
+<!-- ============ TAG PREVIEW OVERLAY ============ -->
+<div id="tagOverlay" class="tag-overlay" role="dialog" aria-hidden="true">
+    <div class="tag-overlay-bar">
+        <span class="tag-overlay-brand">NEJMEH · TAG PREVIEW</span>
+        <span class="tag-overlay-title" id="tagOverlayTitle"></span>
+        <span class="tag-overlay-spacer"></span>
+
+        <label style="font-size:11px;color:#e8c86a;font-weight:600;">W (mm)</label>
+        <input id="tagOverlayW" type="number" step="0.1" min="5"
+               class="w-16 px-2 py-1 rounded text-center text-black font-bold text-sm" />
+
+        <label style="font-size:11px;color:#e8c86a;font-weight:600;">H (mm)</label>
+        <input id="tagOverlayH" type="number" step="0.1" min="5"
+               class="w-16 px-2 py-1 rounded text-center text-black font-bold text-sm" />
+
+        <label style="font-size:11px;color:#e8c86a;font-weight:600;">Copies</label>
+        <input id="tagOverlayCopies" type="number" min="1" max="50" value="1"
+               class="w-14 px-2 py-1 rounded text-center text-black font-bold text-sm" />
+
+        <button type="button" class="tag-overlay-btn tag-overlay-close" onclick="window.closeTagOverlay()">
+            Close
+        </button>
+        <button type="button" class="tag-overlay-btn tag-overlay-print" onclick="window.doPrintTag()">
+            🖨️  Print Tag
+        </button>
+    </div>
+    <div class="tag-overlay-stage">
+        <div class="tag-overlay-card">
+            <div class="tag-overlay-scale" id="tagOverlayContent"></div>
+            <div class="tag-overlay-caption" id="tagOverlayCaption"></div>
+        </div>
+    </div>
+</div>
 
 <div id="toast" class="fixed bottom-6 right-6 bg-gray-800 text-white px-5 py-3 rounded-xl shadow-xl toast translate-y-20 opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-3 z-50">
     <i class="fas fa-check-circle text-green-400"></i> <span id="toastMsg">Success</span>
@@ -1123,10 +1462,30 @@
 
 <script>
 /* ============================================================
-   NEJMEH JEWELRY POS · PWA (installable)
-   Live Kitco panel · Login · Users · Cashier = POS + Stock only
-   Making charge in USD ($)
-   Firebase v12.19.0
+   NEJMEH JEWELRY POS · ADVANCED EDITION
+   ------------------------------------------------------------
+   Thermal-print engine v8  (Xprinter edition)
+
+   NEW in v8
+   ─────────
+   • New `info` tag layout: FULL item information
+       brand · purity · name · weight · making charge · qty
+       · CODE128 barcode (readable) · human-readable code
+       · sell price · supplier
+   • New Xprinter preset group (25×15 … 100×100 mm)
+   • Barcodes are now rendered with a guaranteed 10-module
+     quiet zone and measured dots-per-module so we can warn
+     you when a code is too dense for a 203-dpi Xprinter.
+   • Barcode SVG uses preserveAspectRatio="none" on a
+     viewBox taken from the *rendered* JsBarcode output, so
+     module widths stay perfectly uniform (scannable) no
+     matter how the label is stretched.
+   • All label CSS is generated from the label's mm size, so
+     every preset scales correctly.
+
+   Printing model (unchanged from v7 — it works):
+   tags are printed from #njPrintArea in the MAIN document,
+   one page per tag per copy, with @page = label size.
    ============================================================ */
 
 const waitForFirebase = () => new Promise(resolve => {
@@ -1173,12 +1532,10 @@ let previousKitcoPrice = null;
 let formSellLocked = false;
 let formBuyLocked  = false;
 
-/* ---------- Auth state ---------- */
 const SESSION_KEY = 'gp_session';
 let currentUser = null;
 let appStarted = false;
 
-/* Tabs a cashier is allowed to access */
 const CASHIER_TABS = ['posTab', 'stockTab'];
 
 const $ = id => document.getElementById(id);
@@ -1224,39 +1581,7 @@ const sellLockBadge = $('sellLockBadge'), buyLockBadge = $('buyLockBadge');
 const userForm = $('userForm'), userTbody = $('userTbody'), emptyUser = $('emptyUser');
 
 /* ============================================================
-   BRAND SVG HELPERS
-   ============================================================ */
-const NJ_STAR_POINTS_SMALL = "50,5 54.97,37.99 81.82,18.18 62.01,45.03 95,50 62.01,54.97 81.82,81.82 54.97,62.01 50,95 45.03,62.01 18.18,81.82 37.99,54.97 5,50 37.99,45.03 18.18,18.18 45.03,37.99";
-
-function njStarSvg(size = 24, className = '') {
-    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="${className}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <polygon points="${NJ_STAR_POINTS_SMALL}" fill="url(#njGoldGrad)"/>
-    </svg>`;
-}
-
-/* Small inline logo (star + Nejmeh + JEWELRY) for labels */
-function njCompactLogoSvg(width = 180) {
-    const height = Math.round(width * 0.62);
-    return `<svg viewBox="0 0 320 220" width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg" aria-label="Nejmeh Jewelry">
-        <defs>
-            <linearGradient id="njGoldLbl${Date.now()}" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%"   stop-color="#f7e7b4"/>
-                <stop offset="35%"  stop-color="#e8c86a"/>
-                <stop offset="70%"  stop-color="#c9a227"/>
-                <stop offset="100%" stop-color="#9a7a1a"/>
-            </linearGradient>
-        </defs>
-        <polygon points="160,20 165.74,61.14 198.89,36.11 173.86,69.26 215,75 173.86,80.74 198.89,113.89 165.74,88.86 160,130 154.26,88.86 121.11,113.89 146.14,80.74 105,75 146.14,69.26 121.11,36.11 154.26,61.14"
-                 fill="url(#njGoldGrad)"/>
-        <text x="160" y="186" font-family="'Great Vibes','Brush Script MT',cursive" font-size="72"
-              fill="url(#njGoldGrad)" text-anchor="middle">Nejmeh</text>
-        <text x="160" y="210" font-family="'Cormorant Garamond',serif" font-size="13" letter-spacing="6.5"
-              fill="url(#njGoldGrad)" text-anchor="middle" font-weight="600">JEWELRY</text>
-    </svg>`;
-}
-
-/* ============================================================
-   PWA INSTALLABILITY
+   PWA
    ============================================================ */
 let deferredInstallPrompt = null;
 
@@ -1265,19 +1590,15 @@ function isStandalone() {
            window.navigator.standalone === true;
 }
 
-/* ---- generate app icons via canvas (PNG data URIs) ----
-   Icon design mirrors the black-and-gold "Nejmeh" logo (page 2 style). */
 function generateAppIcon(size) {
     const canvas = document.createElement('canvas');
     canvas.width = size;
     canvas.height = size;
     const ctx = canvas.getContext('2d');
 
-    // Deep black background (matches page 2 of the logo)
     ctx.fillStyle = '#0a0a0a';
     ctx.fillRect(0, 0, size, size);
 
-    // Subtle gold radial glow
     const glow = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size * 0.75);
     glow.addColorStop(0, 'rgba(201,162,39,0.20)');
     glow.addColorStop(0.6, 'rgba(201,162,39,0.05)');
@@ -1285,14 +1606,12 @@ function generateAppIcon(size) {
     ctx.fillStyle = glow;
     ctx.fillRect(0, 0, size, size);
 
-    // Gold gradient fill
     const grad = ctx.createLinearGradient(0, 0, size, size);
     grad.addColorStop(0,    '#f7e7b4');
     grad.addColorStop(0.35, '#e8c86a');
     grad.addColorStop(0.70, '#c9a227');
     grad.addColorStop(1,    '#9a7a1a');
 
-    // 8-pointed star (centered, upper part)
     const cx = size / 2;
     const cy = size * 0.42;
     const R  = size * 0.30;
@@ -1310,7 +1629,6 @@ function generateAppIcon(size) {
     ctx.closePath();
     ctx.fill();
 
-    // "Nejmeh" script text at bottom
     ctx.fillStyle = grad;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
@@ -1364,7 +1682,6 @@ function setupManifest() {
         link.href = url;
         document.head.appendChild(link);
 
-        // Apple touch icon
         let apple = document.querySelector('link[rel="apple-touch-icon"]');
         if (!apple) {
             apple = document.createElement('link');
@@ -1373,7 +1690,6 @@ function setupManifest() {
         }
         apple.href = icon192;
 
-        // Favicon
         let fav = document.querySelector('link[rel="icon"]');
         if (!fav) {
             fav = document.createElement('link');
@@ -1382,8 +1698,6 @@ function setupManifest() {
         }
         fav.type = 'image/png';
         fav.href = icon192;
-
-        console.log('📱 Nejmeh POS PWA manifest injected');
     } catch (err) {
         console.warn('Manifest setup failed:', err);
     }
@@ -1391,10 +1705,10 @@ function setupManifest() {
 
 async function registerServiceWorker() {
     if (!('serviceWorker' in navigator)) return;
-    if (!location.protocol.startsWith('http')) return; // needs http(s)
+    if (!location.protocol.startsWith('http')) return;
 
     const swCode = `
-        const CACHE = 'nejmehpos-v1';
+        const CACHE = 'nejmehpos-v6';
 
         self.addEventListener('install', () => self.skipWaiting());
         self.addEventListener('activate', (e) => { e.waitUntil(self.clients.claim()); });
@@ -1439,8 +1753,7 @@ async function registerServiceWorker() {
         const reg = await navigator.serviceWorker.register(swUrl, { scope: './' });
         console.log('✅ Service worker registered ·', reg.scope);
     } catch (err) {
-        console.info('ℹ️ Blob-based SW registration blocked (expected for single-file apps).',
-                     'Use the browser menu → "Install app" to install.');
+        console.info('ℹ️ Blob-based SW registration blocked (expected for single-file apps).');
     }
 }
 
@@ -1463,7 +1776,7 @@ function setupInstallPrompt() {
     window.addEventListener('appinstalled', () => {
         deferredInstallPrompt = null;
         btn.classList.add('hidden');
-        showToast('✅ Nejmeh POS installed — launch it from your home screen / app list!', 'success');
+        showToast('✅ Nejmeh POS installed!', 'success');
     });
 
     btn.addEventListener('click', async () => {
@@ -1484,9 +1797,9 @@ function setupInstallPrompt() {
         let msg;
 
         if (isIOS)          msg = 'iPhone/iPad: tap the Share icon → "Add to Home Screen"';
-        else if (isAndroid) msg = 'Android: tap the ⋮ menu → "Install app" / "Add to Home screen"';
+        else if (isAndroid) msg = 'Android: tap the ⋮ menu → "Install app"';
         else if (isEdge)    msg = 'Edge: click the ⋯ menu → Apps → "Install this site as an app"';
-        else                msg = 'Chrome: click the ⋮ menu → "Install Nejmeh POS…" (or the ⊕ icon in the address bar)';
+        else                msg = 'Chrome: click the ⋮ menu → "Install Nejmeh POS…"';
         showToast('📲 ' + msg, 'info');
     });
 }
@@ -1495,10 +1808,6 @@ function setupPWA() {
     setupManifest();
     setupInstallPrompt();
     registerServiceWorker();
-
-    if (!location.protocol.startsWith('http')) {
-        console.warn('⚠️ Not running over HTTP(S). PWA install requires HTTPS (or localhost).');
-    }
 }
 
 /* ============================================================
@@ -1572,11 +1881,8 @@ async function loadUsers() {
             };
             await setDoc(doc(db, 'users', admin.id), admin);
             users = [admin];
-            console.log('%c👤 Default admin created (admin / admin123)',
-                        'color:#22c55e;font-weight:bold');
         }
     } catch (err) {
-        console.warn('Users: Firestore unavailable —', err.message);
         try { users = JSON.parse(localStorage.getItem('gp_users')) || []; } catch (e) { users = []; }
         if (!users.length) {
             users = [{
@@ -1800,8 +2106,7 @@ userForm.addEventListener('submit', async function (e) {
 
             const stillAdmin = users.filter(x =>
                 x.role === 'admin' && x.active &&
-                x.id !== u.id &&
-                !(x.id === u.id)
+                x.id !== u.id
             );
             if (u.role === 'admin' && u.active && (role !== 'admin' || !active) && stillAdmin.length === 0) {
                 showToast('At least one active administrator must remain.', 'warning');
@@ -1854,7 +2159,6 @@ userForm.addEventListener('submit', async function (e) {
     }
 });
 
-/* ---------- Role permissions ---------- */
 function applyRolePermissions() {
     const isAdmin = !!(currentUser && currentUser.role === 'admin');
     document.querySelectorAll('.admin-only').forEach(el => {
@@ -2047,7 +2351,7 @@ function updateKitcoHead(spotPerOunce, spotPerGram, source) {
 }
 
 /* ============================================================
-   KITCO GRID — all karats / gram
+   KITCO GRID
    ============================================================ */
 function renderKitcoGrid() {
     const fmt = v => (v && v > 0) ? Number(v).toFixed(2) : '--';
@@ -2121,8 +2425,6 @@ window.fetchLivePrices = async function (silent = false) {
         rateWarning.classList.add('hidden');
 
         if (!silent) showToast(`✅ Live rates updated (${source})`, 'success');
-        console.log(`💹 Spot: $${spotPerOunce.toFixed(2)}/oz → $${spotPerGram.toFixed(2)}/g (${source})`);
-
     } catch (error) {
         kitcoSourceEl.innerHTML = '<i class="fas fa-triangle-exclamation"></i> offline';
         if (!silent) showToast('Failed to fetch live prices: ' + error.message, 'error');
@@ -2146,7 +2448,7 @@ function computeAutoPrices(purityLabel, w, mc) {
     const vatPct = parseFloat(vatRateInput.value) || 0;
     const bought = w * buyRate;
     const base   = w * sellRate;
-    const sub    = base + num(mc);   // making charge is a flat USD amount
+    const sub    = base + num(mc);
     const vat    = sub * (vatPct / 100);
     const sell   = sub + vat;
 
@@ -2500,6 +2802,7 @@ window.deleteItem = async function (id) {
     try {
         await deleteDoc(doc(db, 'items', id));
         items = items.filter(i => i.id !== id);
+        batchSelection.delete(id);
         renderStock(); renderPOS(); updateCart();
         showToast('Item deleted.', 'info');
     } catch (err) { showToast('Delete failed: ' + err.message, 'error'); }
@@ -2556,6 +2859,7 @@ function renderStock() {
         stockTbody.innerHTML = '';
         emptyStock.classList.remove('hidden');
         itemCount.innerText = '0 items';
+        updateBatchBar();
         return;
     }
     emptyStock.classList.add('hidden');
@@ -2570,9 +2874,14 @@ function renderStock() {
         const lockIcon = item.sellLocked
             ? '<i class="fas fa-lock text-[10px] ml-1" title="Manual price" style="color: var(--nj-gold);"></i>'
             : '';
+        const checked = batchSelection.has(item.id) ? 'checked' : '';
 
         return `
             <tr class="border-b hover:bg-amber-50/50 transition">
+                <td class="p-2 text-center">
+                    <input type="checkbox" class="row-select w-4 h-4 accent-amber-500" data-id="${item.id}"
+                           onchange="window.__toggleSelect('${item.id}', this.checked)" ${checked} />
+                </td>
                 <td class="p-3">${photoHtml}</td>
                 <td class="p-3 font-mono text-xs font-semibold text-gray-700">${item.itemCode || '—'}</td>
                 <td class="p-3">
@@ -2590,7 +2899,7 @@ function renderStock() {
                     <button onclick="window.editItem('${item.id}')" class="text-blue-500 hover:text-blue-700 mr-1 transition" title="Edit"><i class="fas fa-edit"></i></button>
                     <button onclick="window.deleteItem('${item.id}')" class="text-red-400 hover:text-red-600 mr-1 transition" title="Delete"><i class="fas fa-trash-alt"></i></button>
                     <button onclick="window.printLabel('${item.id}')" class="text-indigo-500 hover:text-indigo-700 mr-1 transition" title="Large label (450px)"><i class="fas fa-tag"></i></button>
-                    <button onclick="window.printSmallLabel('${item.id}')" class="text-purple-500 hover:text-purple-700 transition" title="Small label (40×20mm)"><i class="fas fa-compress-alt"></i></button>
+                    <button onclick="window.printSmallLabel('${item.id}')" class="text-purple-500 hover:text-purple-700 transition" title="Preview & print jewelry tag"><i class="fas fa-compress-alt"></i></button>
                 </td>
             </tr>`;
     }).join('');
@@ -2617,6 +2926,8 @@ function renderStock() {
             }
         });
     }, 100);
+
+    updateBatchBar();
 }
 
 /* ============================================================
@@ -2837,7 +3148,7 @@ window.checkout = async function () {
 };
 
 /* ============================================================
-   PRINT RECEIPT  (uses the Nejmeh logo header)
+   PRINT RECEIPT
    ============================================================ */
 window.printReceipt = function () {
     if (!lastReceipt) { showToast('No sale to print', 'warning'); return; }
@@ -2879,7 +3190,7 @@ window.printReceipt = function () {
         </div>`;
 
     const w = window.open('', '_blank', 'width=400,height=600');
-    if (!w) { showToast('Please allow popups to print', 'warning'); return; }
+    if (!w) { showToast('Please allow popups to print the receipt', 'warning'); return; }
     w.document.write(`<html><head><title>Receipt</title></head>
         <body style="margin:0;background:#fff;" onload="window.print();setTimeout(()=>window.close(),600);">
         ${html}</body></html>`);
@@ -2887,7 +3198,7 @@ window.printReceipt = function () {
 };
 
 /* ============================================================
-   LARGE LABEL  (450px)
+   LARGE LABEL (450px)
    ============================================================ */
 function buildLabelHTML(item, supplier) {
     const code = item.itemCode || 'N/A';
@@ -2895,7 +3206,6 @@ function buildLabelHTML(item, supplier) {
     const logo = supplier?.logo || '';
     const supplierName = supplier?.name || '';
 
-    // Inline the Nejmeh brand mark so we don't depend on the parent page defs.
     const brandMark = `
         <svg viewBox="0 0 320 220" width="150" height="103" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <defs>
@@ -3010,175 +3320,985 @@ window.printCurrentLabel = function () {
 };
 
 /* ============================================================
-   SMALL LABEL (40×20mm)
+   ██████  TAG PRINT ENGINE v8 — XPRINTER EDITION           ██████
    ============================================================ */
-function buildSmallLabelHTML(item, supplier) {
-    const code = item.itemCode || 'N/A';
-    const barcodeId = 'sl-barcode-' + Date.now();
-    const price = num(item.finalSalePrice);
-    const logo = supplier?.logo || '';
-    const supplierName = supplier?.name || 'Nejmeh Jewelry';
 
-    return `
-        <div class="small-label">
-            <div class="sl-top">
-                ${logo ? `<img src="${logo}" class="sl-logo" alt="" />` : '<span class="sl-star">✦</span>'}
-                <span class="sl-supplier">${supplierName}</span>
-                <span class="sl-code">${code}</span>
-            </div>
-            <div class="sl-barcode-wrap">
-                <svg id="${barcodeId}" class="sl-barcode"></svg>
-            </div>
-            <div class="sl-bottom">
-                <span class="sl-purity">${item.purity || ''} · ${num(item.weight).toFixed(2)}g</span>
-                <span class="sl-price">$${price.toFixed(2)}</span>
-            </div>
-        </div>
-        <script>
-            (function(){
-                var svg = document.getElementById('${barcodeId}');
-                if (svg && typeof JsBarcode !== 'undefined') {
-                    try {
-                        JsBarcode(svg, '${code}', {
-                            format:"CODE128",
-                            width:1.1,
-                            height:22,
-                            displayValue:false,
-                            margin:0,
-                            background:"#ffffff",
-                            lineColor:"#000000"
-                        });
-                    } catch(e){}
-                }
-            })();
-        <\/script>`;
+const TAG_PRESETS = {
+    /* Fills whatever paper size the Xprinter driver reports. */
+    auto: { key:'auto', label:'Fill page (driver size)', auto:true, w:40, h:30, layout:'info',
+            barcode:true, pricePt:12, codePt:7, specPt:5 },
+
+    /* ══════════════════════════════════════════════════════════
+       ★ XPRINTER  — FULL INFO + READABLE BARCODE
+       ══════════════════════════════════════════════════════════ */
+    xp25x15:  { key:'xp25x15',  label:'Xprinter 25×15 · full info + barcode',  w:25,  h:15,  layout:'info', barcode:true, pricePt:7,  codePt:3.5, specPt:4 },
+    xp30x20:  { key:'xp30x20',  label:'Xprinter 30×20 · full info + barcode',  w:30,  h:20,  layout:'info', barcode:true, pricePt:8,  codePt:4,   specPt:4.5 },
+    xp40x20:  { key:'xp40x20',  label:'Xprinter 40×20 · full info + barcode',  w:40,  h:20,  layout:'info', barcode:true, pricePt:9,  codePt:4.5, specPt:5 },
+    xp40x30:  { key:'xp40x30',  label:'Xprinter 40×30 · full info + barcode',  w:40,  h:30,  layout:'info', barcode:true, pricePt:12, codePt:6,   specPt:6 },
+    xp50x30:  { key:'xp50x30',  label:'Xprinter 50×30 · full info + barcode',  w:50,  h:30,  layout:'info', barcode:true, pricePt:12, codePt:6,   specPt:6 },
+    xp50x40:  { key:'xp50x40',  label:'Xprinter 50×40 · full info + barcode',  w:50,  h:40,  layout:'info', barcode:true, pricePt:14, codePt:7,   specPt:7 },
+    xp60x40:  { key:'xp60x40',  label:'Xprinter 60×40 · full info + barcode',  w:60,  h:40,  layout:'info', barcode:true, pricePt:14, codePt:7,   specPt:7 },
+    xp70x50:  { key:'xp70x50',  label:'Xprinter 70×50 · full info + barcode',  w:70,  h:50,  layout:'info', barcode:true, pricePt:16, codePt:8,   specPt:8 },
+    xp100x100:{ key:'xp100x100',label:'Xprinter 100×100 · full info + barcode',w:100, h:100, layout:'info', barcode:true, pricePt:22, codePt:12,  specPt:11 },
+
+    /* ── Full info + barcode (generic, non-Xprinter sizes) ── */
+    f25x15:{key:'f25x15',label:'25×15 · Full info + barcode', w:25, h:15, layout:'full', neck:0, paddle:0,
+            barcode:true, pricePt:7,  codePt:3.6, specPt:4.2 },
+    f30x15:{key:'f30x15',label:'30×15 · Full info + barcode', w:30, h:15, layout:'full', neck:0, paddle:0,
+            barcode:true, pricePt:8.5,codePt:4,   specPt:4.8 },
+    f30x20:{key:'f30x20',label:'30×20 · Full info + barcode', w:30, h:20, layout:'full', neck:0, paddle:0,
+            barcode:true, pricePt:9.5,codePt:4.5, specPt:5.5 },
+    f35x20:{key:'f35x20',label:'35×20 · Full info + barcode', w:35, h:20, layout:'full', neck:0, paddle:0,
+            barcode:true, pricePt:11, codePt:5,   specPt:6 },
+
+    /* ── Mini gold (no barcode) ── */
+    g10x6:{ key:'g10x6', label:'10×6 · Gold mini',   w:10, h:6,  layout:'mini', neck:0, paddle:0,
+            barcode:false, pricePt:4,   codePt:2.2, specPt:2.4 },
+    g15x8:{ key:'g15x8', label:'15×8 · Gold small',  w:15, h:8,  layout:'mini', neck:0, paddle:0,
+            barcode:false, pricePt:5.5, codePt:3,   specPt:3.2 },
+    g20x10:{key:'g20x10',label:'20×10 · Gold small', w:20, h:10, layout:'mini', neck:0, paddle:0,
+            barcode:false, pricePt:7.5, codePt:3.8, specPt:4.2 },
+    g25x12:{key:'g25x12',label:'25×12 · Gold medium',w:25, h:12, layout:'mini', neck:0, paddle:0,
+            barcode:false, pricePt:9,   codePt:4.5, specPt:5 },
+    g30x15:{key:'g30x15',label:'30×15 · Gold + code',w:30, h:15, layout:'mini', neck:0, paddle:0,
+            barcode:false, pricePt:11,  codePt:5.5, specPt:6 },
+
+    /* ── Fold-over dumbbell tags ── */
+    tiny: { key:'tiny', label:'15×8 · Mini studs',  w:15, h:8,  neck:4,  paddle:5.5,
+            barcode:false, pricePt:5,   codePt:3,   specPt:2.5 },
+    xxs:  { key:'xxs',  label:'20×10 · Earrings',   w:20, h:10, neck:5,  paddle:7.5,
+            barcode:false, pricePt:5.5, codePt:3.5, specPt:2.8 },
+    xs:   { key:'xs',  label:'25×10 · Rings',  w:25, h:10, neck:6.5, paddle:9.25,
+            barcode:false, pricePt:6.5, codePt:4,   specPt:3 },
+    sm:   { key:'sm',  label:'30×10 · Chains', w:30, h:10, neck:8,   paddle:11,
+            barcode:false, pricePt:7,   codePt:4.5, specPt:3 },
+    sm35: { key:'sm35', label:'35×12 · Bracelets',  w:35, h:12, neck:9,  paddle:13,
+            barcode:false, pricePt:8,   codePt:5,   specPt:3.5 },
+    sm40: { key:'sm40', label:'40×10 · Long chains', w:40, h:10, neck:10, paddle:15,
+            barcode:false, pricePt:8.5, codePt:5,   specPt:3.5 },
+    sm45: { key:'sm45', label:'45×12 · Necklaces',  w:45, h:12, neck:11, paddle:17,
+            barcode:false, pricePt:9,   codePt:5.5, specPt:4 },
+
+    /* ── With barcode (flat) ── */
+    md:   { key:'md',  label:'30×15 · +Barcode', w:30, h:15, neck:0, paddle:0,
+            barcode:true,  pricePt:8,   codePt:5,   specPt:4 },
+    md35: { key:'md35', label:'35×15 · +Barcode',   w:35, h:15, neck:0, paddle:0,
+            barcode:true,  pricePt:9,   codePt:5.5, specPt:4.5 },
+    md40: { key:'md40', label:'40×15 · +Barcode',   w:40, h:15, neck:0, paddle:0,
+            barcode:true,  pricePt:9,   codePt:5.5, specPt:4.5 },
+    lg:   { key:'lg',  label:'40×20 · Large',  w:40, h:20, neck:0,   paddle:0,
+            barcode:true,  pricePt:10,  codePt:6,   specPt:5 },
+    xl:   { key:'xl',  label:'50×30 · XL',     w:50, h:30, neck:0,   paddle:0,
+            barcode:true,  pricePt:12,  codePt:7,   specPt:6 },
+    xxl:  { key:'xxl', label:'60×40 · XXL',    w:60, h:40, neck:0,   paddle:0,
+            barcode:true,  pricePt:14,  codePt:8,   specPt:7 },
+};
+
+const LABEL_CFG_KEY = 'nj_label_cfg_v8';
+
+let labelCfg = (() => {
+    try {
+        const saved = JSON.parse(localStorage.getItem('nj_label_cfg_v8'))
+                   || JSON.parse(localStorage.getItem('nj_label_cfg_v6'))
+                   || JSON.parse(localStorage.getItem('nj_label_cfg_v5'));
+        if (saved && saved.w > 0 && saved.h > 0) {
+            if (Math.abs(saved.offsetX) > 3) saved.offsetX = 0;
+            if (Math.abs(saved.offsetY) > 3) saved.offsetY = 0;
+            /* v6/v5 default was the 30×10 fold-over tag — upgrade it */
+            if (saved.presetKey === 'sm') {
+                saved.presetKey = 'xp40x30';
+                saved.w = 40; saved.h = 30;
+            }
+            return saved;
+        }
+    } catch (e) {}
+    return {
+        presetKey: 'xp40x30',
+        auto: false,
+        w: 40,
+        h: 30,
+        offsetX: parseFloat(localStorage.getItem('nj_cal_offx')) || 0,
+        offsetY: parseFloat(localStorage.getItem('nj_cal_offy')) || 0,
+    };
+})();
+
+/* ★ The job currently loaded into the preview overlay. */
+let pendingTagJob = null;   // { list:[{item,supplier}], presetKey, copies, title }
+
+function saveLabelCfg() {
+    try { localStorage.setItem(LABEL_CFG_KEY, JSON.stringify(labelCfg)); } catch (e) {}
 }
 
-const SMALL_LABEL_STYLES = `
-    @page { size: 40mm 20mm; margin: 0; }
-    * { box-sizing: border-box; }
-    html, body { margin:0; padding:0; background:#fff; font-family: Arial, Helvetica, sans-serif; }
-    body { display:flex; align-items:center; justify-content:center; min-height:100vh; }
+function syncLabelInputs() {
+    const w = document.getElementById('tagWidth');
+    const h = document.getElementById('tagHeight');
+    if (w) w.value = labelCfg.w;
+    if (h) h.value = labelCfg.h;
+    const ox = document.getElementById('tagOffsetX');
+    const oy = document.getElementById('tagOffsetY');
+    if (ox) ox.value = labelCfg.offsetX;
+    if (oy) oy.value = labelCfg.offsetY;
+    const sel = document.getElementById('tagSizeSelect');
+    if (sel && sel.querySelector(`option[value="${labelCfg.presetKey}"]`)) {
+        sel.value = labelCfg.presetKey;
+    }
+}
 
-    .small-label {
-        width: 40mm;
-        height: 20mm;
-        padding: 0.9mm 1.2mm;
-        background: #fff;
-        display: flex;
-        flex-direction: column;
-        gap: 0.3mm;
-        overflow: hidden;
-        page-break-after: avoid;
-    }
+window.__setTagPreset = function (key) {
+    if (!TAG_PRESETS[key]) return;
+    labelCfg.presetKey = key;
 
-    .sl-top {
-        display: flex;
-        align-items: center;
-        gap: 1mm;
-        height: 4mm;
-        flex: 0 0 auto;
-        line-height: 1;
-        overflow: hidden;
-    }
-    .sl-logo {
-        width: 4mm;
-        height: 4mm;
-        object-fit: contain;
-        flex: 0 0 auto;
-        border-radius: 0.5mm;
-        background: #fff;
-    }
-    .sl-star {
-        flex: 0 0 auto;
-        font-size: 8pt;
-        line-height: 1;
-        color: #c9a227;
-    }
-    .sl-supplier {
-        flex: 1 1 auto;
-        min-width: 0;
-        font-size: 5.5pt;
-        font-weight: 800;
-        color: #000;
-        letter-spacing: 0.1px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-    .sl-code {
-        flex: 0 0 auto;
-        font-family: 'Courier New', monospace;
-        font-size: 5pt;
-        font-weight: 700;
-        color: #111;
-        white-space: nowrap;
-    }
+    const p = TAG_PRESETS[key];
+    labelCfg.w = p.w;
+    labelCfg.h = p.h;
+    labelCfg.auto = !!p.auto;
 
-    .sl-barcode-wrap {
-        flex: 1 1 auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        min-height: 0;
+    saveLabelCfg();
+    syncLabelInputs();
+    showToast(`Preset: ${p.label} (${p.w}×${p.h} mm)`, 'info');
+};
+
+window.__applyLabelSize = function () {
+    const w = parseFloat(document.getElementById('tagWidth')?.value);
+    const h = parseFloat(document.getElementById('tagHeight')?.value);
+    if (!(w > 0) || !(h > 0)) {
+        showToast('Enter a valid width and height in mm', 'warning');
+        return;
     }
-    .sl-barcode {
-        width: 100%;
-        height: 100%;
-        max-height: 8mm;
-        display: block;
+    labelCfg.w = w;
+    labelCfg.h = h;
+    labelCfg.auto = false;
+    saveLabelCfg();
+    syncLabelInputs();
+    showToast(`Label size saved: ${w} × ${h} mm`, 'success');
+};
+
+window.__savePrinterCalibration = function () {
+    let ox = parseFloat(document.getElementById('tagOffsetX')?.value) || 0;
+    let oy = parseFloat(document.getElementById('tagOffsetY')?.value) || 0;
+    if (Math.abs(ox) > 3 || Math.abs(oy) > 3) {
+        showToast('Offsets are fine-tuning only (max ±3 mm) — value limited.', 'warning');
+        ox = Math.max(-3, Math.min(3, ox)); oy = Math.max(-3, Math.min(3, oy));
+    }
+    labelCfg.offsetX = ox;
+    labelCfg.offsetY = oy;
+    saveLabelCfg();
+    syncLabelInputs();
+    try {
+        localStorage.setItem('nj_cal_offx', String(labelCfg.offsetX));
+        localStorage.setItem('nj_cal_offy', String(labelCfg.offsetY));
+    } catch (e) {}
+    showToast(`Calibration saved · X ${labelCfg.offsetX}mm · Y ${labelCfg.offsetY}mm`, 'success');
+};
+
+/* ---------- Diagnostics ---------- */
+window.__runDiagnostics = async function () {
+    const panel = document.getElementById('diagPanel');
+    const list = document.getElementById('diagList');
+    const rows = [];
+
+    function add(status, msg) {
+        const cls = status === 'ok' ? 'diag-ok' : status === 'warn' ? 'diag-warn' : 'diag-bad';
+        const icon = status === 'ok' ? '✓' : status === 'warn' ? '!' : '✗';
+        rows.push(`<li class="${cls}"><strong>${icon}</strong> ${msg}</li>`);
     }
 
-    .sl-bottom {
-        flex: 0 0 auto;
-        height: 3.6mm;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-size: 5.5pt;
-        font-weight: 700;
-        color: #000;
-        line-height: 1;
-        white-space: nowrap;
+    if (window.isSecureContext) add('ok', 'Secure context (HTTPS or localhost) — required for printing.');
+    else add('warn', 'Not a secure context. Printing may be blocked. Use HTTPS or localhost.');
+
+    let popupBlocked = false;
+    try {
+        const test = window.open('', '_blank', 'width=1,height=1');
+        if (!test || test.closed || typeof test.closed === 'undefined') popupBlocked = true;
+        else test.close();
+    } catch (e) { popupBlocked = true; }
+    if (popupBlocked) add('bad', 'Pop-ups are BLOCKED for this site. Allow pop-ups for this domain in your browser settings.');
+    else add('ok', 'Pop-ups allowed — the fallback print window is available.');
+
+    let iframePrintOk = false;
+    try {
+        const testIframe = document.createElement('iframe');
+        testIframe.setAttribute('sandbox', 'allow-modals allow-forms allow-popups allow-same-origin allow-scripts');
+        testIframe.style.cssText = 'position:fixed;left:-99999px;top:0;width:10px;height:10px;';
+        document.body.appendChild(testIframe);
+        const idoc = testIframe.contentWindow.document;
+        idoc.open();
+        idoc.write('<html><body>t</body></html>');
+        idoc.close();
+        iframePrintOk = typeof testIframe.contentWindow.print === 'function';
+        testIframe.remove();
+    } catch (e) { iframePrintOk = false; }
+    if (iframePrintOk) add('ok', 'Iframe print() call available.');
+    else add('warn', 'Iframe print() unavailable — the main-document pipeline will still run.');
+
+    add('ok', `Label size: ${labelCfg.w} × ${labelCfg.h} mm (preset: ${labelCfg.presetKey})`);
+    if (labelCfg.auto) {
+        add('warn', 'Fill-page mode uses @page { size: auto } — the Xprinter driver must have the correct label size configured.');
+    } else {
+        add('ok', `@page will be set to ${labelCfg.w}mm × ${labelCfg.h}mm with zero margin.`);
     }
-    .sl-purity { letter-spacing: 0.1px; }
-    .sl-price  { font-size: 8pt; font-weight: 800; }
+    add('warn', 'Xprinter reminder: set the SAME label size in the printer driver (Printer properties → Preferences → Stock), and set Media Type = "Gap/Label".');
 
-    @media print {
-        html, body { min-height: 0; }
-        body { display: block; }
-        .small-label { margin: 0; }
-    }`;
+    if (typeof JsBarcode !== 'undefined') add('ok', 'JsBarcode library loaded — barcodes will render.');
+    else add('bad', 'JsBarcode library missing. Barcodes will be printed as text.');
 
-window.printSmallLabel = function (id) {
+    /* Barcode density check for a typical code */
+    const sample = items[0]?.itemCode || 'NJM-0001';
+    const fit = barcodeFitReport(sample, labelCfg.w * 0.94, labelCfg.h * 0.25, 203);
+    if (fit.ok) {
+        add('ok', `Barcode "${sample}" → ${fit.dotsPerModule.toFixed(1)} printer dots per module at 203 dpi (min 2).`);
+    } else {
+        add('bad', `Barcode "${sample}" is TOO DENSE: only ${fit.dotsPerModule.toFixed(1)} dots/module at 203 dpi. Use a wider label (≥50 mm) or a shorter item code.`);
+    }
+
+    const ua = navigator.userAgent;
+    if (/Edg\//.test(ua)) add('warn', 'Edge detected. Some Edge builds block iframe printing — the fallback window will be used.');
+    else if (/Chrome/.test(ua)) add('ok', 'Chrome detected — full print support.');
+    else if (/Safari/.test(ua)) add('warn', 'Safari detected. Label sizes may need to be set in the macOS print dialog.');
+    else if (/Firefox/.test(ua)) add('ok', 'Firefox detected — print pipeline supported.');
+
+    if (isStandalone()) add('warn', 'Running as installed PWA. If printing fails, open the URL in a normal browser tab.');
+    else add('ok', 'Running in a browser tab — best print compatibility.');
+
+    list.innerHTML = rows.join('');
+    panel.classList.add('show');
+};
+
+/* ---------- Batch selection ---------- */
+const batchSelection = new Set();
+
+window.__toggleSelect = function (id, checked) {
+    if (checked) batchSelection.add(id);
+    else batchSelection.delete(id);
+    updateBatchBar();
+};
+window.__toggleSelectAll = function (checked) {
+    if (checked) items.forEach(i => batchSelection.add(i.id));
+    else batchSelection.clear();
+    document.querySelectorAll('.row-select').forEach(cb => cb.checked = checked);
+    updateBatchBar();
+};
+window.__clearBatch = function () {
+    batchSelection.clear();
+    document.querySelectorAll('.row-select').forEach(cb => cb.checked = false);
+    const sel = document.getElementById('selectAllItems');
+    if (sel) sel.checked = false;
+    updateBatchBar();
+};
+function updateBatchBar() {
+    const el = document.getElementById('batchCount');
+    if (el) el.textContent = String(batchSelection.size);
+}
+
+/* ---------- Barcode helpers ---------- */
+function escHtml(s) {
+    return String(s ?? '').replace(/[&<>"']/g, c =>
+        ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+}
+
+function shortCode(item) {
+    const raw = String(item.itemCode || item.id || '');
+    const digits = raw.replace(/\D/g, '');
+    return digits ? digits.slice(-4) : raw.slice(-4).toUpperCase();
+}
+
+/**
+ * Estimate the number of CODE128 modules (excluding quiet zones) that
+ * JsBarcode will emit for `code`. Uses the auto subset-switching rule:
+ * runs of ≥4 digits are packed two-per-symbol in subset C.
+ */
+function estimateCode128Modules(code) {
+    const s = String(code || '');
+    if (!s) return 0;
+
+    let modules = 11;           // START
+    let inC = false;
+    let i = 0;
+
+    while (i < s.length) {
+        /* count the digit run starting at i */
+        let run = 0;
+        while (i + run < s.length && /\d/.test(s[i + run])) run++;
+
+        if (run >= 4) {
+            if (!inC) { modules += 11; inC = true; }   // CODE C switch
+            const pairs = Math.floor(run / 2);
+            modules += pairs * 11;
+            i += pairs * 2;
+            if (run % 2 === 1) {
+                modules += 11; inC = false;            // back to B for the odd digit
+                i += 1;
+            }
+        } else {
+            if (inC) { modules += 11; inC = false; }   // CODE B switch
+            modules += 11;
+            i += 1;
+        }
+    }
+    modules += 11 + 13;         // CHECKSUM + STOP
+    return modules;
+}
+
+/** Quiet zone, in modules, that we reserve on each side of the bars. */
+const QUIET_MODULES = 10;
+
+/**
+ * Report how dense a barcode will be on a given label.
+ * `dpi` 203 for most Xprinter desktop label printers, 300 for the high-res ones.
+ */
+function barcodeFitReport(code, availableWidthMm, availableHeightMm, dpi) {
+    const dataModules  = estimateCode128Modules(code);
+    const totalModules = dataModules + QUIET_MODULES * 2;
+    const mmPerModule  = availableWidthMm / totalModules;
+    const dotsPerModule = mmPerModule * ((dpi || 203) / 25.4);
+    const barHeightMm  = availableHeightMm || 0;
+    return {
+        totalModules,
+        mmPerModule,
+        dotsPerModule,
+        barHeightMm,
+        ok: dotsPerModule >= 2 && barHeightMm >= 4
+    };
+}
+
+/* Effective label size (mm) for a preset + label config. */
+function effectiveSize(label, p) {
+    return label.auto ? { w: p.w, h: p.h } : { w: label.w, h: label.h };
+}
+
+/* ============================================================
+   TAG MARKUP — ONE PAGE PER TAG PER COPY
+   ============================================================ */
+function buildTagMarkup(itemsWithSuppliers, presetKey, label, copies) {
+    const p = TAG_PRESETS[presetKey] || TAG_PRESETS.xp40x30;
+    const { w } = effectiveSize(label, p);
+
+    const tags = [];
+
+    itemsWithSuppliers.forEach(({ item, supplier }) => {
+        const price   = num(item.finalSalePrice);
+        const logo    = supplier?.logo || '';
+        const supName = escHtml(supplier?.name || 'NEJMEH');
+        const code    = escHtml(item.itemCode || item.id || 'N/A');
+        const spec    = `${escHtml(item.purity || '')}·${num(item.weight).toFixed(2)}g`;
+
+        /* ------------------------------------------------------
+           ★ NEW — "info" layout: EVERYTHING on the label
+           ------------------------------------------------------ */
+        if (p.layout === 'info') {
+            const qty = num(item.stockQty) || 1;
+            const mc  = num(item.makingCharge);
+
+            const specParts = [`<span class="if-w">${num(item.weight).toFixed(2)} g</span>`];
+            if (mc > 0)  specParts.push(`<span class="if-mc">Making $${mc.toFixed(2)}</span>`);
+            if (qty > 1) specParts.push(`<span class="if-qty">Qty ${qty}</span>`);
+
+            tags.push(`
+                <div class="tag info-tag">
+                    <div class="if-head">
+                        <span class="if-brand">NEJMEH</span>
+                        <span class="if-purity">${escHtml(item.purity || '')}</span>
+                    </div>
+                    <div class="if-name">${escHtml(item.name || '')}</div>
+                    <div class="if-specs">${specParts.join('')}</div>
+                    <div class="if-bc-wrap">
+                        <svg class="if-bc" data-code="${code}"></svg>
+                        <div class="if-bc-text">${code}</div>
+                    </div>
+                    <div class="if-foot">
+                        <span class="if-price">$${price.toFixed(2)}</span>
+                        <span class="if-sup">${supName}</span>
+                    </div>
+                </div>`);
+            return;
+        }
+
+        /* ------------------------------------------------------
+           Legacy "full" layout (price + spec + name + barcode)
+           ------------------------------------------------------ */
+        if (p.layout === 'full') {
+            const bc = `<div class="fl-bc-wrap"><svg class="ft-bc" data-code="${code}"></svg></div>`;
+            tags.push(`
+                <div class="tag full-tag">
+                    <div class="fl-top">
+                        <span class="fl-price">$${price.toFixed(2)}</span>
+                        <span class="fl-spec"><b>${escHtml(item.purity || '')}</b> ${num(item.weight).toFixed(2)}g</span>
+                    </div>
+                    <div class="fl-name">${escHtml(item.name || '')}</div>
+                    ${bc}
+                    <div class="fl-code">${code}</div>
+                </div>`);
+            return;
+        }
+
+        /* ------------------------------------------------------
+           Legacy "mini" layout
+           ------------------------------------------------------ */
+        if (p.layout === 'mini') {
+            tags.push(`
+                <div class="tag mini-tag">
+                    <div class="mn-price">$${price.toFixed(2)}</div>
+                    <div class="mn-spec"><b>${escHtml(item.purity || '')}</b> · ${num(item.weight).toFixed(2)}g</div>
+                    <div class="mn-code">${escHtml(shortCode(item))}</div>
+                </div>`);
+            return;
+        }
+
+        /* ------------------------------------------------------
+           Legacy "flat + barcode" layout
+           ------------------------------------------------------ */
+        if (p.barcode) {
+            tags.push(`
+                <div class="tag flat-tag">
+                    <div class="ft-top">
+                        <div class="ft-price">$${price.toFixed(2)}</div>
+                        <div class="ft-meta">
+                            ${logo ? `<img src="${escHtml(logo)}" class="ft-logo" alt="">` : ''}
+                            <span class="ft-sup">${supName}</span>
+                            <span class="ft-spec">${spec}</span>
+                        </div>
+                    </div>
+                    <div class="ft-bc-wrap"><svg class="ft-bc" data-code="${code}"></svg></div>
+                </div>`);
+            return;
+        }
+
+        /* ------------------------------------------------------
+           Legacy "dumbbell" fold-over layout
+           ------------------------------------------------------ */
+        tags.push(`
+            <div class="tag dumbbell-tag">
+                <div class="db-paddle db-left">
+                    <div class="db-sup">${supName}</div>
+                    <div class="db-code">${escHtml(shortCode(item))}</div>
+                    <div class="db-spec">${spec}</div>
+                </div>
+                <div class="db-neck"><span class="db-fold"></span></div>
+                <div class="db-paddle db-right">
+                    <div class="db-price">$${price.toFixed(2)}</div>
+                    <div class="db-rule"></div>
+                    <div class="db-brand">NEJMEH</div>
+                </div>
+            </div>`);
+    });
+
+    let html = '';
+    tags.forEach(tag => {
+        for (let c = 0; c < copies; c++) html += `<div class="page">${tag}</div>\n`;
+    });
+    return html;
+}
+
+/* ============================================================
+   TAG CSS — every selector is prefixed with `S` so the same CSS
+   can be used inside the preview iframe (S = '') and inside the
+   main-document print area (S = '#njPrintArea').
+   ============================================================ */
+function buildTagCSS(S, presetKey, label) {
+    const p0 = TAG_PRESETS[presetKey] || TAG_PRESETS.xp40x30;
+    const { w, h } = effectiveSize(label, p0);
+
+    /* Shrink text when the label is narrower/shorter than the preset's design size. */
+    const fs = Math.max(0.4, Math.min(1, w / p0.w, h / p0.h));
+    const p = Object.assign({}, p0, {
+        pricePt: +(p0.pricePt * fs).toFixed(2),
+        codePt:  +(p0.codePt  * fs).toFixed(2),
+        specPt:  +(p0.specPt  * fs).toFixed(2)
+    });
+
+    /* Offsets are fine-tuning only: clamp to ±3 mm and clamp to the label. */
+    const clampOff = v => Math.max(-3, Math.min(3, parseFloat(v) || 0));
+    const offX = Math.min(clampOff(label.offsetX), w * 0.25);
+    const offY = Math.min(clampOff(label.offsetY), h * 0.25);
+
+    /* Neck/paddle widths only valid for the preset's own width. */
+    const presetWidthMatches = !label.auto && Math.abs(w - p0.w) < 0.01;
+    const neckW   = (p0.neck && presetWidthMatches) ? p0.neck : +(w * 0.27).toFixed(2);
+    const paddleW = (p0.paddle && presetWidthMatches) ? p0.paddle : +((w - neckW) / 2).toFixed(2);
+
+    /* Height a hair under the label so rounding can never push a blank page out. */
+    const pageH = label.auto ? '100vh' : `${(h - 0.15).toFixed(2)}mm`;
+    const pageW = label.auto ? '100%'  : `${w}mm`;
+
+    /* ---- derived sizes for the "info" layout (in mm) ---- */
+    const padX   = +(w * 0.030).toFixed(3);
+    const padY   = +(h * 0.035).toFixed(3);
+    const gap    = +(h * 0.018).toFixed(3);
+    const rule   = Math.max(0.25, +(Math.min(w, h) * 0.008).toFixed(3));
+    const brandS = +(h * 0.078).toFixed(3);
+    const purS   = +(h * 0.072).toFixed(3);
+    const nameS  = +(h * 0.105).toFixed(3);
+    const specS  = +(h * 0.068).toFixed(3);
+    const bcTxS  = +(h * 0.062).toFixed(3);
+    const priceS = +(h * 0.145).toFixed(3);
+    const supS   = +(h * 0.062).toFixed(3);
+
+    return `
+        ${S} * { box-sizing: border-box; margin: 0; padding: 0; }
+        ${S} .page {
+            width: ${pageW}; height: ${pageH};
+            overflow: hidden; background: #fff; color: #000;
+            break-after: page; page-break-after: always;
+            font-family: Arial, 'Helvetica Neue', sans-serif;
+            -webkit-print-color-adjust: exact; print-color-adjust: exact;
+        }
+        ${S} .page:last-child { break-after: auto; page-break-after: auto; }
+        ${S} .tag { width: 100%; height: 100%; background: #fff; color: #000; overflow: hidden;
+                    transform: translate(${offX}mm, ${offY}mm); }
+
+        /* ══════════════════════════════════════════════════════
+           ★ INFO LAYOUT — full information + readable barcode
+           ══════════════════════════════════════════════════════ */
+        ${S} .info-tag {
+            display: flex; flex-direction: column;
+            padding: ${padY}mm ${padX}mm;
+            gap: ${gap}mm;
+        }
+        ${S} .if-head {
+            flex: 0 0 auto;
+            display: flex; align-items: baseline; justify-content: space-between;
+            gap: 1mm;
+            border-bottom: ${rule}mm solid #000;
+            padding-bottom: ${gap}mm;
+        }
+        ${S} .if-brand {
+            font-size: ${brandS}mm; font-weight: 900;
+            letter-spacing: 0.25mm; line-height: 1; white-space: nowrap;
+        }
+        ${S} .if-purity {
+            font-size: ${purS}mm; font-weight: 900; line-height: 1;
+            border: ${rule}mm solid #000;
+            padding: 0 0.7mm; white-space: nowrap;
+        }
+        ${S} .if-name {
+            flex: 0 0 auto;
+            font-size: ${nameS}mm; font-weight: 900; line-height: 1.05;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        ${S} .if-specs {
+            flex: 0 0 auto;
+            display: flex; align-items: baseline; gap: 1.4mm;
+            font-size: ${specS}mm; font-weight: 700; line-height: 1;
+            white-space: nowrap; overflow: hidden;
+        }
+        ${S} .if-specs span { white-space: nowrap; }
+        ${S} .if-bc-wrap {
+            flex: 1 1 auto; min-height: 0;
+            display: flex; flex-direction: column; align-items: stretch;
+            padding: 0 0.6mm;
+        }
+        ${S} .if-bc {
+            flex: 1 1 auto; min-height: 0;
+            display: block; width: 100%;
+        }
+        ${S} .if-bc-text {
+            flex: 0 0 auto;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: ${bcTxS}mm; font-weight: 900; letter-spacing: 0.3mm;
+            line-height: 1.15; white-space: nowrap; overflow: hidden;
+        }
+        ${S} .if-foot {
+            flex: 0 0 auto;
+            display: flex; align-items: baseline; justify-content: space-between;
+            gap: 1mm;
+            border-top: ${rule}mm solid #000;
+            padding-top: ${gap}mm;
+        }
+        ${S} .if-price { font-size: ${priceS}mm; font-weight: 900; line-height: 1; white-space: nowrap; }
+        ${S} .if-sup   { font-size: ${supS}mm; font-weight: 700; line-height: 1; white-space: nowrap;
+                         overflow: hidden; text-overflow: ellipsis; max-width: 50%; text-align: right; }
+
+        /* ══════════════════════════════════════════════════════
+           Legacy "full" layout
+           ══════════════════════════════════════════════════════ */
+        ${S} .full-tag { display: flex; flex-direction: column; padding: 0.6mm 0.8mm; gap: 0.2mm; }
+        ${S} .fl-top { display: flex; justify-content: space-between; align-items: baseline; gap: 1mm; line-height: 1; }
+        ${S} .fl-price { font-size: ${p.pricePt}pt; font-weight: 900; white-space: nowrap; }
+        ${S} .fl-spec  { font-size: ${p.specPt}pt; font-weight: 800; white-space: nowrap; }
+        ${S} .fl-spec b{ font-weight: 900; }
+        ${S} .fl-name  { font-size: ${p.specPt}pt; font-weight: 700; line-height: 1; white-space: nowrap;
+                         overflow: hidden; text-overflow: ellipsis; flex: 0 0 auto; }
+        ${S} .fl-bc-wrap { flex: 1 1 auto; min-height: 0; display: flex; }
+        ${S} .fl-code  { font-family: 'Courier New', monospace; font-size: ${p.codePt}pt; font-weight: 900;
+                         line-height: 1; text-align: center; white-space: nowrap; flex: 0 0 auto; letter-spacing: 0.15mm; }
+
+        /* ══════════════════════════════════════════════════════
+           Legacy "mini" layout
+           ══════════════════════════════════════════════════════ */
+        ${S} .mini-tag { display: flex; flex-direction: column; align-items: center; justify-content: center;
+                         text-align: center; gap: 0.25mm; padding: 0.3mm; }
+        ${S} .mn-price { font-size: ${p.pricePt}pt; font-weight: 900; line-height: 1; white-space: nowrap; }
+        ${S} .mn-spec  { font-size: ${p.specPt}pt;  font-weight: 800; line-height: 1; white-space: nowrap; }
+        ${S} .mn-spec b{ font-weight: 900; }
+        ${S} .mn-code  { font-family: 'Courier New', monospace; font-size: ${p.codePt}pt; font-weight: 900;
+                         line-height: 1; white-space: nowrap; border-top: 0.15mm solid #000; padding-top: 0.2mm; width: 85%; }
+
+        /* ══════════════════════════════════════════════════════
+           Legacy "dumbbell" fold-over layout
+           ══════════════════════════════════════════════════════ */
+        ${S} .dumbbell-tag { display: flex; align-items: center; justify-content: center; }
+        ${S} .db-paddle {
+            width: ${paddleW}mm; height: 100%; padding: 0.5mm 0.7mm;
+            display: flex; flex-direction: column;
+            overflow: hidden; background: #fff; flex: 0 0 auto;
+        }
+        ${S} .db-left  { justify-content: space-between; }
+        ${S} .db-right { justify-content: center; align-items: center; text-align: center; gap: 0.3mm; }
+        ${S} .db-neck { width: ${neckW}mm; height: 100%; flex: 0 0 auto; position: relative; background: #fff; }
+        ${S} .db-fold {
+            position: absolute; left: 50%; top: 20%; bottom: 20%; width: 0;
+            border-left: 0.15mm dashed #000; transform: translateX(-50%);
+        }
+        ${S} .db-sup   { font-size: 3.4pt; font-weight: 900; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        ${S} .db-code  { font-family: 'Courier New', monospace; font-size: ${p.codePt}pt; font-weight: 900; line-height: 1; white-space: nowrap; }
+        ${S} .db-spec  { font-size: ${p.specPt}pt; font-weight: 900; line-height: 1; white-space: nowrap; }
+        ${S} .db-price { font-size: ${p.pricePt}pt; font-weight: 900; line-height: 1; white-space: nowrap; }
+        ${S} .db-rule  { width: 72%; height: 0; border-top: 0.2mm solid #000; margin: 0.2mm 0; }
+        ${S} .db-brand { font-size: 3pt; font-weight: 900; letter-spacing: 0.25mm; line-height: 1; white-space: nowrap; }
+
+        /* ══════════════════════════════════════════════════════
+           Legacy "flat + barcode" layout
+           ══════════════════════════════════════════════════════ */
+        ${S} .flat-tag { display: flex; flex-direction: column; }
+        ${S} .ft-top {
+            flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between;
+            padding: 0.8mm 1mm 0.4mm; gap: 1mm;
+        }
+        ${S} .ft-price { font-size: ${p.pricePt}pt; font-weight: 900; line-height: 1; color: #000; }
+        ${S} .ft-meta  { display: flex; align-items: center; gap: 0.6mm; font-size: ${Math.max(3.5, p.specPt)}pt; font-weight: 900; line-height: 1; }
+        ${S} .ft-logo  { width: 3mm; height: 3mm; object-fit: contain; }
+        ${S} .ft-sup   { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 14mm; }
+        ${S} .ft-spec  { white-space: nowrap; }
+        ${S} .ft-bc-wrap {
+            flex: 1 1 auto; min-height: 0; padding: 0 0.8mm 0.8mm;
+            display: flex; align-items: stretch; justify-content: center;
+        }
+        ${S} .ft-bc { display: block; width: 100%; height: 100%; }
+        ${S} .ft-code {
+            flex: 1 1 auto; display: flex; align-items: center; justify-content: center;
+            font-family: 'Courier New', monospace; font-size: ${p.codePt + 1}pt; font-weight: 900;
+            letter-spacing: 0.4mm; color: #000;
+        }
+    `;
+}
+
+/* Full standalone document (used by the preview iframe). */
+function buildTagDocumentHTML(itemsWithSuppliers, presetKey, opts) {
+    const label  = (opts && opts.label) || labelCfg;
+    const copies = (opts && opts.copies) || 1;
+    const zoom   = (opts && opts.zoom) || 1;
+    const p = TAG_PRESETS[presetKey] || TAG_PRESETS.xp40x30;
+    const { w, h } = effectiveSize(label, p);
+    const markup = buildTagMarkup(itemsWithSuppliers, presetKey, label, copies);
+
+    return `<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Nejmeh Tag</title>
+<style>
+  @page { size: ${w}mm ${h}mm; margin: 0; }
+  html, body { margin: 0; padding: 0; background: #fff; }
+  .zoomwrap { width: ${w}mm; transform: scale(${zoom}); transform-origin: 0 0; }
+  ${buildTagCSS('', presetKey, Object.assign({}, label, { auto: false, w, h }))}
+</style></head>
+<body><div class="zoomwrap">${markup}</div></body></html>`;
+}
+
+/* ============================================================
+   BARCODES — rendered into a detached SVG, then copied across.
+   The viewBox is taken from JsBarcode's own rendered output, so
+   the module widths stay perfectly uniform when the SVG is
+   stretched to fill its container (preserveAspectRatio="none").
+   ============================================================ */
+function renderBarcodesIn(root) {
+    if (!root || typeof JsBarcode === 'undefined') return;
+
+    const NS = 'http://www.w3.org/2000/svg';
+    const BAR_UNIT = 2;   // JsBarcode internal unit (px per module)
+
+    root.querySelectorAll('svg.if-bc, svg.ft-bc').forEach(target => {
+        const code = target.getAttribute('data-code') || '';
+        if (!code) return;
+
+        try {
+            const tmp = document.createElementNS(NS, 'svg');
+            JsBarcode(tmp, code, {
+                format: 'CODE128',
+                width: BAR_UNIT,
+                height: 100,
+                displayValue: false,
+                margin: QUIET_MODULES * BAR_UNIT,   // ← guaranteed quiet zone
+                background: '#ffffff',
+                lineColor: '#000000'
+            });
+
+            const bw = parseFloat(tmp.getAttribute('width'))  || 100;
+            const bh = parseFloat(tmp.getAttribute('height')) || 100;
+
+            target.setAttribute('viewBox', `0 0 ${bw} ${bh}`);
+            target.setAttribute('preserveAspectRatio', 'none');
+            target.setAttribute('shape-rendering', 'crispEdges');
+            target.innerHTML = tmp.innerHTML;
+            target.removeAttribute('width');
+            target.removeAttribute('height');
+            target.dataset.modules = String((bw - QUIET_MODULES * 2 * BAR_UNIT) / BAR_UNIT);
+        } catch (e) {
+            console.warn('Barcode render failed:', e.message);
+        }
+    });
+}
+
+function computePreviewZoom(w_mm, h_mm) {
+    const pxW = w_mm * 3.7795;
+    const pxH = h_mm * 3.7795;
+    const targetW = Math.min(700, Math.max(240, window.innerWidth * 0.72));
+    const zoomW = targetW / pxW;
+    const zoomH = (window.innerHeight * 0.45) / pxH;
+    return Math.max(1.5, Math.min(14, Math.min(zoomW, zoomH)));
+}
+
+/* ============================================================
+   PREVIEW OVERLAY
+   ============================================================ */
+function openTagOverlay(job) {
+    const overlay = document.getElementById('tagOverlay');
+    const content = document.getElementById('tagOverlayContent');
+    const title   = document.getElementById('tagOverlayTitle');
+    const caption = document.getElementById('tagOverlayCaption');
+    const copiesInput = document.getElementById('tagOverlayCopies');
+    const wInp = document.getElementById('tagOverlayW');
+    const hInp = document.getElementById('tagOverlayH');
+
+    if (!overlay || !content) { console.error('Tag overlay missing from DOM'); return; }
+    if (!job || !job.list || !job.list.length) { showToast('Nothing to preview', 'warning'); return; }
+
+    pendingTagJob = job;
+
+    const preset = job.presetKey || labelCfg.presetKey || 'xp40x30';
+    const p = TAG_PRESETS[preset] || TAG_PRESETS.xp40x30;
+    const { w, h } = effectiveSize(labelCfg, p);
+
+    const zoom = computePreviewZoom(w, h);
+    const previewDoc = buildTagDocumentHTML([job.list[0]], preset,
+        { copies: 1, label: labelCfg, zoom });
+
+    content.innerHTML = '';
+    content.style.transform = 'none';
+    content.style.marginBottom = '0';
+
+    const frame = document.createElement('iframe');
+    frame.setAttribute('title', 'Tag preview');
+    frame.style.cssText =
+        `width:${Math.ceil(w * 3.7795 * zoom)}px;height:${Math.ceil(h * 3.7795 * zoom)}px;` +
+        'border:1px dashed #c9a227;background:#fff;display:block;';
+    frame.srcdoc = previewDoc;
+    frame.addEventListener('load', () => {
+        try { renderBarcodesIn(frame.contentDocument); } catch (e) {}
+    });
+    content.appendChild(frame);
+
+    title.textContent = job.title || p.label;
+
+    /* ---- barcode density note in the caption ---- */
+    let bcNote = '';
+    if (p.barcode && job.list[0]) {
+        const code = String(job.list[0].item.itemCode || '');
+        const fit = barcodeFitReport(code, w * 0.94, h * 0.25, 203);
+        bcNote = fit.ok
+            ? `<br><span style="color:#15803d;">Barcode OK — ${fit.dotsPerModule.toFixed(1)} dots/module @ 203 dpi</span>`
+            : `<br><span style="color:#b91c1c;">⚠ Barcode dense — only ${fit.dotsPerModule.toFixed(1)} dots/module @ 203 dpi. Use a wider label (≥50 mm) or a shorter item code.</span>`;
+    }
+
+    const extra = job.list.length > 1
+        ? `<br><strong>Batch:</strong> ${job.list.length} tags will be printed — preview shows the first one.`
+        : '';
+    caption.innerHTML =
+        `Label: <strong>${w} × ${h} mm</strong> (preview at ${zoom.toFixed(1)}×)<br>` +
+        `Offsets: X ${labelCfg.offsetX}mm · Y ${labelCfg.offsetY}mm${extra}${bcNote}`;
+
+    if (copiesInput) copiesInput.value = String(job.copies || 1);
+    if (wInp) wInp.value = w;
+    if (hInp) hInp.value = h;
+
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+}
+
+window.closeTagOverlay = function () {
+    const overlay = document.getElementById('tagOverlay');
+    if (!overlay) return;
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    const content = document.getElementById('tagOverlayContent');
+    if (content) content.innerHTML = '';
+};
+
+/* ============================================================
+   PUBLIC ENTRY POINTS
+   ============================================================ */
+
+/* 1 · Item row / form button */
+window.printSmallLabel = function (id, presetKey) {
     const item = items.find(i => i.id === id);
     if (!item) { showToast('Item not found', 'error'); return; }
 
+    const preset = presetKey || labelCfg.presetKey || 'xp40x30';
+    const p = TAG_PRESETS[preset] || TAG_PRESETS.xp40x30;
     const supplier = suppliers.find(s => s.id === item.supplier) || null;
-    const content = buildSmallLabelHTML(item, supplier);
 
-    const w = window.open('', '_blank', 'width=320,height=200');
-    if (!w) { showToast('Please allow popups to print', 'warning'); return; }
+    /* Warn *before* the preview if the barcode will be unreadable. */
+    if (p.barcode) {
+        const { w, h } = effectiveSize(labelCfg, p);
+        const fit = barcodeFitReport(item.itemCode || '', w * 0.94, h * 0.25, 203);
+        if (!fit.ok) {
+            showToast(
+                `⚠️ Barcode "${item.itemCode}" is dense on this ${w}×${h} mm label ` +
+                `(${fit.dotsPerModule.toFixed(1)} dots/module at 203 dpi). ` +
+                `Pick a wider label (≥50 mm) or shorten the item code.`,
+                'warning'
+            );
+        }
+    }
 
-    w.document.write(`<html>
-        <head>
-            <title>Small Label - ${item.itemCode || ''}</title>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.6/JsBarcode.all.min.js"><\/script>
-            <style>${SMALL_LABEL_STYLES}</style>
-        </head>
-        <body onload="setTimeout(()=>{window.print();},350);">
-            ${content}
-        </body>
-    </html>`);
-    w.document.close();
-    showToast(`Small label ready for ${item.name}`, 'success');
+    openTagOverlay({
+        list: [{ item, supplier }],
+        presetKey: preset,
+        copies: Math.max(1, parseInt(document.getElementById('tagCopies')?.value) || 1),
+        title: `${item.name || ''} — ${p.label} — ${item.purity || ''} ` +
+               `${num(item.weight).toFixed(2)} g — $${num(item.finalSalePrice).toFixed(2)}`
+    });
 };
 
 window.printCurrentSmallLabel = function () {
     const id = editId.value;
-    if (id) window.printSmallLabel(id);
-    else showToast('Save the item first, then print its small label from the stock list.', 'warning');
+    if (!id) {
+        showToast('Save the item first, then print its tag from the stock list.', 'warning');
+        return;
+    }
+    window.printSmallLabel(id);
+};
+
+/* 2 · Tag bar: Test Tag */
+window.__printTestTag = function () {
+    const presetKey = labelCfg.presetKey || 'xp40x30';
+    const p = TAG_PRESETS[presetKey] || TAG_PRESETS.xp40x30;
+    const fakeItem = {
+        id: 'test-tag', itemCode: 'NJM-0001', name: 'CALIBRATION',
+        purity: '21K', weight: 3.50, makingCharge: 15.00,
+        finalSalePrice: 888.88, stockQty: 1, supplier: ''
+    };
+    openTagOverlay({
+        list: [{ item: fakeItem, supplier: { name: 'NEJMEH' } }],
+        presetKey,
+        copies: Math.max(1, parseInt(document.getElementById('tagCopies')?.value) || 1),
+        title: `TEST TAG — ${p.label} — ${labelCfg.w} × ${labelCfg.h} mm`
+    });
+};
+
+/* 3 · Tag bar: Print tags (batch) */
+window.__printBatchTags = function () {
+    if (!batchSelection.size) {
+        showToast('Tick the box next to one or more items first (header box = select all).', 'warning');
+        return;
+    }
+    const copies = Math.max(1, parseInt(document.getElementById('tagCopies')?.value) || 1);
+    const list = items
+        .filter(i => batchSelection.has(i.id))
+        .map(item => ({ item, supplier: suppliers.find(s => s.id === item.supplier) || null }));
+
+    if (!list.length) { showToast('No valid items selected', 'warning'); return; }
+
+    openTagOverlay({
+        list,
+        presetKey: labelCfg.presetKey || 'xp40x30',
+        copies,
+        title: `Batch print — ${list.length} tag${list.length > 1 ? 's' : ''} × ${copies} — ${labelCfg.w} × ${labelCfg.h} mm`
+    });
+};
+
+/* ============================================================
+   ACTUAL PRINT — tags are printed from the MAIN document
+   ============================================================ */
+function cleanupTagPrint() {
+    document.getElementById('njPrintArea')?.remove();
+    document.getElementById('njPrintStyle')?.remove();
+    document.body.classList.remove('nj-printing');
+}
+
+function printTagsNative(itemsWithSuppliers, presetKey, copies, label) {
+    cleanupTagPrint();
+
+    const p = TAG_PRESETS[presetKey] || TAG_PRESETS.xp40x30;
+    const { w, h } = effectiveSize(label, p);
+
+    const area = document.createElement('div');
+    area.id = 'njPrintArea';
+    area.innerHTML = buildTagMarkup(itemsWithSuppliers, presetKey, label, copies);
+    document.body.appendChild(area);
+
+    renderBarcodesIn(area);
+
+    const pageRule = label.auto
+        ? '@page { size: auto; margin: 0; }'
+        : `@page { size: ${w}mm ${h}mm; margin: 0; }`;
+
+    const style = document.createElement('style');
+    style.id = 'njPrintStyle';
+    style.textContent = `
+        #njPrintArea { position: absolute; left: -99999px; top: 0; width: ${label.auto ? '100vw' : w + 'mm'}; background: #fff; }
+        ${buildTagCSS('#njPrintArea', presetKey, label)}
+        @media print {
+            ${pageRule}
+            html, body { margin: 0 !important; padding: 0 !important; background: #fff !important;
+                         width: auto !important; height: auto !important; overflow: visible !important; }
+            body.nj-printing > *:not(#njPrintArea) { display: none !important; }
+            #njPrintArea { position: static !important; left: auto !important; width: ${label.auto ? '100%' : w + 'mm'} !important; }
+        }
+    `;
+    document.head.appendChild(style);
+    document.body.classList.add('nj-printing');
+
+    window.addEventListener('afterprint', cleanupTagPrint, { once: true });
+
+    /* Two frames + a short delay so images/SVG are laid out. */
+    requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(() => {
+        try {
+            window.focus();
+            window.print();
+        } catch (e) {
+            console.error('print() failed:', e);
+            showToast('Printing failed: ' + e.message, 'error');
+            cleanupTagPrint();
+        }
+    }, 150)));
+}
+
+/* ---------- Print the currently-open tag ---------- */
+window.doPrintTag = function () {
+    if (!pendingTagJob || !pendingTagJob.list || !pendingTagJob.list.length) {
+        showToast('No tag selected. Open a tag preview first.', 'warning');
+        return;
+    }
+
+    const wInp = parseFloat(document.getElementById('tagOverlayW')?.value);
+    const hInp = parseFloat(document.getElementById('tagOverlayH')?.value);
+    if (wInp > 0 && hInp > 0 && (wInp !== labelCfg.w || hInp !== labelCfg.h || labelCfg.auto)) {
+        labelCfg.w = wInp;
+        labelCfg.h = hInp;
+        labelCfg.auto = false;
+        saveLabelCfg();
+        syncLabelInputs();
+    }
+
+    const copies = Math.max(1, parseInt(document.getElementById('tagOverlayCopies')?.value) || 1);
+    const job = pendingTagJob;
+    const presetKey = job.presetKey || labelCfg.presetKey || 'xp40x30';
+
+    window.closeTagOverlay();
+    pendingTagJob = null;
+
+    printTagsNative(job.list, presetKey, copies, Object.assign({}, labelCfg));
 };
 
 /* ============================================================
@@ -3313,10 +4433,11 @@ window.exportPDF = function () {
    ============================================================ */
 function buildBackupPayload() {
     return {
-        app: 'NejmehPOS', version: 1,
+        app: 'NejmehPOS', version: 3,
         exportedAt: new Date().toISOString(),
         counts: { items: items.length, suppliers: suppliers.length, users: users.length },
-        items, suppliers, users, rates, settings
+        items, suppliers, users, rates, settings,
+        printerCal: labelCfg
     };
 }
 
@@ -3347,7 +4468,6 @@ async function replaceCollection(name, newDocs) {
 }
 
 async function applyBackup(payload) {
-    // Accept both NejmehPOS and legacy GoldPOS backups
     if (!payload || (payload.app !== 'NejmehPOS' && payload.app !== 'GoldPOS')) {
         showToast('This file is not a Nejmeh POS backup.', 'error');
         return false;
@@ -3372,6 +4492,18 @@ async function applyBackup(payload) {
             cacheUsersLocally();
             renderUsers();
         }
+    }
+
+    if (payload.printerCal) {
+        labelCfg.offsetX = num(payload.printerCal.offsetX);
+        labelCfg.offsetY = num(payload.printerCal.offsetY);
+        if (payload.printerCal.w > 0) labelCfg.w = payload.printerCal.w;
+        if (payload.printerCal.h > 0) labelCfg.h = payload.printerCal.h;
+        if (payload.printerCal.presetKey && TAG_PRESETS[payload.printerCal.presetKey]) {
+            labelCfg.presetKey = payload.printerCal.presetKey;
+        }
+        saveLabelCfg();
+        syncLabelInputs();
     }
 
     await saveRatesToFirestore();
@@ -3490,6 +4622,7 @@ window.wipeDatabase = async function () {
             for (const d of snap.docs) await deleteDoc(doc(db, name, d.id));
         }
         items = []; suppliers = []; cart = [];
+        batchSelection.clear();
         renderSuppliers(); renderSupplierDropdown(); renderStock(); renderPOS(); updateCart();
         showToast('Database wiped.', 'info');
     } catch (err) { showToast('Wipe failed: ' + err.message, 'error'); }
@@ -3548,6 +4681,20 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     });
 });
 
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        const ov = document.getElementById('tagOverlay');
+        if (ov && ov.classList.contains('open')) window.closeTagOverlay();
+    }
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'p') {
+        const ov = document.getElementById('tagOverlay');
+        if (ov && ov.classList.contains('open')) {
+            e.preventDefault();
+            window.doPrintTag();
+        }
+    }
+});
+
 /* ============================================================
    APP ENTRY / INIT
    ============================================================ */
@@ -3572,6 +4719,8 @@ async function enterApp() {
     applyRolePermissions();
     renderUsers();
 
+    syncLabelInputs();
+
     if (!appStarted) {
         appStarted = true;
         await loadAllData();
@@ -3580,7 +4729,7 @@ async function enterApp() {
 
 async function init() {
     setupPWA();
-
+    syncLabelInputs();
     updateLockBadges();
     await loadUsers();
 
